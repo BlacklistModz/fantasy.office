@@ -5,20 +5,20 @@
 
 			<ul class="lfloat" ref="actions">
 				<li class="mt">
-					<h2><i class="icon-cart-arrow-down mrs"></i><span> รายการสินค้า</span></h2>
+					<h2><i class="icon-cart-arrow-down mrs"></i><span> Item</span></h2>
 				</li>
 
 				<li class="mt"><a class="btn js-refresh" data-plugins="tooltip" data-options="<?=$this->fn->stringify(array('text'=>'refresh'))?>"><i class="icon-refresh"></i></a></li>
 
 				<li class="divider"></li>
-				
+
 				 <!-- data-plugins="dialog" -->
 				<!-- <li class="mt">
 					<a href="<?=URL?>customers/import" data-plugins="dialog" class="btn btn-blue"><i class="icon-plus"></i> Import Excel</a>
 				</li> -->
 
 			</ul>
-			
+
 			<ul class="lfloat selection hidden_elem" ref="selection">
 				<li><span class="count-value"></span></li>
 				<li><a class="btn-icon"><i class="icon-download"></i></a></li>
@@ -27,23 +27,23 @@
 
 
 			<ul class="rfloat" ref="control">
-				<li><label class="fwb fcg fsm" for="limit">แสดง</label>
+				<li><label class="fwb fcg fsm" for="limit">Show</label>
 				<select ref="selector" id="limit" name="limit" class="inputtext"><?php
 					echo '<option value="20">20</option>';
 					echo '<option selected value="50">50</option>';
 					echo '<option value="100">100</option>';
 					echo '<option value="200">200</option>';
-				?></select><span id="more-link">คำนวณ...</span></li>
+				?></select><span id="more-link">Loading...</span></li>
 			</ul>
-			
+
 		</div>
 		<div class="clearfix mbl mtm">
 			<ul class="lfloat" ref="control">
 				<li>
-					<label class="label">หมวดหมู่สินค้า</label>
+					<label class="label">Categories</label>
 					<select ref="selector" name="category" class="inputtext">
 						<option value="">-</option>
-						<?php 
+						<?php
 						foreach ($this->categories['lists'] as $key => $value) {
 							echo '<option value="'.$value['id'].'">'.$value['name_th'].' ('.$value['name_en'].')</option>';
 						}
@@ -52,14 +52,14 @@
 				</li>
 
 				<li>
-					<label class="label">สถานะ</label>
+					<label class="label">Status</label>
 					<select ref="selector" name="status" class="inputtext">
 						<option value="">-</option>
-						<option value="A">เปิดใช้งาน (Active)</option>
-						<option value="I">ปิดใช้งาน (Inactive)</option>
+						<option value="A">Active</option>
+						<option value="I">Inactive</option>
 					</select>
 				</li>
-				
+
 			</ul>
 			<ul class="rfloat" ref="control">
 				<li class="mt"><form class="form-search" action="#">
@@ -71,7 +71,7 @@
 				</form></li>
 			</ul>
 		</div>
-		
+
 	</div>
 
 </div>

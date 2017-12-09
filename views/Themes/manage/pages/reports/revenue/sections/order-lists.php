@@ -1,5 +1,5 @@
 <div class="clearfix">
-	<h3 class="fwb"><i class="icon-list-alt"></i> รายการ ORDER (ประจำวันที่ <?=$this->periodStr?>)</h3>
+	<h3 class="fwb"><i class="icon-list-alt"></i> Order ( of day <?=$this->periodStr?>)</h3>
 	<a href="<?=URL?>pdf/reports?type=revenue?period_start=<?=$this->start?>&period_end=<?=$this->end?>" class="btn btn-blue rfloat" target="_blank"><i class="icon-print"></i> PRINT</a>
 	<div ref="table" class="listpage2-table">
 		<table class="table-bordered mtm">
@@ -13,7 +13,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<?php 
+				<?php
 				if( !empty($this->results['lists']) ) {
 					$num = 1;
 					foreach ($this->results['lists'] as $key => $value) {

@@ -6,20 +6,20 @@ $form = $form->create()
 	->addClass('form-insert');
 
 $form 	->field("file")
-		->label("เลือกไฟล์")
+		->label("Select file")
 		->addClass('inputtext')
 		->type('file')
 		->attr('accept', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel')
 		->value('');
 
 $form 	->field("start_row")
-		->label("เริ่มอ่านข้อมูลในแถวที่")
+		->label("Read the data in rows")
 		->addClass('inputtext')
 		->type('number')
 		->value(1);
 
 # set form
-$arr['title'] = 'Import ไฟล์ xls, xlsx';
+$arr['title'] = 'Import File xls, xlsx';
 
 $arr['form'] = '<form class="js-submit-form" method="post" action="'.URL. 'suppliers/import" enctype="multipart/form-data"></form>';
 

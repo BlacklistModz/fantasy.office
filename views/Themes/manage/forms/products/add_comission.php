@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 $arr['title'] = $this->item['pds_name'];
 if( !empty($this->item) ){
@@ -12,7 +12,7 @@ $form = $form->create()
 	->addClass('form-insert');
 
 $form 	->field("pds_comission")
-		->label("คอมมิชชั่น *")
+		->label("Commission *")
 		->autocomplete('off')
 		->addClass('inputtext')
 		->value( !empty($this->item['pds_comission']) ? $this->item['pds_comission'] : '' );

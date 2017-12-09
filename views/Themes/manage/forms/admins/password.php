@@ -1,12 +1,12 @@
-<?php 
+<?php
 
-$title = 'รหัสผ่าน';
+$title = 'Password';
 if( !empty($this->item) ){
-	$arr['title'] = "แก้ไข {$title}";
+	$arr['title'] = "Edit {$title}";
 	$arr['hiddenInput'][] = array('name'=>'id', 'value'=>$this->item['id']);
 }
 else{
-	$arr['title'] = "เพิ่ม {$title}";
+	$arr['title'] = "Add {$title}";
 }
 
 $form = new Form();

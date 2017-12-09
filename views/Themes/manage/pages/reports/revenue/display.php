@@ -4,12 +4,12 @@
 			<div class="uiBoxWhite pas pam">
 				<div class="clearfix">
 					<div class="lfloat">
-						<h3 class="fwb"><i class="icon-line-chart"></i> รายงานรายรับ</h3>
+						<h3 class="fwb"><i class="icon-line-chart"></i> Receipt report</h3>
 					</div>
 					<div class="lfloat" style="margin-left: 5mm;">
 						<ul>
 							<li class="clearfix">
-								<label class="fwb fcg fsm" for="closedate">แสดงวันที่</label>
+								<label class="fwb fcg fsm" for="closedate">Show date</label>
 								<select selector="closedate" name="closedate" class="inputtext"></select>
 							</li>
 						</ul>
@@ -30,23 +30,23 @@
 		leng:"th",
 		options: [
 			{
-				text: 'วันนี้',
+				text: 'Today',
 				value: 'daily',
 			},
 			{
-				text: 'เมื่อวานนี้',
+				text: 'Yesterday',
 				value: 'yesterday',
 			},
 			{
-				text: 'สัปดาห์นี้',
+				text: 'This week',
 				value: 'weekly',
 			},
 			{
-				text: 'เดือนนี้',
-				value: 'monthly', 
+				text: 'This month',
+				value: 'monthly',
 			},
 			{
-				text: 'กำหนดเอง',
+				text: 'Custom',
 				value: 'custom',
 			}
 		],

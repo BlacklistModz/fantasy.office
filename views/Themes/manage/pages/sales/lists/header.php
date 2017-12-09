@@ -5,7 +5,7 @@
 
 			<ul class="lfloat" ref="actions">
 				<li class="mt">
-					<h2><i class="icon-user mrs"></i><span> จัดการพนักงานขาย</span></h2>
+					<h2><i class="icon-user mrs"></i><span> Manage sales staff</span></h2>
 				</li>
 
 				<li class="mt"><a class="btn js-refresh" data-plugins="tooltip" data-options="<?=$this->fn->stringify(array('text'=>'refresh'))?>"><i class="icon-refresh"></i></a></li>
@@ -30,13 +30,13 @@
 
 
 			<ul class="rfloat" ref="control">
-				<li><label class="fwb fcg fsm" for="limit">แสดง</label>
+				<li><label class="fwb fcg fsm" for="limit">Show</label>
 				<select ref="selector" id="limit" name="limit" class="inputtext"><?php
 					echo '<option value="20">20</option>';
 					echo '<option selected value="50">50</option>';
 					echo '<option value="100">100</option>';
 					echo '<option value="200">200</option>';
-				?></select><span id="more-link">คำนวณ...</span></li>
+				?></select><span id="more-link">Loading...</span></li>
 			</ul>
 
 		</div>
@@ -53,9 +53,9 @@
 				</li> -->
 
 				<li>
-					<label for="status" class="label">เลือกสถานะ</label>
+					<label for="status" class="label">Select status</label>
 					<select ref="selector" name="status" class="inputtext">
-						<?php 
+						<?php
 						echo '<option value="">--- เลือกสถานะ ---</option>';
 						foreach ($this->status as $key => $value) {
 							echo '<option value="'.$value['id'].'">'.$value['name'].'</option>';

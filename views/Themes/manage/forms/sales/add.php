@@ -1,12 +1,12 @@
 <?php
 
-$title = 'ข้อมูลผู้ขาย';
+$title = 'Seller Information';
 if( !empty($this->item) ){
-	$arr['title'] = "แก้ไข {$title}";
+	$arr['title'] = "Edit {$title}";
 	$arr['hiddenInput'][] = array('name'=>'id', 'value'=>$this->item['id']);
 }
 else{
-	$arr['title'] = "เพิ่ม {$title}";
+	$arr['title'] = "Add {$title}";
 }
 
 $form = new Form();
@@ -31,25 +31,25 @@ $form = $form->create()
 	}
 
 	$form 	->field("sale_code")
-			->label("รหัสผู้ขาย * :")
+			->label("Seller ID * :")
 			->autocomplete('off')
 			->addClass('inputtext')
 			->value( !empty($this->item['sale_code']) ? $this->item['sale_code'] : '' );
 
 	$form 	->field("sale_name")
-			->label("ชื่อผู้ขาย * :")
+			->label("Seller Name * :")
 			->autocomplete('off')
 			->addClass('inputtext')
 			->value( !empty($this->item['sale_name']) ? $this->item['sale_name'] : '' );
 
 	$form 	->field("sale_fullname")
-			->label("ชื่อเต็มผู้ขาย * :")
+			->label("Full name seller * :")
 			->autocomplete('off')
 			->addClass('inputtext')
 			->value( !empty($this->item['sale_fullname']) ? $this->item['sale_fullname'] : '' );
 
 	$form 	->field("region")
-			->label("ภูมิภาค * :")
+			->label("Region * :")
 			->autocomplete('off')
 			->addClass('inputtext')
 			->select($this->region)

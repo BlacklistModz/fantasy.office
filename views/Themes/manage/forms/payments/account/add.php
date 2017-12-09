@@ -1,6 +1,6 @@
 <?php
 
-$title = "ธนาคาร";
+$title = "Bank";
 
 $form = new Form();
 $form = $form->create()
@@ -9,26 +9,26 @@ $form = $form->create()
 	->addClass('form-insert');
 
 $form 	->field("account_bank_id")
-		->label("ธนาคาร*")
+		->label("Bank*")
 		->autocomplete('off')
 		->addClass('inputtext')
 		->select( $this->bank )
 		->value( !empty($this->item['bank_id']) ? $this->item['bank_id'] : '' );
 
 $form 	->field("account_number")
-		->label("เลขบัญชี")
+		->label("Account number")
 		->autocomplete('off')
 		->addClass('inputtext')
 		->value( !empty($this->item['number']) ? $this->item['number'] : '' );
 
 $form 	->field("account_name")
-		->label("ชื่อบัญชี")
+		->label("Account Name")
 		->autocomplete('off')
 		->addClass('inputtext')
 		->value( !empty($this->item['name']) ? $this->item['name'] : '' );
 
 $form 	->field("account_branch")
-		->label("สาขา")
+		->label("Branch")
 		->autocomplete('off')
 		->addClass('inputtext')
 		->value( !empty($this->item['branch']) ? $this->item['branch'] : '' );
@@ -41,11 +41,11 @@ $arr['body'] = $form->html();
 
 # title
 if( !empty($this->item) ){
-    $arr['title']= "แก้ไข{$title}";
+    $arr['title']= "Edit {$title}";
     $arr['hiddenInput'][] = array('name'=>'id','value'=>$this->item['id']);
 }
 else{
-    $arr['title']= "เพิ่ม{$title}";
+    $arr['title']= "Add {$title}";
 }
 
 # fotter: button

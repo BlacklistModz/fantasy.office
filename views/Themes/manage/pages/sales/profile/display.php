@@ -21,19 +21,19 @@
 			<div class="clearfix">
 				<div class="span12">
 					<div class="uiBoxOverlay pam pas">
-						<h3 class="mbm fwb"><i class="icon-user"></i> ข้อมูลพนักงานขาย</h3>
+						<h3 class="mbm fwb"><i class="icon-user"></i> Salesman information</h3>
 						<ul>
 							<li>
-								<label><span class="fwb">รหัส : </span><?=$this->item['sale_code']?></label>
+								<label><span class="fwb">Code : </span><?=$this->item['sale_code']?></label>
 							</li>
 							<li>
-								<label><span class="fwb">ชื่อ : </span><?=$this->item['sale_fullname']?> (<?=$this->item['sale_name']?>)</label>
+								<label><span class="fwb">Name : </span><?=$this->item['sale_fullname']?> (<?=$this->item['sale_name']?>)</label>
 							</li>
 							<li>
 								<label><span class="fwb">Username : </span><?=$this->item['username']?></label>
 							</li>
 							<li>
-								<label><span class="fwb">ภูมิภาค : </span><?=( !empty($this->item['region_arr']['name']) ? $this->item['region_arr']['name'] : "-" )?></label>
+								<label><span class="fwb">Region : </span><?=( !empty($this->item['region_arr']['name']) ? $this->item['region_arr']['name'] : "-" )?></label>
 							</li>
 							<li>
 								<label><span class="fwb">Status : </span><?=(!empty($this->item['status_arr']['name']) ? $this->item['status_arr']['name'] : "-")?></label>
@@ -50,11 +50,11 @@
 							<table class="table-bordered">
 								<thead>
 									<tr>
-										<th class="ID">ลำดับ</th>
-										<th class="date">วันที่</th>
+										<th class="ID">Order</th>
+										<th class="date">Date</th>
 										<th class="ID">ORDER CODE</th>
-										<th class="name">ชื่อร้าน</th>
-										<th class="price">ยอดรวม</th>
+										<th class="name">Shop name</th>
+										<th class="price">Total</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -80,12 +80,12 @@
 											<?php
 										}
 									}else{
-										echo '<td colspan="3" style="text-align:center; color:red;" class="fwb">ไม่พบข้อมูลการซื้อสินค้า</td>';
+										echo '<td colspan="3" style="text-align:center; color:red;" class="fwb">No purchase information found.</td>';
 									}
 									?>
 								</tbody>
 								<tfoot>
-									<th colspan="4" style="text-align: right;" class="fwb">รวม</th>
+									<th colspan="4" style="text-align: right;" class="fwb">Total</th>
 									<th class="fwb" style="text-align: center;"><?=number_format($total_price, 2)?></th>
 								</tfoot>
 							</table>

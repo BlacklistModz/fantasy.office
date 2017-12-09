@@ -1,6 +1,6 @@
 <?php
 
-$title = "ธนาคาร";
+$title = "Bank";
 
 $form = new Form();
 $form = $form->create()
@@ -9,13 +9,13 @@ $form = $form->create()
 	->addClass('form-insert');
 
 $form 	->field("bank_code")
-		->label("อักษรย่อ")
+		->label("Acronym")
 		->autocomplete('off')
 		->addClass('inputtext')
 		->value( !empty($this->item['code']) ? $this->item['code'] : '' );
 
 $form 	->field("bank_name")
-		->label("ชื่อธนาคาร")
+		->label("Bank name")
 		->autocomplete('off')
 		->addClass('inputtext')
 		->value( !empty($this->item['name']) ? $this->item['name'] : '' );
@@ -28,11 +28,11 @@ $arr['body'] = $form->html();
 
 # title
 if( !empty($this->item) ){
-    $arr['title']= "แก้ไข{$title}";
+    $arr['title']= "Edit {$title}";
     $arr['hiddenInput'][] = array('name'=>'id','value'=>$this->item['id']);
 }
 else{
-    $arr['title']= "เพิ่ม{$title}";
+    $arr['title']= "Add {$title}";
 }
 
 # fotter: button

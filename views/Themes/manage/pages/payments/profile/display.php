@@ -8,42 +8,42 @@
 				<div class="clearfix">
 					<div class="span6">
 						<div class="uiBoxOverlay pam">
-							<h3 class="mbm fwb"><i class="icon-user"></i> ข้อมูลลูกค้า</h3>
+							<h3 class="mbm fwb"><i class="icon-user"></i> Customer data</h3>
 							<ul>
 								<li>
-									<label><span class="fwb">ชื่อร้าน : </span><?=$this->item['user_name']?></label>
+									<label><span class="fwb">Shop name : </span><?=$this->item['user_name']?></label>
 								</li>
 								<li>
-									<label><span class="fwb">รหัส : </span><?=$this->item['user_code']?></label>
+									<label><span class="fwb">Code : </span><?=$this->item['user_code']?></label>
 								</li>
 								<li>
-									<label><span class="fwb">เงื่อนไขการชำระเงิน : </span><?= !empty($this->item['term_of_payment']) ? $this->item['term_of_payment']['name'] : "-" ?></label>
+									<label><span class="fwb">Term of payment : </span><?= !empty($this->item['term_of_payment']) ? $this->item['term_of_payment']['name'] : "-" ?></label>
 								</li>
 								<li>
-									<label><span class="fwb">ยอดรวม : </span><?=number_format($this->item['net_price'], 2)?> บาท</label>
+									<label><span class="fwb">Total : </span><?=number_format($this->item['net_price'], 2)?> Bath</label>
 								</li>
 							</ul>
 						</div>
 
 						<div class="uiBoxOverlay mtm pam">
-							<h3 class="fwb mbm"><i class="icon-shopping-basket"></i> รายการสินค้า</h3>
+							<h3 class="fwb mbm"><i class="icon-shopping-basket"></i> Item</h3>
 							<div ref="table" class="listpage2-table">
 								<table class="table-bordered">
 									<thead>
 										<tr>
-											<th class="ID">ลำดับ</th>
-											<th class="name">ชื่อสินค้า</th>
-											<th class="qty">จำนวน</th>
-											<th class="price">ราคา</th>
-											<th class="price">ส่วนลด</th>
-											<th class="price">ราคารวม</th>
+											<th class="ID">Order</th>
+											<th class="name">Product name</th>
+											<th class="qty">Number</th>
+											<th class="price">Price</th>
+											<th class="price">discount</th>
+											<th class="price">Total price</th>
 										</tr>
 									</thead>
 									<tbody>
-										<?php 
+										<?php
 										$no = 0;
 										$total_price = 0;
-										foreach ($this->item['items'] as $key => $item) { 
+										foreach ($this->item['items'] as $key => $item) {
 											$no++;
 											$cls = $i%2 ? 'even' : "odd";
 											$total_price += $item['price'] * $item['qty'];
@@ -60,7 +60,7 @@
 									</tbody>
 									<tfoot>
 										<tr>
-											<th colspan="2" style="text-align: right;">รวม</th>
+											<th colspan="2" style="text-align: right;">Total</th>
 											<th style="text-align: center;"><?=$this->item['total_qty']?></th>
 											<th style="text-align: center;"><?=number_format($total_price, 2)?></th>
 											<th style="text-align: center;"><?= !empty($this->item['total_discount']) ? number_format($this->item['total_discount'], 2) : "-" ?></th>
@@ -72,26 +72,26 @@
 						</div>
 
 						<div class="uiBoxOverlay mtm pam mbl">
-							<h3 class="fwb mbm"><i class="icon-shopping-cart"></i> รายการที่เกี่ยวข้อง</h3>
+							<h3 class="fwb mbm"><i class="icon-shopping-cart"></i> Related Items</h3>
 							<div ref="table" class="listpage2-table">
 								<table class="table-bordered">
 									<thead>
 										<tr>
-											<th class="ID">ลำดับ</th>
-											<th class="name">เลข ORDER</th>
-											<th class="price">ราคารวม</th>
-											<th class="price">ชำระแล้ว</th>
-											<th class="price">ยอดคงค้าง</th>
+											<th class="ID">Order</th>
+											<th class="name">Order number</th>
+											<th class="price">Total price</th>
+											<th class="price">Paid</th>
+											<th class="price">Outstanding</th>
 										</tr>
 									</thead>
 									<?php if( !empty($this->orders['lists']) ) { ?>
 									<tbody>
-										<?php 
+										<?php
 											$no=0;
 											$prices = 0;
 											$pay = 0;
 											$balance = 0;
-											foreach ($this->orders['lists'] as $key => $value) { 
+											foreach ($this->orders['lists'] as $key => $value) {
 											$no++;
 											$cls = $i%2 ? 'even' : "odd";
 
@@ -127,7 +127,7 @@
 									<?php }else{ ?>
 									<tbody>
 										<tr>
-											<td colspan="5" style="text-align: center; color:red" class="fwb">ไม่พบรายการเกี่ยวข้อง / ลูกค้าได้สั่งเพียง 1 รายการ</td>
+											<td colspan="5" style="text-align: center; color:red" class="fwb">No related items / customers have only 1 order.</td>
 										</tr>
 									</tbody>
 									<?php } ?>
@@ -136,7 +136,7 @@
 						</div>
 					</div>
 
-					<?php 
+					<?php
 					$tr = "";
 					if( !empty($this->item['payment_lists']) ){
 						foreach ($this->item['payment_lists'] as $key => $value) {
@@ -200,20 +200,20 @@
 								</span>
 							</div>
 							<div class="nfloat mts">
-								<h3 class="fwb mbm"><i class="icon-money"></i> รายการจ่ายเงิน</h3>
+								<h3 class="fwb mbm"><i class="icon-money"></i> Payment transaction</h3>
 								<div ref="table" class="listpage2-table">
 									<table class="table-bordered">
 										<thead>
 											<tr>
-												<th class="ID">ลำดับ</th>
-												<th class="date">วันที่</th>
-												<th clsss="name">วิธีชำระ</th>
-												<th class="price">จำนวนเงิน</th>
-												<th class="status">หลักฐาน</th>
-												<th class="actions">จัดการ</th>
+												<th class="ID">Order</th>
+												<th class="date">Date</th>
+												<th clsss="name">Payment method</th>
+												<th class="price">Amount</th>
+												<th class="status">Evidence</th>
+												<th class="actions">Actions</th>
 											</tr>
 										</thead>
-										<?php 
+										<?php
 											if( !empty($tr) ){
 										?>
 										<tbody>
@@ -221,15 +221,15 @@
 										</tbody>
 										<tfoot>
 											<tr>
-												<th colspan="4" style="text-align: right;">ยอดรวม</th>
+												<th colspan="4" style="text-align: right;">Total</th>
 												<th colspan="2" style="text-align: center;"><?=number_format($this->item['prices'], 2)?></th>
 											</tr>
 											<tr>
-												<th colspan="4" style="text-align: right;">ชำระแล้ว</th>
+												<th colspan="4" style="text-align: right;">Paid</th>
 												<th colspan="2" style="text-align: center;"><?= !empty($this->item['pay']) ? number_format($this->item['pay'], 2) : "-" ?></th>
 											</tr>
 											<tr>
-												<th colspan="4" style="text-align: right;">คงค้าง</th>
+												<th colspan="4" style="text-align: right;">Outstanding</th>
 												<th colspan="2" style="text-align: center;"><?= !empty($this->item['balance']) ? number_format($this->item['balance'], 2) : "-" ?></th>
 											</tr>
 										</tfoot>
@@ -238,7 +238,7 @@
 											echo '<tbody>
 													<tr>
 														<td colspan="6" style="text-align:center;">
-															<span class="fwb" style="color:red;">ไม่พบข้อมูลการชำระเงิน</span>
+															<span class="fwb" style="color:red;">No payment information found.</span>
 														</td>
 													</tr>
 												</tbody>';
@@ -255,22 +255,22 @@
 								</span>
 							</div>
 							<div class="nfloat">
-								<h3 class="fwb mbm"><i class="icon-calendar-check-o"></i> รายการนัดหมาย</h3>
+								<h3 class="fwb mbm"><i class="icon-calendar-check-o"></i> Appointment List</h3>
 								<div ref="table" class="listpage2-table">
 									<table class="table-bordered">
 										<thead>
 											<tr>
 												<th class="ID">No.</th>
-												<th class="date">วันที่</th>
-												<th class="name">หัวข้อ</th>
+												<th class="date">Date</th>
+												<th class="name">Topics</th>
 												<th class="actions"></th>
 											</tr>
 										</thead>
 										<tbody>
 											<?php if( !empty($this->events['lists']) ){
 												$no=0;
-												foreach ($this->events['lists'] as $key => $value) { $no++; 
-													$time = 'ทั้งวัน';
+												foreach ($this->events['lists'] as $key => $value) { $no++;
+													$time = 'All day';
 													$start_time = date("H:i", strtotime($value['start']));
 													if( $start_time != '00:00') {
 														$time = $start_time;
@@ -296,7 +296,7 @@
 											}else{
 												echo '<tr>
 												<td colspan="5" style="text-align:center;">
-												<span class="fwb" style="color:red;">ไม่พบข้อมูลนัดหมาย</span>
+												<span class="fwb" style="color:red;">No appointment found.</span>
 												</td>
 												</tr>';
 											} ?>
@@ -305,7 +305,7 @@
 								</div>
 							</div>
 						</div>
-				
+
 
 					</div>
 

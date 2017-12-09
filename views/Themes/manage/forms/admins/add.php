@@ -1,12 +1,12 @@
-<?php 
+<?php
 
-$title = 'ผู้ดูแลระบบ';
+$title = 'System administrator';
 if( !empty($this->item) ){
-	$arr['title'] = "แก้ไข {$title}";
+	$arr['title'] = "Edit {$title}";
 	$arr['hiddenInput'][] = array('name'=>'id', 'value'=>$this->item['id']);
 }
 else{
-	$arr['title'] = "เพิ่ม {$title}";
+	$arr['title'] = "Add {$title}";
 }
 
 $form = new Form();
@@ -16,7 +16,7 @@ $form = $form->create()
 	->addClass('form-insert');
 
 $form 	->field("name")
-		->label("ชื่อ *")
+		->label("Name *")
 		->autocomplete('off')
 		->addClass('inputtext')
 		->value( !empty($this->item['name']) ? $this->item['name'] : '' );

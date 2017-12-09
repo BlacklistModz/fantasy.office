@@ -5,19 +5,19 @@
 
 			<ul class="lfloat" ref="actions">
 				<li class="mt">
-					<h2><i class="icon-credit-card mrs"></i><span> รายการจ่ายเช็ค</span></h2>
+					<h2><i class="icon-credit-card mrs"></i><span> Checkout</span></h2>
 				</li>
 
 				<li class="mt"><a class="btn js-refresh" data-plugins="tooltip" data-options="<?=$this->fn->stringify(array('text'=>'refresh'))?>"><i class="icon-refresh"></i></a></li>
 
 				<li class="divider"></li>
-				
+
 				<li class="mt">
 					<a class="btn btn-blue" data-plugins="dialog" href="<?=URL?>paycheck/add"><i class="icon-plus mrs"></i><span><?=$this->lang->translate('Add New')?></span></a>
-				</li> 
+				</li>
 
 			</ul>
-			
+
 			<ul class="lfloat selection hidden_elem" ref="selection">
 				<li><span class="count-value"></span></li>
 				<li><a class="btn-icon"><i class="icon-download"></i></a></li>
@@ -26,40 +26,40 @@
 
 
 			<ul class="rfloat" ref="control">
-				<li><label class="fwb fcg fsm" for="limit">แสดง</label>
+				<li><label class="fwb fcg fsm" for="limit">Show</label>
 				<select ref="selector" id="limit" name="limit" class="inputtext"><?php
 					echo '<option value="20">20</option>';
 					echo '<option selected value="50">50</option>';
 					echo '<option value="100">100</option>';
 					echo '<option value="200">200</option>';
-				?></select><span id="more-link">คำนวณ...</span></li>
+				?></select><span id="more-link">Loading...</span></li>
 			</ul>
-			
+
 		</div>
 		<div class="clearfix mbl mtm">
 			<ul class="lfloat" ref="control">
 				<li>
-					<label for="closedate" class="label">เลือกวันที่</label><select ref="closedate" name="closedate" class="inputtext">
-						<option value="daily">วันนี้</option>
-						<option value="yesterday">เมื่อวานนี้</option>
-						<option value="weekly">สัปดาห์นี้</option>
-						<option value="monthly" selected>เดือนนี้</option>
-						<option value="custom">กำหนดเอง</option>
+					<label for="closedate" class="label">Choose date</label><select ref="closedate" name="closedate" class="inputtext">
+						<option value="daily">Today</option>
+						<option value="yesterday">Yesterday</option>
+						<option value="weekly">This week</option>
+						<option value="monthly" selected>This month</option>
+						<option value="custom">Custom</option>
 					</select>
 				</li>
 
 				<li class="divider"></li>
 
 				<li>
-					<label for="bank" class="label">ธนาคาร</label>
+					<label for="bank" class="label">Bank</label>
 					<select ref="selector" name="bank" class="inputtext">
 						<option value="">-</option>
-						<?php foreach ($this->bank as $key => $value) { 
+						<?php foreach ($this->bank as $key => $value) {
 							echo '<option value="'.$value['id'].'">'.$value['name'].' ('.$value['code'].')</option>';
 						} ?>
 					</select>
 				</li>
-				
+
 			</ul>
 			<ul class="rfloat" ref="control">
 				<li class="mt"><form class="form-search" action="#">
@@ -71,7 +71,7 @@
 				</form></li>
 			</ul>
 		</div>
-		
+
 	</div>
 
 </div>

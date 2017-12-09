@@ -3,11 +3,11 @@
 $tr = "";
 $tr_total = "";
 
-if( !empty($this->results['lists']) ){ 
+if( !empty($this->results['lists']) ){
     //print_r($this->results); die;
 
     $seq = 0;
-    foreach ($this->results['lists'] as $i => $item) { 
+    foreach ($this->results['lists'] as $i => $item) {
 
         $cls = $i%2 ? 'even' : "odd";
 
@@ -37,7 +37,7 @@ if( !empty($this->results['lists']) ){
 
             '<td class="name">'.
                 '<div class="ellipsis"><a title="'.$item['code'].'" class="fwb" href="'.URL.'payments/'.$item['order_id'].'">'.(!empty($item['code']) ? $item['code'] : "-").'</a></div>'.
-                '<div class="date-float fsm fcg">ชื่อร้าน/ลูกค้า: '.$item['cus_name'].'</div>'.
+                '<div class="date-float fsm fcg">Name of shop / customer: '.$item['cus_name'].'</div>'.
             '</td>'.
 
             '<td class="status">'.$image.'</td>'.

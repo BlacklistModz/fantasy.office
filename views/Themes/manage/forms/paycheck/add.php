@@ -1,6 +1,6 @@
-<?php 
+<?php
 
-$title = 'ข้อมูลจ่ายเช็ค';
+$title = 'Payment Information';
 
 $form = new Form();
 $form = $form->create()
@@ -9,7 +9,7 @@ $form = $form->create()
 	->addClass('form-insert');
 
 $form 	->field("check_date")
-		->label("วันที่จ่ายเช็ค / Payment Date*")
+		->label("Payment Date*")
 		->autocomplete('off')
 		->addClass('inputtext')
 		->attr('data-plugins', 'datepicker')
@@ -23,27 +23,27 @@ $form 	->field("check_sup_id")
 		->value( !empty($this->item['sup_id']) ? $this->item['sup_id'] : $this->currSup );
 
 $form 	->field("check_up_date")
-		->label("วันที่ในเช็ค / Check Date*")
+		->label("Check Date*")
 		->autocomplete('off')
 		->addClass('inputtext')
 		->attr('data-plugins', 'datepicker')
 		->value( !empty($this->item['up_date']) ? $this->item['up_date'] : '' );
 
 $form 	->field("check_bank_id")
-		->label("ธนาคาร / Bank*")
+		->label("Bank*")
 		->autocomplete('off')
 		->addClass('inputtext')
 		->select( $this->bank )
 		->value( !empty($this->item['bank_id']) ? $this->item['bank_id'] : '' );
 
 $form 	->field("check_number")
-		->label("เลขที่เช็ค / Check Number*")
+		->label("Check Number*")
 		->autocomplete('off')
 		->addClass('inputtext')
 		->value( !empty($this->item['number']) ? $this->item['number'] : '' );
 
 $form 	->field("check_price")
-		->label("จำนวนเงิน / Amount")
+		->label("Amount")
 		->autocomplete('off')
 		->addClass('inputtext')
 		->type('number')
@@ -52,14 +52,14 @@ $form 	->field("check_price")
 $image = !empty($this->item['image_arr']) ? '(<a href="'.$this->item['image_arr']['original_url'].'" target="_blank"><i class="icon-eye"></i> ดูรูปภาพเดิม</a>)' : '';
 
 $form 	->field("check_image_id")
-		->label("รูปหลักฐาน / Upload Picture ".$image)
+		->label("Upload Picture ".$image)
 		->autocomplete('off')
 		->addClass('inputtext')
 		->type('file')
 		->attr('accept', 'image/*');
 
 $form 	->field("check_note")
-		->label("หมายเหตุ / note")
+		->label("Note")
 		->autocomplete('off')
 		->addClass('inputtext')
 		->type('textarea')
@@ -68,11 +68,11 @@ $form 	->field("check_note")
 
 # title
 if( !empty($this->item) ){
-    $arr['title']= "แก้ไข {$title}";
+    $arr['title']= "Edit {$title}";
     $arr['hiddenInput'][] = array('name'=>'id','value'=>$this->item['id']);
 }
 else{
-    $arr['title']= "เพิ่ม {$title}";
+    $arr['title']= "Add {$title}";
 }
 
 #form

@@ -2,11 +2,11 @@
 	<div role="toolbar" class="mtm">
 		<div class="uiBoxWhite pam js-control">
 			<ul class="ui-list ui-list-horizontal clearfix" ref="actions">
-				<li class="ui-item"><h2><i class="icon-signal"></i> คอมมิชชั่น / Comission</h2></li>
+				<li class="ui-item"><h2><i class="icon-signal"></i> Comission</h2></li>
 				<li class="js-control mtm">
-					<label for="month" class="label">เดือน / Month</label>
+					<label for="month" class="label">Month</label>
 					<select class="inputtext" name="month" style="display:inline;">
-						<?php 
+						<?php
 						for($i=1; $i<=12; $i++){
 							$sel = '';
 							if( $i == date("n") ){
@@ -16,9 +16,9 @@
 						}
 						?>
 					</select>
-					<label for="year" class="label mlm">ปี / Year</label>
+					<label for="year" class="label mlm">Year</label>
 					<select class="inputtext" name="year" style="display:inline;">
-						<?php 
+						<?php
 						$year = date("Y");
 						for($i=0; $i<5; $i++){
 							$_year = $year-$i;

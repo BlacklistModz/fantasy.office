@@ -1,5 +1,5 @@
 <div class="uiBoxWhite mts pam">
-	<h3><i class="icon-users mrs"></i> รายชื่อเซลล์ (<?=$this->period?>)</h3>
+	<h3><i class="icon-users mrs"></i> Saller name (<?=$this->period?>)</h3>
 	<div ref="table" class="listpage2-table">
 		<table class="table-bordered mtm">
 			<thead>
@@ -11,11 +11,11 @@
 				</tr>
 			</thead>
 			<tbody>
-				<?php 
+				<?php
 				$month = isset($_REQUEST["month"]) ? $_REQUEST["month"] : date("m");
 				$year = isset($_REQUEST["year"]) ? $_REQUEST["year"] : date("Y");
 				$total = 0;
-				foreach ($this->results as $key => $value) { 
+				foreach ($this->results as $key => $value) {
 					$total += $value['comission'];
 					?>
 					<tr>
@@ -32,8 +32,8 @@
 							<?= !empty($value['comission']) ? number_format($value['comission'], 2) : "-" ?>
 						</td>
 					</tr>
-					<?php 
-				} 
+					<?php
+				}
 				?>
 			</tbody>
 			<tfoot>

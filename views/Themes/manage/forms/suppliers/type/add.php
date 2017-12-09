@@ -1,6 +1,6 @@
 <?php
 
-$title = "ประเภท";
+$title = "Type";
 
 $form = new Form();
 $form = $form->create()
@@ -9,7 +9,7 @@ $form = $form->create()
 	->addClass('form-insert');
 
 $form 	->field("type_name")
-		->label("ประเภท")
+		->label("Type")
 		->autocomplete('off')
 		->addClass('inputtext')
 		->value( !empty($this->item['name']) ? $this->item['name'] : '' );
@@ -22,11 +22,11 @@ $arr['body'] = $form->html();
 
 # title
 if( !empty($this->item) ){
-    $arr['title']= "แก้ไข{$title}";
+    $arr['title']= "Edit {$title}";
     $arr['hiddenInput'][] = array('name'=>'id','value'=>$this->item['id']);
 }
 else{
-    $arr['title']= "เพิ่ม{$title}";
+    $arr['title']= "Add {$title}";
 }
 
 # fotter: button

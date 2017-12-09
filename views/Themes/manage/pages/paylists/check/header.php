@@ -1,4 +1,4 @@
-<?php 
+<?php
 $icon = "icon-";
 if( $this->type['id'] == 1 ){
 	$icon .= "money";
@@ -18,7 +18,7 @@ elseif( $this->type['id'] == 3 ){
 			<ul class="lfloat" ref="actions">
 				<li class="mt">
 					<?php $name = str_replace("จ่าย", "", $this->type['name']); ?>
-					<h2><i class="<?=$icon?> mrs"></i><span> รายการรับ<?=$name?></span></h2>
+					<h2><i class="<?=$icon?> mrs"></i><span> Receipts <?=$name?></span></h2>
 				</li>
 
 				<li class="mt"><a class="btn js-refresh" data-plugins="tooltip" data-options="<?=$this->fn->stringify(array('text'=>'refresh'))?>"><i class="icon-refresh"></i></a></li>
@@ -26,7 +26,7 @@ elseif( $this->type['id'] == 3 ){
 				<li class="divider"></li>
 
 			</ul>
-			
+
 			<ul class="lfloat selection hidden_elem" ref="selection">
 				<li><span class="count-value"></span></li>
 				<li><a class="btn-icon"><i class="icon-download"></i></a></li>
@@ -35,32 +35,32 @@ elseif( $this->type['id'] == 3 ){
 
 
 			<ul class="rfloat" ref="control">
-				<li><label class="fwb fcg fsm" for="limit">แสดง</label>
+				<li><label class="fwb fcg fsm" for="limit">Show</label>
 				<select ref="selector" id="limit" name="limit" class="inputtext"><?php
 					echo '<option value="20">20</option>';
 					echo '<option selected value="50">50</option>';
 					echo '<option value="100">100</option>';
 					echo '<option value="200">200</option>';
-				?></select><span id="more-link">คำนวณ...</span></li>
+				?></select><span id="more-link">Loading...</span></li>
 			</ul>
-			
+
 		</div>
 		<div class="clearfix mbl mtm">
 			<ul class="lfloat" ref="control">
 				<li>
-					<label for="closedate" class="label">เลือกวันที่</label><select ref="closedate" name="closedate" class="inputtext">
-						<option value="daily">วันนี้</option>
-						<option value="yesterday">เมื่อวานนี้</option>
-						<option value="weekly" selected>สัปดาห์นี้</option>
-						<option value="monthly">เดือนนี้</option>
-						<option value="custom">กำหนดเอง</option>
+					<label for="closedate" class="label">Choose date</label><select ref="closedate" name="closedate" class="inputtext">
+						<option value="daily">Today</option>
+						<option value="yesterday">Yesterday</option>
+						<option value="weekly" selected>This week</option>
+						<option value="monthly">This month</option>
+						<option value="custom">Custom</option>
 					</select>
 				</li>
 
 				<li class="divider"></li>
 
 				<li>
-					<label class="label" for="bank">เลือกธนาคาร</label>
+					<label class="label" for="bank">Select a bank</label>
 					<select name="bank" class="inputtext" ref="selector">
 						<option value="">-</option>
 						<?php
@@ -70,7 +70,7 @@ elseif( $this->type['id'] == 3 ){
 						?>
 					</select>
 				</li>
-				
+
 			</ul>
 			<ul class="rfloat" ref="control">
 				<li class="mt"><form class="form-search" action="#">
@@ -82,7 +82,7 @@ elseif( $this->type['id'] == 3 ){
 				</form></li>
 			</ul>
 		</div>
-		
+
 	</div>
 
 </div>

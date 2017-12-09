@@ -23,14 +23,14 @@ $form = $form->create()
     ->addClass('form-insert');
 
 $form   ->field("event_title")
-        ->label('หัวข้อ')
+        ->label('Topics')
         ->addClass('inputtext')
         ->placeholder('')
         ->autocomplete('off')
         ->value( !empty($this->item['title']) ? $this->item['title']:'' );
 
 $form 	->field("event_location")
-		->label('สถานที่')
+		->label('Place')
 		->addClass('inputtext')
 		->placeholder('')
 		->autocomplete('off')
@@ -42,7 +42,7 @@ if( !empty($this->item) ){
 }
 
 $form 	->field("event_date")
-		->label('วันที่')
+		->label('Date')
 		->text( '<div style="min-height: 159px;" data-plugins="eventdate" data-options="'.$this->fn->stringify( array(
 
 			'startDate' => $startDate,
@@ -62,7 +62,7 @@ $form 	->field("event_date")
 		->value( !empty($this->item['color_code']) ? $this->item['color_code']:'' ); */
 
 $form 	->field("event_text")
-		->label('รายละเอียด')
+		->label('Description')
 		->addClass('inputtext')
 		->type('textarea')
 		->placeholder('')
@@ -76,7 +76,7 @@ if( $this->has_invite ){
 	$form = new Form();
 	$form = $form->create()->elem('div')->addClass('form-insert');
 	$form 	->field("event_invite")
-			->label('ผู้ที่เกี่ยวข้อง')
+			->label('Relevant person')
 			->text( //'<div class="">'.
 
 	'<div class="ui-invite-content">'.
@@ -91,16 +91,16 @@ if( $this->has_invite ){
 			'<td class="td-input"></td>'.
 			// '<td></td>'.
 		'<tr></table>'.*/
-		
+
 		'<header class="ui-invite-listsbox-header clearfix">'.
 			'<div class="lfloat ui-invite-actions">'.
 				'<select class="inputtext" act="selector" name="objects">'.
-					'<option>ทั้งหมด</option>'.
+					'<option>All</option>'.
 					'<option value="employees">พนักงาน</option>'.
 					'<option value="customers">ลูกค้า</option>'.
 				'</select>'.
 			'</div>'.
-			'<div class="rfloat"><a class="js-selected-all">เลือกทั้งหมด</a></div>'.
+			'<div class="rfloat"><a class="js-selected-all">Select all</a></div>'.
 		'</header>'.
 
 		'</div>'.
@@ -108,30 +108,30 @@ if( $this->has_invite ){
 
 	'<div class="ui-invite-listsbox has-loading">'.
 		'<ul class="ui-list ui-list-user ui-list-checked" ref="listsbox"></ul>'.
-		'<a class="ui-more btn">โหลดเพิ่มเติม</a>'.
+		'<a class="ui-more btn">Load more</a>'.
 		'<div class="ui-alert">'.
 			'<div class="ui-alert-loader">
 				<div class="ui-alert-loader-icon loader-spin-wrap"><div class="loader-spin"></div></div>
-				<div class="ui-alert-loader-text">กำลังโหลด...</div> 
+				<div class="ui-alert-loader-text">Loading...</div>
 			</div>
 
 			<div class="ui-alert-error">
 				<div class="ui-alert-error-icon"><i class="icon-exclamation-triangle"></i></div>
-				<div class="ui-alert-error-text">ไม่สามารถเชื่อมต่อได้</div> 
+				<div class="ui-alert-error-text">Can not connect</div>
 			</div>
 
 			<div class="ui-alert-empty">
-				<div class="ui-alert-empty-text">ไม่มีไฟล์ <a class="js-upload">เพิ่มไฟล์ใหม่</a></div> 
+				<div class="ui-alert-empty-text">No files <a class="js-upload">Add new file</a></div>
 			</div>'.
 		'</div>'.
-	'</div>'.	
+	'</div>'.
 
 	'</div>'.
 	// end: ui-invite-content
 
 	'<div class="ui-invite-selected">'.
 		'<header class="ui-invite-selected-header clearfix">'.
-			'<div class="lfloat">เลือกแล้ว (<span class="js-selectedCountVal">0</span>)</div>'.
+			'<div class="lfloat">Selected (<span class="js-selectedCountVal">0</span>)</div>'.
 		'</header>'.
 		'<div class="ui-invite-selected-listsbox">'.
 			'<ul class="ui-list ui-list-token ui-list-horizontal" ref="tokenbox"></ul>'.
@@ -150,7 +150,7 @@ if( $this->has_invite ){
 	}
 
 	$arr['hiddenInput'][] = array('name'=>'has_invite','value'=>1);
-	
+
 
 # body
 $arr['body'] = '<div class="table-plan-wrap"><div class="table-plan">'.
@@ -172,7 +172,7 @@ else{
 		$obj_type = $_REQUEST['obj_type'];
 		$obj_id = $_REQUEST['obj_id'];
 		if( is_array($obj_type) ){
-			for ($i=0; $i < count($obj_type); $i++) { 
+			for ($i=0; $i < count($obj_type); $i++) {
 				$arr['hiddenInput'][] = array('name'=>'invite[type][]','value'=>$obj_type[$i]);
 				$arr['hiddenInput'][] = array('name'=>'invite[id][]','value'=>$obj_id[$i]);
 			}
@@ -190,12 +190,12 @@ $arr['form'] = '<form class="js-submit-form" method="post" action="'.URL. 'event
 
 $arr['button'] = '';
 if( !empty($this->item) ){
-    $arr['title']= "แก้ไขนัดหมาย";
+    $arr['title']= "Edit appointment";
     $arr['hiddenInput'][] = array('name'=>'id','value'=>$this->item['id']);
 
 }
 else{
-    $arr['title']= "เพิ่มนัดหมาย";
+    $arr['title']= "Add an appointment";
 }
 
 $has_callback = '';
@@ -204,7 +204,7 @@ if( isset( $_REQUEST['callback'] ) ){
     $has_callback = ' role="submit"';
 }
 
-$arr['button'] .= '<button type="submit"'.$has_callback.' class="btn btn-primary btn-submit"><span class="btn-text">บันทึก</span></button>';
-$arr['bottom_msg'] = '<a class="btn" role="dialog-close"><span class="btn-text">ยกเลิก</span></a>';
+$arr['button'] .= '<button type="submit"'.$has_callback.' class="btn btn-primary btn-submit"><span class="btn-text">Save</span></button>';
+$arr['bottom_msg'] = '<a class="btn" role="dialog-close"><span class="btn-text">Cancel</span></a>';
 
 echo json_encode($arr);

@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 $title = 'Supplier';
 if( !empty($this->item) ){
@@ -31,13 +31,13 @@ $form 	->field("sup_code")
 		->value( !empty($this->item['type_id']) ? $this->item['type_id'] : 1 ); */
 
 $form 	->field("sup_name")
-		->label("ชื่อบริษัท / Supplier Name*")
+		->label("Supplier Name*")
 		->autocomplete('off')
 		->addClass('inputtext')
 		->value( !empty($this->item['name']) ? $this->item['name'] : '' );
 
 $form   ->field("name")
-        ->label('ชื่อผู้ติดต่อ / Contact Name*')
+        ->label('Contact Name*')
         ->text( $this->fn->q('form')->fullname( !empty($this->item)?$this->item:array(), array('field_first_name'=>'sup_', 'prefix_name'=>$this->prefixName) ) );
 
 /* $form   ->field("sup_address")
@@ -46,57 +46,57 @@ $form   ->field("name")
         ->text( $this->fn->q('form')->address( !empty($this->item['address'])? $this->item['address']:array(), array('city'=>$this->city ) ) ); */
 
 $form 	->field("sup_address")
-		->label("ที่อยู่*")
+		->label("Address*")
 		->autocomplete('off')
 		->addClass('inputtext')
 		->value( !empty($this->item['address']) ? $this->item['address'] : '' );
 
 $form 	->field("sup_street")
-		->label("ถนน")
+		->label("Road")
 		->autocomplete('off')
 		->addClass('inputtext')
 		->value( !empty($this->item['street']) ? $this->item['street'] : '' );
 
 $form 	->field("sup_supdistrict")
-		->label("แขวง/ตำบล*")
+		->label("District*")
 		->autocomplete('off')
 		->addClass('inputtext')
 		->value( !empty($this->item['supdistrict']) ? $this->item['supdistrict'] : '' );
 
 $form 	->field("sup_district")
-		->label("เขต/อำเภอ*")
+		->label("Area*")
 		->autocomplete('off')
 		->addClass('inputtext')
 		->value( !empty($this->item['district']) ? $this->item['district'] : '' );
 
 $form 	->field("sup_province_id")
-		->label("จังหวัด")
+		->label("Province")
 		->autocomplete('off')
 		->addClass('inputtext')
 		->select( $this->city )
 		->value( !empty($this->item['province_id']) ? $this->item['province_id'] : '' );
 
 $form 	->field("sup_zip")
-		->label("รหัสไปรษณีย์*")
+		->label("Zip code*")
 		->autocomplete('off')
 		->addClass('inputtext')
 		->value( !empty($this->item['zip']) ? $this->item['zip'] : '' );
 
 $form 	->field("sup_country_id")
-		->label("ประเทศ*")
+		->label("Country*")
 		->autocomplete('off')
 		->addClass('inputtext')
 		->select( $this->country )
 		->value( !empty($this->item['country_id']) ? $this->item['country_id'] : '' );
 
 $form 	->field("sup_mobile_phone")
-		->label("เบอร์โทรศัพท์มือถือ / Mobile Phone")
+		->label("Mobile Phone")
 		->autocomplete('off')
 		->addClass('inputtext')
 		->value( !empty($this->item['mobile_phone']) ? $this->item['mobile_phone'] : '' );
 
 $form 	->field("sup_phone")
-		->label("เบอร์โทรศัพท์ / Phone")
+		->label("Phone")
 		->autocomplete('off')
 		->addClass('inputtext')
 		->value( !empty($this->item['phone']) ? $this->item['phone'] : '' );

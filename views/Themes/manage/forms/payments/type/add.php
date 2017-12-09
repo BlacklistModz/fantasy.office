@@ -1,6 +1,6 @@
 <?php
 
-$title = "ประเภทการชำระเงิน";
+$title = "Payment Type";
 
 $form = new Form();
 $form = $form->create()
@@ -15,12 +15,12 @@ $form 	->field("type_name")
         ->placeholder('')
         ->value( !empty($this->item['name'])? $this->item['name']:'' );
 
-$type = '<div><label class="radio"><input '.(!empty($this->item['is_cash']) ? 'checked="1"' : '').' type="radio" name="type_is" value="cash"> เงินสด</label></div>';
-$type .= '<div><label class="radio"><input '.(!empty($this->item['is_bank']) ? 'checked="1"' : '').' type="radio" name="type_is" value="bank"> โอนเงิน</label></div>';
-$type .= '<div><label class="radio"><input '.(!empty($this->item['is_check']) ? 'checked="1"' : '').' type="radio" name="type_is" value="check"> เช็คธนาคาร</label></div>';
+$type = '<div><label class="radio"><input '.(!empty($this->item['is_cash']) ? 'checked="1"' : '').' type="radio" name="type_is" value="cash"> Cash</label></div>';
+$type .= '<div><label class="radio"><input '.(!empty($this->item['is_bank']) ? 'checked="1"' : '').' type="radio" name="type_is" value="bank"> Transfer money</label></div>';
+$type .= '<div><label class="radio"><input '.(!empty($this->item['is_check']) ? 'checked="1"' : '').' type="radio" name="type_is" value="check"> Check</label></div>';
 
 $form 	->field("type_is")
-		->label("ประเภท")
+		->label("Type")
 		->text( $type );
 
 # set form
@@ -31,11 +31,11 @@ $arr['body'] = $form->html();
 
 # title
 if( !empty($this->item) ){
-    $arr['title']= "แก้ไข{$title}";
+    $arr['title']= "Edit {$title}";
     $arr['hiddenInput'][] = array('name'=>'id','value'=>$this->item['id']);
 }
 else{
-    $arr['title']= "เพิ่ม{$title}";
+    $arr['title']= "Add {$title}";
 }
 
 # fotter: button

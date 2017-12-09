@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 $arr['title'] = $this->item['code'];
 
@@ -46,17 +46,17 @@ $body = '<table width="100%" class="table-permit" data-plugins="listsPayments">'
 			'<thead>'.
 				'<tr>'.
 					'<th> No. </th>'.
-					'<th>วันที่</td>'.
-					'<th>วิธีชำระ</td>'.
-					'<th>หลักฐาน</td>'.
-					'<th>จำนวนเงิน</td>'.
+					'<th>Date</td>'.
+					'<th>Payment method</td>'.
+					'<th>Evidence</td>'.
+					'<th>Amount</td>'.
 					'<th></td>'.
 				'<tr>'.
 			'</thead>'.
 			'<tbody>'.$tr.'</tbody>'.
 			'<tfoot>
 				<tr>
-					<th colspan="4" class="tar"><span class="fwb">รวม</span></td>
+					<th colspan="4" class="tar"><span class="fwb">Total</span></td>
 					<th><span class="total">'.number_format($balance, 2).'</span></th>
 					<th></th>
 				</tr>

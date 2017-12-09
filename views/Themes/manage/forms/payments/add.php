@@ -28,7 +28,7 @@ $min = '<select name="time[min]" class="inputtext mrs" style="display:inline;">'
 
 $image = !empty($this->item['image_arr']) ? '(<a href="'.$this->item['image_arr']['original_url'].'" target="_blank"><i class="icon-eye"></i> ดูรูปภาพเดิม</a>)' : '';
 
-$title = "การจ่ายเงิน";
+$title = "Payment";
 
 $form = new Form();
 $form = $form->create()
@@ -37,22 +37,22 @@ $form = $form->create()
 	->addClass('form-insert');
 
 $form 	->field("pay_date")
-		->label("วันที่รับเงิน")
+		->label("Date of payment")
 		->autocomplete('off')
 		->addClass('inputtext')
 		->attr('data-plugins', 'datepicker')
 		->value( !empty($this->item['date']) ? $this->item['date'] : '' );
 
 $form 	->field("pay_hour")
-		->label("นาฬิกา")
+		->label("Time")
 		->text( $hour );
 
 $form 	->field("pay_min")
-		->label("นาที")
+		->label("Minute")
 		->text( $min );
 
 $form 	->field("pay_type_id")
-		->label("ประเภทการจ่ายเงิน / Payment Type*")
+		->label("Payment Type*")
 		->autocomplete('off')
 		->addClass('inputtext')
 		->attr('data-name', 'type')
@@ -60,40 +60,40 @@ $form 	->field("pay_type_id")
 		->value( !empty($this->item['type_id']) ? $this->item['type_id'] : '' );
 
 $form 	->field("pay_check_date")
-		->label("วันที่เช็ค")
+		->label("Check Date")
 		->autocomplete('off')
 		->addClass('inputtext')
 		->attr('data-plugins', 'datepicker')
 		->value( !empty($this->item['check_date']) ? $this->item['check_date'] : '' );
 
 $form 	->field("pay_check_bank")
-		->label("เช็คธนาคาร / Bank Check")
+		->label("Bank Check")
 		->autocomplete('off')
 		->addClass('inputtext')
 		->select( $this->bank )
 		->value( !empty($this->item['check_bank']) ? $this->item['check_bank'] : '' );
 
 $form 	->field("pay_check_number")
-		->label("เลขที่เช็ค / Check Number")
+		->label("Check Number")
 		->autocomplete('off')
 		->addClass('inputtext')
 		->value( !empty($this->item['check_number']) ? $this->item['check_number']  : '' );
 
 $form 	->field("pay_account_id")
-		->label("เลขบัญชี / Bank Account")
+		->label("Bank Account")
 		->autocomplete('off')
 		->addClass('inputtext')
 		->select( $this->account, 'id', 'name_str' )
 		->value( !empty($this->item['account_id']) ? $this->item['account_id'] : '' );
 
 $form 	->field("pay_amount")
-		->label("จำนวนเงิน* / Cash")
+		->label("Cash*")
 		->autocomplete('off')
 		->addClass('inputtext')
 		->value( !empty($this->item['amount']) ? $this->item['amount'] : '' );
 
 $form 	->field("pay_image_id")
-		->label("รูปหลักฐาน / Upload Picture ".$image)
+		->label("Upload Picture ".$image)
 		->autocomplete('off')
 		->addClass('inputtext')
 		->type('file')
@@ -102,7 +102,7 @@ $form 	->field("pay_image_id")
 
 if( empty($this->item) || empty($this->order['total_get_comission']) ){
 $form 	->field("pay_comission_amount")
-		->label("ค่าคอมมิสชั่น ( ไม่เกิน : ".number_format($this->order['total_comission'], 2)." บาท )")
+		->label("Commission ( not more than : ".number_format($this->order['total_comission'], 2)." Bath )")
 		->autocomplete('off')
 		->addClass('inputtext')
 		->type('number')
@@ -110,7 +110,7 @@ $form 	->field("pay_comission_amount")
 }
 
 $form 	->field("pay_note")
-		->label("หมายเหตุ / Note")
+		->label("Note")
 		->autocomplete('off')
 		->addClass('inputtext')
 		->type("textarea")
@@ -135,11 +135,11 @@ $arr['body'] = $form->html();
 
 # title
 if( !empty($this->item) ){
-    $arr['title']= "แก้ไข{$title}";
+    $arr['title']= "Edit {$title}";
     $arr['hiddenInput'][] = array('name'=>'id','value'=>$this->item['id']);
 }
 else{
-    $arr['title']= "เพิ่ม{$title}";
+    $arr['title']= "Add {$title}";
 }
 
 # fotter: button
