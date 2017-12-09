@@ -111,10 +111,13 @@ class Products_Model extends Model{
     }
 
     public function insert(&$data){
+        $data["created_at"] = date("c");
+        $data["updated_at"] = date("c");
     	$this->db->insert($this->_objName, $data);
     	$data['id'] = $this->db->lastInsertId();
     }
     public function update($id, $data){
+        $data["updated_at"] = date("c");
     	$this->db->update($this->_objName, $data, "id={$id}");
     }
     public function delete($id){
@@ -122,6 +125,16 @@ class Products_Model extends Model{
     }
 
     #Price
+    public function setPrice($data){
+        if( !empty($data['id']) ){
+            $id = $data['id'];
+            unset($data['id']);
+            $this->db->update('products_pricing', $data, "id={$id}");
+        }
+        else{
+            $this->db->insert('products_pricing', $data);
+        }
+    }
     public function getPrice($id){
         $sth = $this->db->prepare("SELECT frontend, seller, wholesales, employee FROM products_pricing WHERE product_id = :id LIMIT 1");
         $sth->execute( array(

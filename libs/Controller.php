@@ -162,11 +162,6 @@ class Controller {
             $dep = "Administrator";
             $type = 'admin';
         }
-        elseif( Cookie::get( COOKIE_KEY_SALE ) ){
-            $me = $this->model->query('sales')->get( Cookie::get( COOKIE_KEY_SALE ) );
-            $dep = "Sales";
-            $type = 'sale';
-        } 
 
         // if( empty($me) ){
         //     $me = $this->model->query('admins')->get( 1 );
@@ -188,14 +183,8 @@ class Controller {
             $this->model->me = $this->me;
             $this->view->me = $this->me;
             $this->view->setData('me', $this->me);
-
-            if( $this->me['type'] == 'admin' ){
-                Cookie::set( COOKIE_KEY_EMP, $this->me['id'], time() + (3600*24));
-            }
-            elseif( $this->me['type'] == 'sale' ){
-                Cookie::set( COOKIE_KEY_SALE, $this->me['id'], time() + (3600*24));
-            }
-
+            
+            Cookie::set( COOKIE_KEY_EMP, $this->me['id'], time() + (3600*24));
             // 
             $this->setPagePermit();
             $this->_modify();
@@ -283,14 +272,8 @@ class Controller {
 
                     if( !empty($id) ){
 
-                        if( $type == 'admin' ){
-                            Cookie::set( COOKIE_KEY_EMP, $id, time() + (3600*24));
-                            Session::set('isPushedLeft', 1);
-                        }
-                        else{
-                            Cookie::set( COOKIE_KEY_SALE, $id, time() + (3600*24));
-                            // Session::set('isPushedLeft', 1);
-                        }
+                        Cookie::set( COOKIE_KEY_EMP, $id, time() + (3600*24));
+                        Session::set('isPushedLeft', 1);
 
                         if( isset($attempt) ){
                            Session::clear('login_attempt');
@@ -299,10 +282,6 @@ class Controller {
                         $url = !empty($_REQUEST['next'])
                             ? $_REQUEST['next']
                             : $_SERVER['REQUEST_URI'];
-
-                        if( $type == 'sale' ){
-                            $url = URL.'mobile';
-                        }
 
                         header('Location: '.$url);
                     }
@@ -392,13 +371,13 @@ class Controller {
             include_once WWW_APPS.'mPDF/mpdf.php';
             $this->system['theme'] = 'pdf';
         }
-        elseif( $this->pathName == 'mobile' || $this->me['type'] == 'sale' ){
-            $options['has_topbar'] = true;
-            $options['has_menu'] = true;
-            $options['has_footer'] = true;
+        // elseif( $this->pathName == 'mobile' || $this->me['type'] == 'sale' ){
+        //     $options['has_topbar'] = true;
+        //     $options['has_menu'] = true;
+        //     $options['has_footer'] = true;
 
-            $this->system['theme'] = 'mobile';
-        }
+        //     $this->system['theme'] = 'mobile';
+        // }
 
         if( empty($this->system['theme']) ){
             $options['has_menu'] = true;
