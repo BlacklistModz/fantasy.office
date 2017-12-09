@@ -12,7 +12,7 @@ if ( !empty($this->item['permit']['del']) ) {
 }
 else{
 
-	$arr['body'] = "You can not delete <span class=\"fwb\">\"{$this->item['name_th']} ({$this->item['name_en']})\"</span> ?";
+	$arr['body'] = "You can not delete <span class=\"fwb\">\"{$this->item['name_th']} ({$this->item['name_en']})\"</span>";
 	$arr['button'] = '<a href="#" class="btn btn-cancel" role="dialog-close"><span class="btn-text">Close</span></a>';
 }
 

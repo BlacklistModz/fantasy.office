@@ -8,7 +8,7 @@ if ( typeof Object.create !== 'function' ) {
 }
 
 (function( $, window, document, undefined ) {
-	
+
 	/**/
 	/* text slide*/
 	/**/
@@ -42,7 +42,7 @@ if ( typeof Object.create !== 'function' ) {
 			});
 
 			slidesleft();
-			
+
 			function timmer () {
 
 				timer = setTimeout(function(){
@@ -54,7 +54,7 @@ if ( typeof Object.create !== 'function' ) {
 			function slidesleft () {
 
 				if( currentWidth <= fullWidth ) return false;
-				
+
 				currentLeft++;
 				ul.css({
 					width: currentWidth,
@@ -75,7 +75,7 @@ if ( typeof Object.create !== 'function' ) {
 
 				timmer();
 			}
-			
+
 			$elem.mouseenter(function() {
 				clearTimeout( timer );
 			}).mouseleave(function(){
@@ -120,7 +120,7 @@ if ( typeof Object.create !== 'function' ) {
 		    function delayedResize () {
 		        window.setTimeout(resize, 0);
 		    }
-			
+
 			observe(text, 'change',  resize);
 		    observe(text, 'cut',     delayedResize);
 		    observe(text, 'paste',   delayedResize);
@@ -135,7 +135,7 @@ if ( typeof Object.create !== 'function' ) {
 			var $this = Object.create( Autosize );
 			$this.init( options, this );
 			$.data( this, 'autosize', $this );
-			
+
 		});
 	};
 	$.fn.autosize.options = {};*/
@@ -175,14 +175,14 @@ if ( typeof Object.create !== 'function' ) {
 				for (var i = rating; i > 0; i--) {
 					self.$box.find('[rating='+i+']').addClass('has-hover');
 				};
-				
+
 			}).mouseleave(function () {
 				self.$box.find('.has-hover').removeClass('has-hover');
 
 			}).click(function () {
 				var $item = $(this);
 				self.rating = $item.attr( 'rating' );
-				self.active();	
+				self.active();
 			});
 
 			self.active();
@@ -207,7 +207,7 @@ if ( typeof Object.create !== 'function' ) {
 	};
 	$.fn.starsRatable.options = {
 		rating: 0,
-		level: { 
+		level: {
 			1: { rating: 1, text: 'แย่' },
 			2: { rating: 2, text: 'พอใช้' },
 			3: { rating: 3, text: 'ดี' },
@@ -230,7 +230,7 @@ if ( typeof Object.create !== 'function' ) {
 			var text = self.$elem.val();
 			var val = '';
 			/*for (var i = 0; i < text.length; i++) {
-				
+
 				if( $.inArray(i, [3,6])>=0 ){
 					val += "-";
 				}
@@ -252,7 +252,7 @@ if ( typeof Object.create !== 'function' ) {
 					}
 				}
 				else if( e.keyCode==189 && $.inArray(value.length, [3,7] )>=0 ) {
-					
+
 				}
 				else{
 					e.preventDefault();
@@ -275,14 +275,14 @@ if ( typeof Object.create !== 'function' ) {
 	/**/
 	var Selectbox = {
 		init: function( options, elem ) {
-			
+
 			var self = this;
-			
+
 			self.elem = elem;
 			self.$elem = $( elem );
-			
+
 			self.options = $.extend( {}, $.fn.selectbox.options, options );
-			
+
 			// setting
 			self.setSlecte();
 			self.setElem();
@@ -291,10 +291,10 @@ if ( typeof Object.create !== 'function' ) {
 
 			if( self.options.setitem ){
 			}
-			
+
 			self.active = false;
 			self.setMenu();
-			
+
 			if ( typeof self.options.onComplete === 'function' ) {
 				self.options.onComplete.apply( self, arguments );
 			}
@@ -302,12 +302,12 @@ if ( typeof Object.create !== 'function' ) {
 			// Event
 			self.initEvent();
 		},
-		
+
 		initEvent: function(){
 			var self = this;
-			
+
 			self.$btn.not('.disabled').click(function(e){
-				
+
 				$('body').find('.uiPopover').find('a.btn-toggle.active').removeClass('active');
 				if( self.menu.hasClass('open') ){
 					self.close();
@@ -317,41 +317,41 @@ if ( typeof Object.create !== 'function' ) {
 					self.display();
 					self.open();
 				}
-				
+
 				e.stopPropagation();
 			});
-			
+
 			$('a', self.menu).click(function(){
-				self.change( $(this).parent().index() );				
+				self.change( $(this).parent().index() );
 			});
 
 			$('html').on('click', function() {
-		
+
 				if( self.active && self.menu.hasClass('open') ){
 					self.$btn.removeClass('active');
 					self.close();
 				}
-				
+
 			});
 		},
 
 		setElem: function(){
 			var self = this;
-			
+
 			self.selectedInput = $('<input>', {
 				class: 'hiddenInput',
 				type: 'hidden',
 				name: self.$elem.attr('name')
 			});
 			self.selectedText = $('<span>', {class: 'btn-text'});
-				
+
 			self.original = self.$elem;
 
 			var placeholder = $('<div/>', {class: 'uiPopover'});
-			
+
 			self.$elem.replaceWith(placeholder);
             self.$elem = placeholder;
-			
+
 			self.$btn = $('<a>', {class: 'btn btn-box btn-toggle'}).append( self.selectedText );
 
 			if( !self.options.display ){
@@ -366,7 +366,7 @@ if ( typeof Object.create !== 'function' ) {
 		},
 		setSlecte: function(){
 			var self = this;
-			
+
 			self.select = [];
             self.$elem.find('optgroup,option').each(function (i, obj) {
 
@@ -395,14 +395,14 @@ if ( typeof Object.create !== 'function' ) {
 						icon: ( $item.attr('icon') ) ? $item.attr('icon') : '',
 						// loadUrl: ( $item.attr('ajaxify') ) ? $item.attr('ajaxify') : '',
 					};
-					
+
 					if($item.is(':selected')){
 						self.selected = data;
 					}
-					
+
 					self.select.push(data);
 				}
-				
+
             });
 		},
 
@@ -419,7 +419,7 @@ if ( typeof Object.create !== 'function' ) {
 		},
 		setSlected: function( index ){
 			var self = this;
-			self.selected = self.select[index];			
+			self.selected = self.select[index];
 		},
 		getSlected: function(){
 			var self = this;
@@ -430,49 +430,49 @@ if ( typeof Object.create !== 'function' ) {
 			self.selectedText.text(self.selected.text);
 			self.selectedInput.val(self.selected.value);
 		},
-		
+
 		open: function(){
 			var self = this;
 			self.active = true;
-			
+
 			self.getOffset();
 			self.menu.addClass('open');
 		},
-		
+
 		close: function(){
 			var self = this;
-			
-			self.active = false;		
+
+			self.active = false;
 			self.menu.removeClass('open'); // .remove();
 		},
-		
+
 		display: function(){
 			var self = this;
 
 			$('body').append( self.menu );
-			
+
 			if( $('body').find('.open.uiContextualPositioner').length>0 ){
 				$('body').find('.open.uiContextualPositioner').removeClass('open');
 			}
-			
+
 			if( $('body').find('.openToggler.uiToggle').length>0 ){
 				$('body').find('.openToggler.uiToggle').removeClass('openToggler');
 			}
 		},
-		
+
 		setMenu: function(){
 			var self = this;
-			
+
 			var ul = $('<ul>', {class: 'uiMenu'});
 
-			/*var $input = 
+			/*var $input =
 			ul.append( $('<li class="add"><table><tbody><tr><td><input class="inputtext" type="text"></td><td><button type="text" class="btn">เพิ่ม</button></td></tr></tbody></table></li>') );*/
 
 
 			$.each(self.select, function (i, data) {
-				ul.append( self._item[data.type || 'default']( data ) );			
+				ul.append( self._item[data.type || 'default']( data ) );
 			});
-			
+
 			var $boxInput = '';
 
 			if( self.options.add_item_url ){
@@ -500,7 +500,7 @@ if ( typeof Object.create !== 'function' ) {
 				.append(
 					$('<div>', {class: 'toggleFlyout selectBoxFlyout'}).append( $boxInput, ul )
 				);
-				
+
 			if( self.options.max_width ){
 				self.menu.find('.toggleFlyout').css('width', self.options.max_width);
 			}
@@ -523,15 +523,15 @@ if ( typeof Object.create !== 'function' ) {
 				processData: false,
         		contentType: false,
 			}).done(function( response ) {
-			    
+
 			    self.selected = response.select;
-			    var select = []; 
+			    var select = [];
 			    select.push( self.selected );
 
 			    $.each( self.select, function (i, obj) {
 			    	select.push( obj );
 			    } );
-			    
+
 			    self.select = select;
 
 			    self.close();
@@ -543,7 +543,7 @@ if ( typeof Object.create !== 'function' ) {
 
 			    // console.log( self.select );
 			}).fail(function() {
-			   
+
 			}).always(function() {
 			    $input.removeClass('disabled');
 			});
@@ -597,7 +597,7 @@ if ( typeof Object.create !== 'function' ) {
 							)
 
 							.append( $('<div/>').addClass('content')
-								.append( 
+								.append(
 									$('<div/>', {class: 'spacer'}),
 									$('<div/>', {class: 'massages clearfix', text: data.text})
 								)
@@ -606,16 +606,16 @@ if ( typeof Object.create !== 'function' ) {
 					);
 			}
 		},
-		
+
 		getOffset: function(){
 			var self = this;
-			
+
 			if( self.menu.hasClass('uiContextualAbove') ){
 				self.menu.removeClass('uiContextualAbove');
 			}
-			
+
 			var cssMenu = { height: "", overflowY: '', overflowX: ''};
-			
+
 			self.menu.find('.uiMenu').css(cssMenu);
 
 			var outer = $(document).height()<$(window).height()?$(window):$(document);
@@ -624,9 +624,9 @@ if ( typeof Object.create !== 'function' ) {
 				position = self.$elem.offset(),
 				outerWidth = $(window).width(),
 				outerHeight = outer.height();
-			
+
 			position.top += self.$elem.outerHeight();
-			
+
 			var innerWidth = position.left+self.menu.outerWidth();
 			if( $('html').hasClass('sidebarMode') ){
 				innerWidth+= 301;
@@ -635,20 +635,20 @@ if ( typeof Object.create !== 'function' ) {
 			if( innerWidth>outerWidth ){
 				position.left = position.left-self.menu.outerWidth()+self.$elem.outerWidth();
 			}
-			
+
 			var innerHeight = position.top+self.menu.outerHeight();
 			if( innerHeight>outerHeight ){
-				
+
 
 				position.top = position.top-self.menu.outerHeight()-self.$elem.outerHeight();
 
 				if( position.top < 0 ){
-					
+
 					var h = outerHeight-offset.top+self.$elem.outerHeight();
-					// 
+					//
 					if( h>offset.top ){
 						position.top = offset.top;
-						position.top += self.$elem.outerHeight(); 
+						position.top += self.$elem.outerHeight();
 						cssMenu.height = outerHeight-position.top-15;
 					}
 					else{
@@ -660,14 +660,14 @@ if ( typeof Object.create !== 'function' ) {
 
 						self.menu.addClass('uiContextualAbove');
 					}
-					
+
 					cssMenu.overflowY = 'auto';
 					cssMenu.overflowX = 'hidden';
 					self.menu.find('.uiMenu').css(cssMenu);
-					
+
 				}else{
 					position.top+=2;
-					self.menu.addClass('uiContextualAbove'); 
+					self.menu.addClass('uiContextualAbove');
 				}
 			}
 
@@ -679,7 +679,7 @@ if ( typeof Object.create !== 'function' ) {
 			var toggle = Object.create( Selectbox );
 			toggle.init( options, this );
 			$.data( this, 'selectbox', toggle );
-			
+
 		});};
 	$.fn.selectbox.options = {
 		display: true,
@@ -691,7 +691,7 @@ if ( typeof Object.create !== 'function' ) {
     var Selectbox2 = {
 		init: function( options, elem ) {
 			var self = this;
-			
+
 			self.elem = elem;
 			self.$elem = $( elem );
 			self.settings = $.extend( {}, $.fn.selectbox2.settings, options );
@@ -706,18 +706,18 @@ if ( typeof Object.create !== 'function' ) {
 			self.is_keycodes = [37,38,39,40,13];
 
 			// self.url = self.options
-			
+
 			if ( typeof self.settings.onComplete === 'function' ) {
 				self.settings.onComplete.apply( self, arguments );
-			}	
+			}
 
-			// set Elem 
+			// set Elem
 			self.$input = $('<input>', {class: 'inputtext select-box-input',placeholder:"", autocomplete:'off'});
 			self.$preview = $('<ul>');
 
-			self.$elem.addClass('select-box').append( 
-				$('<div>', {class: 'select-box-preview'}).html( self.$preview ), 
-				self.$input, 
+			self.$elem.addClass('select-box').append(
+				$('<div>', {class: 'select-box-preview'}).html( self.$preview ),
+				self.$input,
 				$('<div>', {class: 'select-box-loader loader-spin-wrap'}).html( $('<div>', {class: 'loader-spin'}) ) );
 
 			self.setMenu();
@@ -729,13 +729,13 @@ if ( typeof Object.create !== 'function' ) {
 				if( obj.checked ){
 					self.connect( obj );
 				}
-				
+
 			} );
 			self.active();
 
 			self.events();
 		},
-		
+
 		setMenu: function () {
 			var self = this;
 
@@ -807,7 +807,7 @@ if ( typeof Object.create !== 'function' ) {
 			}
 
 			if( data.activity=='new' ){
-				li.addClass('new').find('.text').before( 
+				li.addClass('new').find('.text').before(
 					$('<div>', {class: 'box-icon'}).append( $('<i>', {class: 'icon-plus'}) )
 				);
 			}
@@ -820,7 +820,7 @@ if ( typeof Object.create !== 'function' ) {
 			var self = this;
 
 			self.$input.keyup(function (e) {
-				
+
 				if( self.is_keycodes.indexOf( e.which )==-1 ){
 					self.search();
 				}
@@ -850,7 +850,7 @@ if ( typeof Object.create !== 'function' ) {
 					self.hide();
 					self.focus = false;
 				}*/
-				
+
 			}).click(function (e) {
 				self.search();
 				e.stopPropagation();
@@ -923,10 +923,10 @@ if ( typeof Object.create !== 'function' ) {
 					self.open = false;
 				}
 
-				// !self.focus && 
-				
+				// !self.focus &&
+
 			});
-			
+
 		},
 		search: function () {
 			var self = this;
@@ -941,8 +941,8 @@ if ( typeof Object.create !== 'function' ) {
 			else{
 
 				$.each(self.settings.options, function (i, obj) {
-					
-					var text = obj.text || obj.name || ''; 
+
+					var text = obj.text || obj.name || '';
 					text = text.toString();
 					if( text.search( value ) >= 0 ){
 						options.push( obj );
@@ -956,7 +956,7 @@ if ( typeof Object.create !== 'function' ) {
 
 				});
 			}
- 
+
 			if( options.length==0 && self.settings.insert_url ){ //
 				self.$menu.empty();
 				options.push({
@@ -967,17 +967,17 @@ if ( typeof Object.create !== 'function' ) {
 			else{
 				self.$menu.empty();
 			}
-			
+
 			var c = 0;
 			$.each( options, function (i, obj) {
 
 				if( !obj.checked ){
 					self.$menu.append( self.setItemMenu( obj ) );
 					c++;
-				} 
+				}
 			});
 
-			
+
 			if( c==0 ){
 				self.hide();
 			}
@@ -986,7 +986,7 @@ if ( typeof Object.create !== 'function' ) {
 				self.active();
 				self.show();
 
-			}		
+			}
 		},
 		active: function () {
 			var self = this;
@@ -1000,7 +1000,7 @@ if ( typeof Object.create !== 'function' ) {
 
 			var length = self.$menu.find('li').length;
 			var index = self.$menu.find('li.selected').index();
-			
+
 			if( active=='up' ) index--;
 			else index++;
 
@@ -1018,7 +1018,7 @@ if ( typeof Object.create !== 'function' ) {
 				var li = self.$menu.find('li').eq( self.is_active );
 				var data = li.data();
 			}
-			
+
 			if( data.activity=='new' ){
 				self.insertItem( data.text );
 				return false;
@@ -1026,13 +1026,13 @@ if ( typeof Object.create !== 'function' ) {
 
 			self.updateOp( data, true );
 
-			if( !self.settings.multiple ){ 
+			if( !self.settings.multiple ){
 
 				$.each( self.$preview.find('li'), function(i, obj) {
-					
+
 					self.updateOp( $(obj).data(), false );
 				} );
-				
+
 				self.$preview.empty();
 			}
 			self.$preview.append( self.setItemPreview( data ) );
@@ -1043,7 +1043,7 @@ if ( typeof Object.create !== 'function' ) {
 			self.$elem.addClass('has-preview'); //  not-multiple
 
 			if( !self.settings.multiple ){
-				self.$elem.addClass('not-multiple'); 
+				self.$elem.addClass('not-multiple');
 			}
 			else{
 				/*self.$input.focus();
@@ -1059,7 +1059,7 @@ if ( typeof Object.create !== 'function' ) {
 				var value = data.value || data.id;
 
 				var _text = obj.text || obj.name;
-				var _value = obj.value || obj.id; 
+				var _value = obj.value || obj.id;
 
 				if( text==_text && value==_value ){
 					self.settings.options[i].checked = checked;
@@ -1069,7 +1069,7 @@ if ( typeof Object.create !== 'function' ) {
 		},
 		setItemPreview: function(data) {
 			var self = this;
-			var li = $('<li>').append( 
+			var li = $('<li>').append(
 				  $('<span>', {class: 'text', text: data.text||data.name })
 				, $('<input>', {type: 'hidden', class: 'hiddenInput', value: data.value||data.id, name: self.settings.name, autocomplete:"off"})
 				, $('<button>', {type: 'button', class: 'remove-preview js-remove-preview', title: 'Remove'}).html( $('<i>', {class: 'icon-remove'}) )
@@ -1083,11 +1083,11 @@ if ( typeof Object.create !== 'function' ) {
 			var self = this;
 
 			Dialog.load( self.settings.insert_url,{
-				callback: 'selectbox', 
+				callback: 'selectbox',
 				text: self.$input.val()
 			}, {
 				onSubmit: function(d) {
-					
+
 					var $form = d.$pop.find('form');
 					Event.inlineSubmit( $form ).done(function( result ) {
 
@@ -1102,7 +1102,7 @@ if ( typeof Object.create !== 'function' ) {
 
 						self.settings.options.push(data);
 						self.connect( data );
-						
+
 					});
 				},
 				onClose: function() {
@@ -1116,11 +1116,11 @@ if ( typeof Object.create !== 'function' ) {
 					self.hide();
 
 					$( window ).keydown(function (e) {
-						
+
 						if( e.keyCode==27 ){
 							Dialog.close();
 						}
-						
+
 					});
 				},
 			} );
@@ -1131,7 +1131,7 @@ if ( typeof Object.create !== 'function' ) {
 			var toggle = Object.create( Selectbox2 );
 			toggle.init( options, this );
 			$.data( this, 'selectbox', toggle );
-			
+
 		});};
 	$.fn.selectbox2.settings = {
 		name: '',
@@ -1140,7 +1140,7 @@ if ( typeof Object.create !== 'function' ) {
         insert_url: false,
         multiple: false
     };
-	
+
 	/**/
 	/* Datepicker */
 	/**/
@@ -1170,7 +1170,7 @@ if ( typeof Object.create !== 'function' ) {
 				type: 'hidden',
 				name: self.$elem.attr('name')
 			});
-			
+
 			// self.$input.addClass( self.$elem.attr('class') );
 			self.$display = $('<span>', {class: 'btn-text'});
 			self.original = self.$elem;
@@ -1178,7 +1178,7 @@ if ( typeof Object.create !== 'function' ) {
 			var placeholder = $('<div/>', {class: 'uiPopover'});
 			self.$elem.replaceWith(placeholder);
             self.$elem = placeholder;
-			
+
 			self.$btn = $('<a>', {class: 'btn btn-box btn-toggle'}).append( self.$display );
 
 			if( !self.options.icon ){
@@ -1210,7 +1210,7 @@ if ( typeof Object.create !== 'function' ) {
 				selectedDate: new Date( self.options.selectedDate ),
 				lists: []
 			};
-			
+
 			self.$calendar = $('<div>', {class: 'toggleFlyout calendarGridTableSmall'});
 			self.calendar.$elem.html( self.$calendar );
 		},
@@ -1234,7 +1234,7 @@ if ( typeof Object.create !== 'function' ) {
 
 				if( !self.is_focus && self.is_open ){
 					self.hide();
-				}	
+				}
 			});
 
 			self.calendar.$elem.mouseenter(function () {
@@ -1244,7 +1244,7 @@ if ( typeof Object.create !== 'function' ) {
 			} );
 
 			self.calendar.$elem.delegate('.prev,.next','click', function (e) {
-				
+
 				var offset = $(this).hasClass("prev") ? -1 : 1;
 				var newDate = new Date( self.calendar.theDate );
 				newDate.setMonth( newDate.getMonth() + offset);
@@ -1313,8 +1313,8 @@ if ( typeof Object.create !== 'function' ) {
 
 					var call = {};
 					var n = p - prevDateLastDate;
-					call.date = new Date( self.calendar.theDate ); 
-					call.date.setHours(0, 0, 0, 0); 
+					call.date = new Date( self.calendar.theDate );
+					call.date.setHours(0, 0, 0, 0);
 					call.date.setDate( n );
 
 					// If value is outside of bounds its likely previous and next months
@@ -1338,7 +1338,7 @@ if ( typeof Object.create !== 'function' ) {
                     		call.empty = true;
                     	}
                     }*/
-                    
+
 					row.push(call);
 				}
 
@@ -1370,7 +1370,7 @@ if ( typeof Object.create !== 'function' ) {
 
 			var month = Datelang.month( self.calendar.theDate.getMonth(), self.options.format, self.options.lang );
 
-			var $title = $('<thead>').html( $("<tr>", {class: 'title'}).append( 
+			var $title = $('<thead>').html( $("<tr>", {class: 'title'}).append(
 				  $('<td>', {class: 'title', colspan: 5, text: month + " " + year })
 				, $('<td>', {class: 'prev'}).append( $('<i/>', {class:'icon-angle-left'}) )
 				, $('<td>', {class: 'next'}).append( $('<i/>', {class:'icon-angle-right'}) )
@@ -1422,7 +1422,7 @@ if ( typeof Object.create !== 'function' ) {
 						}
 					}
 
-					$tr.append( 
+					$tr.append(
 						$('<td>',{'data-date': datestr })
 
 							.addClass( call.empty?'empty':'' )
@@ -1436,7 +1436,7 @@ if ( typeof Object.create !== 'function' ) {
 					);
 				});
 
-				$tbody.append( $tr );			
+				$tbody.append( $tr );
 			});
 
 			self.$calendar.empty()
@@ -1474,12 +1474,12 @@ if ( typeof Object.create !== 'function' ) {
 		},
 		getOffset: function(){
 			var self = this;
-			
+
 			var $calendar = self.calendar.$elem;
 			if( $calendar.hasClass('uiContextualAbove') ){
 				$calendar.removeClass('uiContextualAbove');
 			}
-			
+
 			var outer = $(document).height()<$(window).height()?$(window):$(document);
 
 			var offset = self.$elem.offset(),
@@ -1487,9 +1487,9 @@ if ( typeof Object.create !== 'function' ) {
 				outerHeight = outer.height();
 
 			var position = offset;
-			
+
 			position.top += self.$elem.outerHeight();
-			
+
 			var innerWidth = position.left+$calendar.outerWidth();
 			if( $('html').hasClass('sidebarMode') ){
 				innerWidth+= 301;
@@ -1498,11 +1498,11 @@ if ( typeof Object.create !== 'function' ) {
 			if( innerWidth>outerWidth ){
 				position.left = offset.left-$calendar.outerWidth()+self.$elem.outerWidth();
 			}
-			
+
 			var innerHeight = position.top+$calendar.outerHeight();
 			if( innerHeight>outerHeight ){
 				position.top = offset.top-$calendar.outerHeight()-self.$elem.outerHeight();
-				$calendar.addClass('uiContextualAbove'); 
+				$calendar.addClass('uiContextualAbove');
 			}
 
 			$calendar.css( position );
@@ -1549,22 +1549,22 @@ if ( typeof Object.create !== 'function' ) {
 		onSelected: function () { },
 		displayFullYear: true
 	};
-	
+
 	/**/
 	/* ToggleLink */
 	/**/
 	var ToggleLink = {
 		init: function( options, elem ) {
-			
+
 			var self = this;
-			
+
 			self.elem = elem;
 			self.$elem = $( elem );
-			
+
 			self.options = $.extend( {}, $.fn.toggleLink.options, options );
-			
+
 			self.setElem();
-			
+
 			self.active = false;
 
 			// Event
@@ -1572,33 +1572,33 @@ if ( typeof Object.create !== 'function' ) {
 		},
 		setElem: function(){
 			var self = this;
-			
+
 			self.$elem.addClass('btn-toggleLink').removeAttr('rel');
-			
+
 			self.$elem = self.$elem.parents('.uitoggleLink');
 			self.$btn = self.$elem.find('a.btn-toggleLink');
 			self.$menu = self.$elem.find('.uitoggleLinkFlyout');
-			
+
 			self.setOffset();
 		},
-		
+
 		setElem: function(){
 			var self = this;
-			
+
 			self.$elem.addClass('btn-toggle').removeAttr('rel');
-			
+
 			self.$elem = self.$elem.parents('.uiToggle');
 			self.$btn = self.$elem.find('a.btn-toggle');
 			self.$menu = self.$elem.find('.uiToggleFlyout');
-			
+
 			self.setOffset();
 		},
-		
+
 		initEvent: function(){
 			var self = this;
-			
+
 			self.$btn.click(function(e){
-				
+
 				$('body').find('.uiPopover, .uiToggle').find('a.btn-toggle.active').removeClass('active');
 				if( self.$elem.hasClass('openToggler') ){
 					self.close();
@@ -1608,12 +1608,12 @@ if ( typeof Object.create !== 'function' ) {
 					self.display();
 					self.open();
 				}
-				
+
 				e.preventDefault();
 				e.stopPropagation();
-				
+
 			});
-			
+
 			self.$menu.find('a').click(function(){
 				self.selected = $(this).parent().index();
 				if ( typeof self.options.onSelected === 'function' ) {
@@ -1622,45 +1622,45 @@ if ( typeof Object.create !== 'function' ) {
 			});
 
 			$('html').on('click', function() {
-		
+
 				if( self.active && self.$elem.hasClass('openToggler') ){
 					self.$btn.removeClass('active');
 					self.close();
 				}
-				
+
 			});
 		},
-		
+
 		display: function(){
 			var self = this;
-			
+
 			if( $('body').find('.open.uiContextualPositioner').length>0 ){
 				$('body').find('.open.uiContextualPositioner').removeClass('open');
 			}
-			
+
 			if( $('body').find('.openToggler.uiToggle').length>0 ){
 				$('body').find('.openToggler.uiToggle').removeClass('openToggler');
 			}
 		},
-		
+
 		open: function(){
 			var self = this;
 			self.active = true;
-			
+
 			self.$elem.addClass('openToggler');
 			self.getOffset();
 		},
-		
+
 		close: function(){
 			var self = this;
-			
-			self.active = false;			
+
+			self.active = false;
 			self.$elem.removeClass('openToggler');
 		},
-		
+
 		setOffset: function(){
 			var self = this;
-			
+
 			var outer = $(document).height()<$(window).height()?$(window):$(document);
 
 			self.$menu.find('.uiMenu').css({ overflowY: '', overflowX: '',height: '',minHeight:'',minWidth:''});
@@ -1668,11 +1668,11 @@ if ( typeof Object.create !== 'function' ) {
 			var offset = self.$elem.offset(),
 				outerWidth = $(window).width(),
 				outerHeight = outer.height();
-			
+
 			var position = offset;
 
 			position.top += self.$elem.outerHeight();
-			
+
 			var innerWidth = position.left+self.$menu.outerWidth();
 
 			if( $('html').hasClass('sidebarMode') ){
@@ -1680,17 +1680,17 @@ if ( typeof Object.create !== 'function' ) {
 			}
 
 			if( innerWidth>=outerWidth || self.options.right ){
-				self.$menu.addClass('uiToggleFlyoutRight'); 
+				self.$menu.addClass('uiToggleFlyoutRight');
 			}
 			else if( self.$menu.hasClass('uiToggleFlyoutRight') ){
 				self.$menu.removeClass('uiToggleFlyoutRight');
 			}
-			
+
 			var innerHeight = position.top+self.$menu.outerHeight();
 
 			innerHeight += 30;
 			if( innerHeight>outerHeight || self.options.above ){
-				self.$menu.addClass('uiToggleFlyoutAbove'); 
+				self.$menu.addClass('uiToggleFlyoutAbove');
 			}else if( self.$menu.hasClass('uiToggleFlyoutAbove') ){
 				self.$menu.removeClass('uiToggleFlyoutAbove');
 			}
@@ -1767,7 +1767,7 @@ if ( typeof Object.create !== 'function' ) {
 
 			// event
 			self.$elem.click(function (e) {
-				
+
 				if( self.$elem.hasClass('active') ){
 					self.close();
 				}
@@ -1780,7 +1780,7 @@ if ( typeof Object.create !== 'function' ) {
 			});
 
 			$('html').on('click', function() {
-		
+
 				if( self.is_open && self.$elem.hasClass('active') && !self._focus ){
 					self.close();
 				}
@@ -1795,7 +1795,7 @@ if ( typeof Object.create !== 'function' ) {
 			self.$menu = $('<ul/>', {class: 'uiMenu', role: "listbox"});
 
 			$.each(self.options.select, function (i, data) {
-				self.$menu.append( self._item[data.type || 'default']( data ) );			
+				self.$menu.append( self._item[data.type || 'default']( data ) );
 			});
 
 			self.$model.html( self.$menu );
@@ -1805,16 +1805,16 @@ if ( typeof Object.create !== 'function' ) {
 
 				offset.$parent = self.$elem.closest( self.options.settings.parent );
 				var parentoffset = offset.$parent.offset();
-				
+
 				var position = offset.$parent.css('position');
 				if( position=='undefined' ||  !position ){
 					offset.$parent.css('position', 'relative');
 				}
-					
+
 				offset.left-=parentoffset.left;
 				offset.top+=$(self.options.settings.parent).scrollTop();
 			}
-			
+
 			var settings = $.extend( {}, self.options.settings, offset );
 			settings.top += self.$elem.outerHeight();
 			settings.$elem = self.$elem;
@@ -1822,7 +1822,7 @@ if ( typeof Object.create !== 'function' ) {
 			uiLayer.get(settings, self.$model);
 			self.$model = self.$menu.parents('.uiContextualLayer');
 			self.$model.addClass('uiContextualPositioner');
-			self.$layer = self.$menu.parents('.uiLayer');		
+			self.$layer = self.$menu.parents('.uiLayer');
 		},
 		resizeMenu: function() {
 			var self = this;
@@ -1922,7 +1922,7 @@ if ( typeof Object.create !== 'function' ) {
 							)
 
 							.append( $('<div/>').addClass('content')
-								.append( 
+								.append(
 									$('<div/>', {class: 'spacer'}),
 									$('<div/>', {class: 'massages clearfix', text: data.text})
 								)
@@ -1991,7 +1991,7 @@ if ( typeof Object.create !== 'function' ) {
 				self.$file.val("");
 				self.$name.text( self.defaultName );
 				self.$remove.addClass('hidden_elem');
-				
+
 			}
 			else{
 				self.$name.text( self.files[0].name );
@@ -2012,7 +2012,7 @@ if ( typeof Object.create !== 'function' ) {
 	var LiveClock = {
 		init: function( options, elem ) {
 			var self = this;
-			
+
 			self.elem = elem;
 			self.$elem = $( elem );
 
@@ -2029,7 +2029,7 @@ if ( typeof Object.create !== 'function' ) {
 
 				// self.$elem.find('[data-timezone]').text( Math.floor( d.getTime() / 1000 ) );
 			}
-			
+
 			// self.$date = self.$elem.find('.plugin-date');
 
 		},
@@ -2093,7 +2093,7 @@ if ( typeof Object.create !== 'function' ) {
 	var Clock = {
 		init: function( options, elem ) {
 			var self = this;
-			
+
 			self.elem = elem;
 			self.$elem = $( elem );
 
@@ -2170,7 +2170,7 @@ if ( typeof Object.create !== 'function' ) {
 
 				var type = $(this).attr('type');
 				var defaultValue = $(this).val();
-				
+
 				if( type=='radio' ){
 					var name = $(this).attr('name');
 					this.default_value = self.$elem.find('input[name=' + name + ']:checked').val();
@@ -2304,7 +2304,7 @@ if ( typeof Object.create !== 'function' ) {
 
 				        	Event.processForm($form, result);
 				        	Dialog.close();
-				        	
+
 				        }).fail(function(){
 
 				        }).always(function(){
@@ -2435,7 +2435,7 @@ if ( typeof Object.create !== 'function' ) {
         	var self = this;
         	self.elem = elem;
         	self.$elem = $(elem);
-        	
+
         	options = $.extend( {}, self.$elem.data(), options );
         	self.options = $.extend( {}, $.fn.tooltip.options, options );
 
@@ -2501,15 +2501,15 @@ if ( typeof Object.create !== 'function' ) {
             $( 'body' ).append( self.$positioner );
 
             if( self.$span.outerWidth() > (self.$text.outerWidth()+1) ){
-            	
+
             	self.$text.css( 'width', self.$text.outerWidth() ).addClass('tooltipWrap');
             }
             /* else if(self.$text.hasClass('tooltipWrap')){
             	self.$text.removeClass('tooltipWrap');
             }*/
-            // 
+            //
             offset.top += self.$elem.outerHeight();
-            
+
             /*if( self.options.pointer ){
             	self.$layer.addClass('uiToggleFlyoutPointer');
             	offset.top += 12;
@@ -2549,7 +2549,7 @@ if ( typeof Object.create !== 'function' ) {
            		offset.top -=self.$elem.outerHeight();
            	}
            	self.$layer.addClass("uiContextualLayer"+overflow.Y+overflow.X)
-            self.$positioner.css(offset);       
+            self.$positioner.css(offset);
         }
 	}
 	$.fn.tooltip = function( options ) {
@@ -2564,7 +2564,7 @@ if ( typeof Object.create !== 'function' ) {
 				title.init( options, this );
 				$.data( this, 'tooltip', title );
             }
-			
+
 		});
 	};
 	$.fn.tooltip.options = {
@@ -2613,7 +2613,7 @@ if ( typeof Object.create !== 'function' ) {
         						obj.elem.removeClass('checked').find('[type=checkbox]').prop( "checked", false );
         						self.dataSelect.splice(i, 1);
         					}
-        					
+
         				} );
         			}
         		}
@@ -2626,7 +2626,7 @@ if ( typeof Object.create !== 'function' ) {
 							self.dataSelect.splice(i, 1);
 						}
 					}
-					
+
 				} );
         	}
 
@@ -2647,7 +2647,7 @@ if ( typeof Object.create !== 'function' ) {
 				title.init( options, this );
 				$.data( this, 'checkedlists', title );
             }
-			
+
 		});
 	};
 	$.fn.checkedlists.options = {
@@ -2667,20 +2667,20 @@ if ( typeof Object.create !== 'function' ) {
 			self.$elem.click(function () {
 
 				if( self.$parent.hasClass('active') || self.$parent.find('>.content, [rel]').css('display')=='block' ){
-					
+
 					self.$parent.find('>.content, [rel]').slideUp( 200, function() {
 					    self.$parent.removeClass('active');
 					});
 				}
 				else{
-					
+
 					self.$parent.find('>.content, [rel]').slideDown( 200, function() {
 					    self.$parent.addClass('active');
 					});
 				}
 			});
 
-			
+
 		}
 	}
 	$.fn.openParent = function(options) {
@@ -2696,7 +2696,7 @@ if ( typeof Object.create !== 'function' ) {
 	/**/
 	var Editor_tags = {
 		init: function (options, elem) {
-			
+
 			var self = this;
 			self.$elem = $(elem);
 
@@ -2722,9 +2722,9 @@ if ( typeof Object.create !== 'function' ) {
 				self.is_focus = false;
 			});
 
-			// Event 
+			// Event
 			self.$input.keyup(function (e) {
-				
+
 				var $this = $(this);
 				var value = $.trim($this.val());
 
@@ -2732,7 +2732,7 @@ if ( typeof Object.create !== 'function' ) {
 
 					if(value==''){
 
-						
+
 						return false;
 					}
 
@@ -2753,7 +2753,7 @@ if ( typeof Object.create !== 'function' ) {
 				}
 
 				if( keyCode==13 && value!='' ){
-					
+
 					self.addtag( value );
 					$this.val('');
 					e.preventDefault();
@@ -2767,7 +2767,7 @@ if ( typeof Object.create !== 'function' ) {
 
 				self.resizeMenu();
 			}).blur(function () {
-				
+
 				var $this = $(this);
 				var value = $.trim($this.val());
 
@@ -2775,7 +2775,7 @@ if ( typeof Object.create !== 'function' ) {
 					self.addtag( value );
 					$this.val('');
 				}
-				
+
 			});
 
 			self.$elem.click(function () {
@@ -2791,7 +2791,7 @@ if ( typeof Object.create !== 'function' ) {
 				self.addtag( obj.name );
 			});
 		},
-		
+
 		setMenu: function () {
 			var self = this;
 
@@ -2845,14 +2845,14 @@ if ( typeof Object.create !== 'function' ) {
 				data: { q: self.q },
 				dataType: 'json'
 			}).fail(function() {
-				
+
 			}).always(function() {
-							
+
 			});
 		},
 
 		buildFrag: function() {
-			
+
 		},
 
 		addtag: function (text) {
@@ -2862,15 +2862,15 @@ if ( typeof Object.create !== 'function' ) {
 
 			var has = false;
 			$.each(self.data, function( i, val ) {
-				
+
 				if( val==text || val.toUpperCase()==text || val.toLowerCase()==text || self.capitalizeFirstLetter(val)==text ){
 					has = true;
 				}
 
 			});
-			
+
 			if( !has ){
-				self.data.push(text); 
+				self.data.push(text);
 				self.$input.before( self.getTag(text) );
 			}
 		},
@@ -2901,7 +2901,7 @@ if ( typeof Object.create !== 'function' ) {
 
 			var data = [];
 			$.each(self.data, function( i, val ) {
-				
+
 				if( val==text || val.toUpperCase()==text || val.toLowerCase()==text || self.capitalizeFirstLetter(val)==text ){
 				}
 				else{
@@ -2932,20 +2932,20 @@ if ( typeof Object.create !== 'function' ) {
     /**/
     var SelectMany = {
 		init: function (options, elem) {
-			
+
 			var self = this;
 			self.$elem = $(elem);
 
 			self.options = $.extend( {}, $.fn.editor_tags.options, options );
 
 			self.$ul = $('<ul>', {class: ''});
-			self.$add = $('<a>', {class: 'rfloat btn btn-green', text: '+ เพิ่ม'});
+			self.$add = $('<a>', {class: 'rfloat btn btn-green', text: '+ Add'});
 
 			self.$elem.addClass('select-many');
-			// 
+			//
 			// self.$input = $('<input>', {class: 'tag-input', placeholder: self.options.placeholder});
 			self.$elem.append( self.$ul, self.$add );
-			
+
 
 			self.$add.click(function () {
 				self.new();
@@ -2953,7 +2953,7 @@ if ( typeof Object.create !== 'function' ) {
 
 			var hasChecked = false;
 			$.each( self.options.lists, function (i, obj) {
-				
+
 				if( obj.checked ){
 					hasChecked = true;
 					self.new( obj.id || obj.value );
@@ -2986,7 +2986,7 @@ if ( typeof Object.create !== 'function' ) {
 			return li.append( self.setSelect( checked ) , $('<a>', {class: 'js-remove'}).html( $('<i>', {class: 'icon-remove'}) ) );
 		},
 		setSelect: function ( checked ) {
-			
+
 			var self = this;
 
 			var $select = $('<select>', {
@@ -3008,7 +3008,7 @@ if ( typeof Object.create !== 'function' ) {
 			});
 
 			return $select;
-			
+
 		}
 	};
 	$.fn.selectmany = function(options) {
@@ -3039,13 +3039,13 @@ if ( typeof Object.create !== 'function' ) {
 
 			self.$input.change(function () {
 				self.file = this.files[0];
-				
+
 				self.setImage( self.file );
 				$(this).val("");
 			});
 
 			self.$elem.find('.js-remove').click(function () {
-				
+
 				self.$image.html( '' );
 				self.$elem.removeClass('has-image');
 
@@ -3110,13 +3110,13 @@ if ( typeof Object.create !== 'function' ) {
 
 						self.resize( width, height );
 						self.display( $img );
-						
-					}).always(function() { 
+
+					}).always(function() {
 						// complete
 
 						self.$elem.removeClass('has-loading');
 					})
-					.fail(function(  ) { 
+					.fail(function(  ) {
 						// error
 					});
 	            }
@@ -3216,7 +3216,7 @@ if ( typeof Object.create !== 'function' ) {
 				self.$input = self.$upload.find('.js-add');
 
 				self.$input.click(function () {
-					
+
 					var $input = $('<input type="file" />');
 					$input.attr('accept', self.options.accept );
 					$input.attr('multiple', self.options.multiple);
@@ -3231,7 +3231,7 @@ if ( typeof Object.create !== 'function' ) {
 
 			self.$outInput.change(function () {
 				// var file = this.files[0];
-				
+
 				if( self.options.preview == 'dialog'  ){
 					self.open();
 				}
@@ -3272,7 +3272,7 @@ if ( typeof Object.create !== 'function' ) {
 			var $header = $('<div>', {class: 'upload-wrapper-header'});
 
 			/**/
-			/* tabs */			
+			/* tabs */
 			var ul = $('<ul>', {class: 'clearfix'});
 			if( self.options.tabs ){
 				ul.append( $('<li>').append( $('<button>', {class: 'active', type: 'button', text: 'My Images'}) ) );
@@ -3296,7 +3296,7 @@ if ( typeof Object.create !== 'function' ) {
 
 			if( self.options.sidebar ){
 				var $sidebar = $('<div>', {class: 'sidebar'});
-				$sidebar.append( 
+				$sidebar.append(
 					$('<div>', {class: 'sidebar-content'}).append(
 						$('<ul>').append(
 							  $('<li>').append( $('<a>').text( 'All Media' ) )
@@ -3309,13 +3309,13 @@ if ( typeof Object.create !== 'function' ) {
 							$('<li>').append( $('<a>').append( '<i class="icon-plus mrs"></i>','Add New Folder' ) )
 						)
 
-					) 
+					)
 				);
 				$body.append( $sidebar );
 			}
 
 			var $main = $('<div>', {class: 'upload-wrapper-main clearfix has-empty', id: 'main'});
-			$main.append( 
+			$main.append(
 				$('<div>', {class: 'breadcrumbs'}).html( '<span>All Media</span>' ),
 				$('<div>', {class: 'clearfix', id: 'listsbox'}),
 				$('<div>', {class: 'empty no-entities-placeholder'}).html('<div class="no-entities no-picture"><div class="empty-icon-image"><i class="icon-image"></i></div><a class="js-add">Upload Images</a></div></div>')
@@ -3346,7 +3346,7 @@ if ( typeof Object.create !== 'function' ) {
 
 				$wrapper.append( $footer );
 			}
-			
+
 			return $wrapper;
 		},
 
@@ -3365,23 +3365,23 @@ if ( typeof Object.create !== 'function' ) {
 				width: self.options.max_width,
 				height: self.options.max_height,
 				margin: self.options.margin
-			}).append( 
+			}).append(
 				$('<div/>', {class: 'photoWrap'}).css({
 					width: self.options.max_width,
 					height: self.options.max_height,
-				}).append( 
+				}).append(
 					self.editablePhotoProgress(),
 					self.editablePhotoError(),
 					$('<div/>', {class: 'scaledImageContainer scaledImage'})
 				),
-				( self.options.caption ? self.editablePhotoCaption(): '' ), 
+				( self.options.caption ? self.editablePhotoCaption(): '' ),
 				self.editablePhotoControls()
 			);
 		},
 		editablePhotoError: function () {
 			return $('<div/>').addClass('empty-error')
 				.append( $('<span/>')
-					.addClass('empty-title') 
+					.addClass('empty-title')
 					.append( $('<span/>') )
 				)
 				.append( $('<div/>')
@@ -3393,11 +3393,11 @@ if ( typeof Object.create !== 'function' ) {
 
 			return $('<div/>').addClass('progress-bar medium')
 				.append( $('<span/>')
-					.addClass('bar blue') 
+					.addClass('bar blue')
 					.append( $('<span/>') )
 				)
 				.append( $('<div/>')
-					.addClass('text') 
+					.addClass('text')
 					.append( uiElem.loader() )
 				);
 		},
@@ -3407,30 +3407,30 @@ if ( typeof Object.create !== 'function' ) {
 				.append( $('<div/>')
 					.addClass('captionArea')
 					.append( $('<div/>')
-						.addClass('uiTypeahead') 
+						.addClass('uiTypeahead')
 						.append( $('<textarea/>')
-							.addClass('uiTextareaNoResize textInput textCaption') 
+							.addClass('uiTextareaNoResize textInput textCaption')
 							.attr({
 								title: "เขียนคำบรรยายรูปภาพ...",
 								name: 'caption_text',
 								placeholder: "เขียนคำบรรยายรูปภาพ"
 							})
-							
+
 						)
-						
+
 					)
-				
+
 				);
 		},
 		editablePhotoControls: function(){
 
-			return $('<div/>').addClass('controls').append( 
-				/*$('<a/>', {class: 'control'}).html( 
+			return $('<div/>').addClass('controls').append(
+				/*$('<a/>', {class: 'control'}).html(
 					$('<i/>', {class: 'icon-refresh'})
 				)*/
 				$('<a/>', {class: 'control remove'}).html(
 					$('<i/>', {class: 'icon-remove', title: 'ยกเลิก'})
-				), 
+				),
 				$('<a/>', {class: 'control checked'}).html(
 					$('<i/>', {class: 'icon-check', title: 'เลือก'})
 				)
@@ -3483,7 +3483,7 @@ if ( typeof Object.create !== 'function' ) {
             		file.$elem.find('.empty-message').text( response.error_message );
 
             		file.$elem.find('.empty-error').css('margin-top', (file.$elem.find('.empty-error').height()/2)*-1);
-            		
+
             		return false;
             	}
 
@@ -3494,13 +3494,13 @@ if ( typeof Object.create !== 'function' ) {
             			file.$elem.addClass('has-caption');
             		}
             	}
-            	
+
 
             	// self.displayImage( file.$elem, response, true );
-            	
+
             }).always(function() {
             	self.getFiles();
-			}).fail(function(  ) { 
+			}).fail(function(  ) {
 			});
 		},
 		getFiles: function(){
@@ -3525,14 +3525,14 @@ if ( typeof Object.create !== 'function' ) {
 				var w = item.find('.photoWrap').width() || self.options.max_width;
 				var scaled = self.resizeImage( {
 					width: w, height: h
-				}, { 
+				}, {
 					width: img.width, height: img.height
 				} );
 
 				var fitHeight = scaled.width>scaled.height? false: true;
 				item.find('.scaledImage').html( img );
 				$( img ).addClass( fitHeight? "scaledImageFitHeight":'scaledImageFitWidth' );
-				
+
 				item
 					.removeClass('has-loading')
 					.addClass('has-file')
@@ -3540,12 +3540,12 @@ if ( typeof Object.create !== 'function' ) {
 						width: w,
 						height: h,
 						lineHeight: h+"px"
-					}).find('.scaledImage').css({ 
+					}).find('.scaledImage').css({
 						width: scaled.width,
 						height: scaled.height
 					});
 			}
-			
+
 			image.onerror = function(e){
 
 				item.find('.empty-message').text('ไม่สามารถดูรูปภาพได้หรือไฟล์รูปภาพถูกลบไปแล้ว');
@@ -3553,7 +3553,7 @@ if ( typeof Object.create !== 'function' ) {
 				item.removeClass('has-loading').addClass('has-error');
 			};
 
-			/*image.onloadprogress = function(e) { 
+			/*image.onloadprogress = function(e) {
 				var progress = e.loaded / e.total;
 				// console.log( progress );
 			};*/
@@ -3596,7 +3596,7 @@ if ( typeof Object.create !== 'function' ) {
 				self.$upload.find('#main').removeClass('has-empty');
 			}
 		},
-	};	
+	};
     $.fn.upload = function(options) {
 		return this.each(function() {
 			var $this = Object.create( Upload );
@@ -3623,7 +3623,7 @@ if ( typeof Object.create !== 'function' ) {
 		sidebar: false,
 		footer: true
     };
-    
+
 
     /* */
     /* ImageCover2 */
@@ -3687,16 +3687,16 @@ if ( typeof Object.create !== 'function' ) {
 				$image = $(image).addClass('img img-crop');
 
 				image.onload = function() {
-					
+
 					var width = self.$elem.width() || self.options.scaledX;
 
 						// width = this.width;
 					var height = ( this.height * width ) / this.width;
-	
+
 					$img.css({ width: width, height: height });
 					self.$elem.css({ width: width, height: height });
-					
-						
+
+
 					setTimeout(function () {
 						self.fetch( file ).done(function( results ) {
 
@@ -3707,15 +3707,15 @@ if ( typeof Object.create !== 'function' ) {
 
 							// console.log( results );
 						});
-						
-					}, 1 );	
+
+					}, 1 );
 
 					// self.cropperImage( self.$elem.find('.preview') );
 				}
 			}
 
 			/*reader.onprogress = function(data) {
-				if (data.lengthComputable) {                                            
+				if (data.lengthComputable) {
 	                var progress = parseInt( ((data.loaded / data.total) * 100), 10 );
 	                $progress.find('.bar').width( progress+"%" );
 	            }
@@ -3762,14 +3762,14 @@ if ( typeof Object.create !== 'function' ) {
 			.fail(function() {
 
 				self.alert({
-					title: 'เกิดข้อผิดพลาด!', 
+					title: 'เกิดข้อผิดพลาด!',
 					text: 'ไม่สามารถเชื่อมกับลิงก์ได้'
 				});
 			});
 		},
 
 		alert: function ( data ) {
-			
+
 
 			alert( data.text );
 		},
@@ -3802,7 +3802,7 @@ if ( typeof Object.create !== 'function' ) {
 			self.$elem.find('.preview').append( $edit );
 
 			$edit.click(function () {
-				
+
 				Media.open({
 					title: 'เปลี่ยนรูป',
 				},{
@@ -3852,11 +3852,11 @@ if ( typeof Object.create !== 'function' ) {
 				}
 
 				Event.showMsg({text: 'บันทึกแล้ว', load: true, auto: true});
-				$.post( self.options.url, {value: value}, function () {					
+				$.post( self.options.url, {value: value}, function () {
 				}, 'json');
 
 			});
-			
+
 		},
 	};
 	$.fn._update = function(options) {
@@ -3866,7 +3866,7 @@ if ( typeof Object.create !== 'function' ) {
 			$.data( this, '_update', $this );
 		});
 	};
-	
+
     /**/
 	/* close date */
 	/**/
@@ -3885,7 +3885,7 @@ if ( typeof Object.create !== 'function' ) {
 
 			self.config();
 			self.setElem();
-			
+
 			self.setMenu();
 			self.hideMenu();
 
@@ -3914,7 +3914,7 @@ if ( typeof Object.create !== 'function' ) {
 			if( self.options.start==null ){
 				self.startDate.setDate( 1 );
 			}
-			
+
 			self.endDate = new Date( self.options.end || self.today );
 
 			var lang = Object.create( Datelang );
@@ -3949,7 +3949,7 @@ if ( typeof Object.create !== 'function' ) {
 			self.$elem.append( self.$btn, self.$startInput, self.$endInput);
 
 			self.$calendar = $('<div>', {class: 'uiContextualPositioner'});
-			self.$calendar.append( $('<div>', {class: 'toggleFlyout calendarGridTableSmall'}) );	
+			self.$calendar.append( $('<div>', {class: 'toggleFlyout calendarGridTableSmall'}) );
 			if( self.options.max_width ){
 				self.menu.find('.toggleFlyout').css('width', self.options.max_width);
 			}
@@ -3964,7 +3964,7 @@ if ( typeof Object.create !== 'function' ) {
 				en: ['Cancel', 'Apply'],
 			}
 
-			var $table = $('<table/>', {class: 'calendarCloseDateGridTable'}).append( 
+			var $table = $('<table/>', {class: 'calendarCloseDateGridTable'}).append(
 				  $('<tr>').append( self.$start, $('<td>', {class: 'to', text: 'to'}), self.$end )
 				, $('<tr>').append( $('<td>', {colspan: 3, class: 'tar ptm'}).append(
 					  self.$preveiw
@@ -3974,7 +3974,7 @@ if ( typeof Object.create !== 'function' ) {
 			);
 			self.$calendar.find('.toggleFlyout').append( $table );
 
-			// self.$menu = 
+			// self.$menu =
 
 			/*self.updateCalendar();
 			self.setSlecte();*/
@@ -4004,7 +4004,7 @@ if ( typeof Object.create !== 'function' ) {
 			});
 
 			$.each( self.options.options, function (i, obj) {
-				self.$menu.append( self.setItemMenu( obj ) );				
+				self.$menu.append( self.setItemMenu( obj ) );
 			});
 
 			self.$menu.find('li').mouseenter(function () {
@@ -4012,7 +4012,7 @@ if ( typeof Object.create !== 'function' ) {
 			});
 
 			self.$menu.mouseleave(function () {
-				
+
 				self._activeIndex();
 			});
 		},
@@ -4034,7 +4034,7 @@ if ( typeof Object.create !== 'function' ) {
 			self.$menu.parents('.uiContextualLayerPositioner').css( settings );
 		},
 		setItemMenu: function(data) {
-			
+
 			var li = $('<li/>');
 			if( data.divider ){
 				li.addClass('divider');
@@ -4044,7 +4044,7 @@ if ( typeof Object.create !== 'function' ) {
 					$('<span>', {class: 'text', text: data.text })
 				) );
 			}
-			
+
 
 			if( data.image_url ){
 				li.addClass('picThumb');
@@ -4052,7 +4052,7 @@ if ( typeof Object.create !== 'function' ) {
 			}
 
 			if( data.activity=='new' ){
-				li.addClass('new').find('.text').before( 
+				li.addClass('new').find('.text').before(
 					$('<div>', {class: 'box-icon'}).append( $('<i>', {class: 'icon-plus'}) )
 				);
 			}
@@ -4084,9 +4084,9 @@ if ( typeof Object.create !== 'function' ) {
 
 			self.$preveiw.text( self.setTextCalendar() );
 
-			// event 
+			// event
 			$('td[data-date]', $start).click(function(e){
-				
+
 				e.stopPropagation();
 
 				var selected = new Date( $(this).attr('data-date') );
@@ -4110,7 +4110,7 @@ if ( typeof Object.create !== 'function' ) {
 				e.stopPropagation();
 			});
 			$('.selectMonth', $start).change(function(e){
-				
+
 				var date = new Date( $start.data('date') );
 				date.setMonth( $(this).val() );
 
@@ -4120,7 +4120,7 @@ if ( typeof Object.create !== 'function' ) {
 				e.stopPropagation();
 			});
 			$('.selectYear', $start).change(function(e){
-				
+
 				var date = new Date( $start.data('date') );
 				date.setYear( $(this).val() );
 
@@ -4130,7 +4130,7 @@ if ( typeof Object.create !== 'function' ) {
 			});
 
 			$('td[data-date]', $end).click(function(e){
-				
+
 				e.stopPropagation();
 
 				var selected = new Date( $(this).attr('data-date') );
@@ -4154,7 +4154,7 @@ if ( typeof Object.create !== 'function' ) {
 			});
 
 			$('.selectMonth', $end).change(function(e){
-				
+
 				var date = new Date( $end.data('date') );
 				date.setMonth( $(this).val() );
 
@@ -4165,7 +4165,7 @@ if ( typeof Object.create !== 'function' ) {
 			});
 
 			$('.selectYear', $end).change(function(e){
-				
+
 				var date = new Date( $end.data('date') );
 				date.setYear( $(this).val() );
 
@@ -4179,15 +4179,15 @@ if ( typeof Object.create !== 'function' ) {
 			var self = this;
 
 			self.startDateStr = self.startDate.getFullYear();
-			m = self.startDate.getMonth()+1; 
+			m = self.startDate.getMonth()+1;
 			self.startDateStr += "-" + (m < 10 ? "0"+m:m);
-			d = self.startDate.getDate(); 
+			d = self.startDate.getDate();
 			self.startDateStr += "-" + (d < 10 ? "0"+d:d);
 
 			self.endDateStr = self.endDate.getFullYear();
-			m = self.endDate.getMonth()+1; 
+			m = self.endDate.getMonth()+1;
 			self.endDateStr += "-" + (m < 10 ? "0"+m:m);
-			d = self.endDate.getDate(); 
+			d = self.endDate.getDate();
 			self.endDateStr += "-" + (d < 10 ? "0"+d:d);
 		},
 		updateData: function( text ){
@@ -4197,7 +4197,7 @@ if ( typeof Object.create !== 'function' ) {
 			if( !text ){
 				text = self.setTextCalendar();
 			}
-			
+
 			self.$text.text( text );
 
 			self.$startInput.val( self.startDateStr );
@@ -4217,58 +4217,58 @@ if ( typeof Object.create !== 'function' ) {
 
 			if( self.startDate.getDate()==self.endDate.getDate() && self.startDate.getMonth()==self.endDate.getMonth() && self.startDate.getFullYear()==self.endDate.getFullYear() ){
 
-				$text.append( 
+				$text.append(
 					  self.endDate.getDate()
 					, ' '
-					, self.string.month( self.startDate.getMonth(), 'normal', self.options.lang ) 
+					, self.string.month( self.startDate.getMonth(), 'normal', self.options.lang )
 					, ' '
-					, self.string.year( self.startDate.getFullYear(), 'normal', self.options.lang ) 
+					, self.string.year( self.startDate.getFullYear(), 'normal', self.options.lang )
 				);
 			}
 			else if( self.startDate.getMonth()==self.endDate.getMonth() && self.startDate.getFullYear()==self.endDate.getFullYear() ){
-				$text.append( 
+				$text.append(
 					  self.startDate.getDate()
 					, TO
 					, self.endDate.getDate()
 					, ' '
-					, self.string.month( self.startDate.getMonth(), 'normal', self.options.lang ) 
+					, self.string.month( self.startDate.getMonth(), 'normal', self.options.lang )
 					, ' '
-					, self.string.year( self.startDate.getFullYear(), 'normal', self.options.lang ) 
+					, self.string.year( self.startDate.getFullYear(), 'normal', self.options.lang )
 				);
 			}
 			else if( self.startDate.getFullYear()==self.endDate.getFullYear() ){
-				$text.append( 
+				$text.append(
 					  self.startDate.getDate()
 					, ' '
-					, self.string.month( self.startDate.getMonth(), 'normal', self.options.lang ) 
-					
+					, self.string.month( self.startDate.getMonth(), 'normal', self.options.lang )
+
 					, TO
 
 					, self.endDate.getDate()
 					, ' '
-					, self.string.month( self.endDate.getMonth(), 'normal', self.options.lang ) 
+					, self.string.month( self.endDate.getMonth(), 'normal', self.options.lang )
 
 					, ' '
-					, self.string.year( self.startDate.getFullYear(), 'normal', self.options.lang ) 
+					, self.string.year( self.startDate.getFullYear(), 'normal', self.options.lang )
 				);
 			}
 			else{
 
-				$text.append( 
+				$text.append(
 					  self.startDate.getDate()
 					, ' '
-					, self.string.month( self.startDate.getMonth(), 'normal', self.options.lang ) 
+					, self.string.month( self.startDate.getMonth(), 'normal', self.options.lang )
 					, ' '
-					, self.string.year( self.startDate.getFullYear(), 'normal', self.options.lang ) 
-					
+					, self.string.year( self.startDate.getFullYear(), 'normal', self.options.lang )
+
 					, TO
 
 					, self.endDate.getDate()
 					, ' '
-					, self.string.month( self.endDate.getMonth(), 'normal', self.options.lang ) 
-					
+					, self.string.month( self.endDate.getMonth(), 'normal', self.options.lang )
+
 					, ' '
-					, self.string.year( self.endDate.getFullYear(), 'normal', self.options.lang ) 
+					, self.string.year( self.endDate.getFullYear(), 'normal', self.options.lang )
 				);
 			}
 
@@ -4296,7 +4296,7 @@ if ( typeof Object.create !== 'function' ) {
 	        var prevDateLastDate = prevDateLast.getDate();
 
 	        var prevweekDay = self.options.weekDayStart;
-	
+
 			prevweekDay = prevweekDay>prevDateLastDay
 				? 7-prevweekDay
 				: prevDateLastDay-prevweekDay;
@@ -4314,15 +4314,15 @@ if ( typeof Object.create !== 'function' ) {
 
 					var call = {};
 					var n = p - prevDateLastDate;
-					call.date = new Date( theDate ); 
-					call.date.setHours(0, 0, 0, 0); 
+					call.date = new Date( theDate );
+					call.date.setHours(0, 0, 0, 0);
 					call.date.setDate( n );
 
 					call.date_str = call.date.getFullYear();
-					m = call.date.getMonth()+1; 
+					m = call.date.getMonth()+1;
 					call.date_str += "-" + (m < 10 ? "0"+m:m);
 
-					d = call.date.getDate(); 
+					d = call.date.getDate();
 					call.date_str += "-" + (d < 10 ? "0"+d:d);
 
 					$td = $('<td>');
@@ -4361,7 +4361,7 @@ if ( typeof Object.create !== 'function' ) {
                     	}
                     }*/
 
-	            	$tr.append( $td );                    
+	            	$tr.append( $td );
 					row.push(call);
 				}
 
@@ -4377,11 +4377,11 @@ if ( typeof Object.create !== 'function' ) {
 			for (var i = 0; i < 12; i++) {
 				option = $('<option>', {text: self.string.month( i, 'normal' ), value: i});
 
-				//  && theDate.getFullYear() == 
+				//  && theDate.getFullYear() ==
 				if( theDate.getMonth() == i ){
 					option.attr('selected', true);
 				}
-				
+
 				$selectMonth.append( option );
 			};
 
@@ -4391,7 +4391,7 @@ if ( typeof Object.create !== 'function' ) {
 			for (var i = self.today.getFullYear(); i >= endYear; i--) {
 
 				option = $('<option>', {text: i, value: i });
-				
+
 				if( theDate.getFullYear() == i ){
 					option.attr('selected', true);
 				}
@@ -4413,9 +4413,9 @@ if ( typeof Object.create !== 'function' ) {
 			};
 			$thead = $('<thead/>').html( $header );
 
-			return $('<table/>', { 
-				class: 'calendarGridTable range', 
-				cellspacing: 0, 
+			return $('<table/>', {
+				class: 'calendarGridTable range',
+				cellspacing: 0,
 				cellpadding: 0,
 			}).data( 'date', theDate ).append( $title, $thead, $tbody );
 		},
@@ -4430,7 +4430,7 @@ if ( typeof Object.create !== 'function' ) {
 			var self = this;
 
 			self.$menu.find('li').click(function() {
-				
+
 				var data = $(this).data();
 
 				self.activeIndex = $(this).index();
@@ -4441,12 +4441,12 @@ if ( typeof Object.create !== 'function' ) {
 					self.openCalendar();
 					return false;
 				}
-				
+
 				self.selectMenu( data );
 			});
 
 			self.$btn.click(function(e){
-				
+
 				$('body').find('.uiPopover').find('a.btn-toggle.active').removeClass('active');
 
 				self.openMenu();
@@ -4455,7 +4455,7 @@ if ( typeof Object.create !== 'function' ) {
 				if( self.$calendar.hasClass('open') ){
 					self.$calendar.removeClass('open');
 				}
-				
+
 				e.stopPropagation();
 			});
 
@@ -4464,7 +4464,7 @@ if ( typeof Object.create !== 'function' ) {
 			});
 
 			$('html').on('click', function() {
-				
+
 				// if( self.active ){
 				self.hideMenu();
 				self.hideCalendar();
@@ -4513,13 +4513,13 @@ if ( typeof Object.create !== 'function' ) {
 				self.startDate.setDate( first );
 				self.endDate.setDate( last );
 
-				date_str = ' | ' 
-					+ self.startDate.getDate() 
-					+ ' - ' 
-					+ self.endDate.getDate() 
-					+ ' ' 
-					+ self.string.month( self.startDate.getMonth() ) 
-					+ ' ' 
+				date_str = ' | '
+					+ self.startDate.getDate()
+					+ ' - '
+					+ self.endDate.getDate()
+					+ ' '
+					+ self.string.month( self.startDate.getMonth() )
+					+ ' '
 					+ self.endDate.getFullYear();
 
 			}else if( data.value=='last1week' ){
@@ -4538,13 +4538,13 @@ if ( typeof Object.create !== 'function' ) {
 				date.setMonth( date.getMonth()+ 1 );
 				date.setDate( 0 );
 
-				date_str = ' | ' 
-					+ 1 
-					+ ' - ' 
+				date_str = ' | '
+					+ 1
+					+ ' - '
 					+ date.getDate()
-					+ ' ' 
-					+ self.string.month( self.startDate.getMonth() ) 
-					+ ' ' 
+					+ ' '
+					+ self.string.month( self.startDate.getMonth() )
+					+ ' '
 					+ self.endDate.getFullYear();
 			}
 			else if( data.value=='latest' ){
@@ -4552,7 +4552,7 @@ if ( typeof Object.create !== 'function' ) {
 				self.startDate = new Date(self.options.lastYear||2000,0,1);
 				self.endDate.setDate( self.today.getDate() );
 			}
-			
+
 			if( minus>0 ){
 				self.startDate.setDate( self.startDate.getDate()-minus );
 			}
@@ -4593,18 +4593,18 @@ if ( typeof Object.create !== 'function' ) {
 		},
 		hideCalendar: function () {
 			var self = this;
-			
+
 			// self.$btn.addClass('active');
-			self.$calendar.removeClass('open');		
+			self.$calendar.removeClass('open');
 		},
-		
+
 		getOffset: function(){
 			var self = this;
-			
+
 			if( self.$calendar.hasClass('uiContextualAbove') ){
 				self.$calendar.removeClass('uiContextualAbove');
 			}
-			
+
 			var outer = $(document).height()<$(window).height()?$(window):$(document);
 
 			var offset = self.$elem.offset(),
@@ -4612,9 +4612,9 @@ if ( typeof Object.create !== 'function' ) {
 				outerHeight = outer.height();
 
 			var position = offset;
-			
+
 			position.top += self.$elem.outerHeight();
-			
+
 			var innerWidth = position.left+self.$calendar.outerWidth();
 			if( $('html').hasClass('sidebarMode') ){
 				innerWidth+= 301;
@@ -4623,15 +4623,15 @@ if ( typeof Object.create !== 'function' ) {
 			if( innerWidth>outerWidth ){
 				position.left = offset.left-self.$calendar.outerWidth()+self.$elem.outerWidth();
 			}
-			
+
 			var innerHeight = position.top+self.$calendar.outerHeight();
 			if( innerHeight>outerHeight ){
 				position.top = offset.top-self.$calendar.outerHeight()-self.$elem.outerHeight();
-				self.$calendar.addClass('uiContextualAbove'); 
+				self.$calendar.addClass('uiContextualAbove');
 			}
 
 			self.$calendar.css( position );
-		},		
+		},
 	};
 	$.fn.closedate = function( options ) {
 		return this.each(function() {
@@ -4668,7 +4668,7 @@ if ( typeof Object.create !== 'function' ) {
 			},
 			{
 				text: 'This month',
-				value: 'monthly', 
+				value: 'monthly',
 			},
 			{
 				text: 'Last 7 days',
@@ -4723,7 +4723,7 @@ if ( typeof Object.create !== 'function' ) {
 			});
 
 			self.$elem.delegate('select.labelselect', 'change', function () {
-				
+
 				if( $(this).val()=='custom' ){
 
 					var $wrap = $('<div>', {class: 'wrap'});
@@ -4731,7 +4731,7 @@ if ( typeof Object.create !== 'function' ) {
 					$remove = $('<button/>', {type: 'button', class: 'icon-remove js-remove-label'});
 
 					$wrap.data( 'select', $(this) ).append( $input, $remove );
-					
+
 					$(this).replaceWith( $wrap );
 					$input.focus();
 				}
@@ -4740,7 +4740,7 @@ if ( typeof Object.create !== 'function' ) {
 			self.$elem.delegate('.js-remove-label', 'click', function () {
 
 				var $wrap = $(this).closest('.wrap');
-				
+
 				var $select = $wrap.data('select');
 				$wrap.replaceWith( $select.clone() );
 
@@ -4758,7 +4758,7 @@ if ( typeof Object.create !== 'function' ) {
 					$field.remove();
 				}
 			});
-			
+
 			if( options.data ){
 
 				var $efirst = self.$elem.find('.control-group').first();
@@ -4788,14 +4788,14 @@ if ( typeof Object.create !== 'function' ) {
 						$remove = $('<button/>', {type: 'button', class: 'icon-remove js-remove-label'});
 
 						$wrap.data( 'select', $select ).append( $input, $remove );
-						
+
 						$select.replaceWith( $wrap );
 						$input.focus();
 					}
-					
+
 
 					self.$elem.find('[ref=listsbox]').append( $clone );
-					
+
 				} );
 
 				if( c>0 ){
@@ -4805,7 +4805,7 @@ if ( typeof Object.create !== 'function' ) {
 		},
 
 		fieldset: function ( data, options ) {
-		} 		
+		}
 	}
 	$.fn.input_label = function( options ) {
 		return this.each(function() {
@@ -4825,7 +4825,7 @@ if ( typeof Object.create !== 'function' ) {
 			self.theDate = options.theDate || $(elem).attr('data-time');
 			self.original = elem;
 			self.$elem = $('<span>', {class: 'timestamp'});
-		
+
 			$( elem ).replaceWith(self.$elem);
 
 
@@ -4848,10 +4848,10 @@ if ( typeof Object.create !== 'function' ) {
 			var self = this;
 
 			self.$elem = $(elem);
-			
-			// Event 
+
+			// Event
 			self.$elem.delegate('.js-add-field', 'click', function() {
-				
+
 				var $field = $(this).closest('.control-group');
 				var $input = $field.find(':input.js-input').first();
 
@@ -4886,7 +4886,7 @@ if ( typeof Object.create !== 'function' ) {
 			});
 
 			self.$elem.delegate('.js-remove-field', 'click', function() {
-				
+
 				var $field = $(this).closest('.form-field');
 				var $control = $field.find('.control-group');
 				if( $control.length==1 ){
@@ -4900,7 +4900,7 @@ if ( typeof Object.create !== 'function' ) {
 				else{
 					$(this).closest('.control-group').remove();
 				}
-				
+
 			});
 
 		},
@@ -4951,7 +4951,7 @@ if ( typeof Object.create !== 'function' ) {
 
 			self.$content.addClass('active').siblings().removeClass('active');
 		}
-	}	
+	}
 	$.fn.tab = function( options ) {
 		return this.each(function() {
 			var $this = Object.create( Tabs );
@@ -4975,18 +4975,18 @@ if ( typeof Object.create !== 'function' ) {
 			self.currVal = self.$elem.val();
 
 			self.$elem.change(function () {
-				
+
 				var val = self.$elem.val();
 
 				if( val == '__add' ){
 
 					Dialog.load( self.url, {callback: 1}, {
-						
+
 						onClose: function () {
 							self.$elem.val( self.currVal );
 						},
 						onSubmit: function ($d) {
-							
+
 							console.log( 'onSubmit' );
 							var $form = $d.$pop.find('form');
 
@@ -5015,7 +5015,7 @@ if ( typeof Object.create !== 'function' ) {
 				}
 			});
 		}
-	}	
+	}
 	$.fn.addselect = function( options ) {
 		return this.each(function() {
 			var $this = Object.create( AddSelect );
@@ -5046,7 +5046,7 @@ if ( typeof Object.create !== 'function' ) {
 			self.changePreview();
 
 			self.$elem.append( self.$input, $('<div>', {class:'loader'}), self.$preview );
-	
+
 			self.$preview.click(function (e) {
 				self.$elem.removeClass('has-preview');
 				self.$input.val( self.currVal ).attr('placeholder', self.placeholder).prop('disabled', false).select();
@@ -5080,7 +5080,7 @@ if ( typeof Object.create !== 'function' ) {
 					}
 				}
 			}).keyup(function (e) {
-				
+
 				clearTimeout( t );
 
 				if( self.is_keycodes.indexOf( e.which )==-1 ){
@@ -5112,7 +5112,7 @@ if ( typeof Object.create !== 'function' ) {
 					e.preventDefault();
 				}
 			}).click(function (e) {
-				
+
 				if( /*$(this).val()!='' && */self.is_open==false ){
 					self.search();
 					e.stopPropagation();
@@ -5122,7 +5122,7 @@ if ( typeof Object.create !== 'function' ) {
 			$('html').on('click', function() {
 				if( !self.is_focus && self.is_open ){
 					self.hide();
-				}	
+				}
 			});
 		},
 
@@ -5134,7 +5134,7 @@ if ( typeof Object.create !== 'function' ) {
 				/*self.hide();
 				self.has_load = false;
 				return false;*/
-			} 
+			}
 
 			if( !self.is_open ){
 				self.setMenu();
@@ -5157,13 +5157,13 @@ if ( typeof Object.create !== 'function' ) {
 			}).mouseleave(function () {
 				self.is_focus = false;
 			});
-			
+
 			if( self.currVal!='' ){
 				self.$create = $('<li/>', {class: "uiLayerItem create"});
 				self.$menu.append( self.$create )
 				self.$create.text('Create "'+ self.currVal +'"').addClass('active').siblings().removeClass('active');
 			}
-			
+
 			self.show();
 
 			if( self.has_load ) return false;
@@ -5175,7 +5175,7 @@ if ( typeof Object.create !== 'function' ) {
 					self.has_load = false;
 
 					$.each( res, function (i, lists) {
-						
+
 						$.each( lists.data.lists, function (index, obj) {
 							self.setItemMenu( obj );
 						} );
@@ -5228,16 +5228,16 @@ if ( typeof Object.create !== 'function' ) {
 
 				offset.$parent = self.$input.closest( self.options.settings.parent );
 				var parentoffset = offset.$parent.offset();
-				
+
 				var position = offset.$parent.css('position');
 				if( position=='undefined' ||  !position ){
 					offset.$parent.css('position', 'relative');
 				}
-					
+
 				offset.left-=parentoffset.left;
 				offset.top+=$(self.options.settings.parent).scrollTop();
 			}
-			
+
 			var settings = $.extend( {}, self.options.settings, offset );
 			settings.top += self.$input.outerHeight();
 			settings.$elem = self.$input;
@@ -5291,14 +5291,14 @@ if ( typeof Object.create !== 'function' ) {
 		changePreview: function () {
 			var self = this;
 
-			self.$preview.append( 
+			self.$preview.append(
 				$('<input>', {type: 'hidden', autocomplete:"off", name: self.$input.attr('name'), value: self.currID ? self.currID: self.currVal }) ,
-				$('<input>', {type: 'hidden', autocomplete:"off", name: self.$input.attr('name') + '_type', value: self.currID ? 'id': 'value' }) 
+				$('<input>', {type: 'hidden', autocomplete:"off", name: self.$input.attr('name') + '_type', value: self.currID ? 'id': 'value' })
 
 			);
 		}
 
-	}	
+	}
 	$.fn.addinput = function( options ) {
 		return this.each(function() {
 			var $this = Object.create( AddInput );

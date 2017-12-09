@@ -5,20 +5,20 @@
 
 			<ul class="lfloat" ref="actions">
 				<li class="mt">
-					<h2><i class="icon-cart-arrow-down mrs"></i><span> รายการส่วนลด</span></h2>
+					<h2><i class="icon-cart-arrow-down mrs"></i><span> Discount Items</span></h2>
 				</li>
 
 				<li class="mt"><a class="btn js-refresh" data-plugins="tooltip" data-options="<?=$this->fn->stringify(array('text'=>'refresh'))?>"><i class="icon-refresh"></i></a></li>
 
 				<li class="divider"></li>
-				
+
 				 <!-- data-plugins="dialog" -->
 				<li class="mt">
 					<a href="<?=URL?>discounts/add" class="btn btn-blue"><i class="icon-plus"></i> <?=$this->lang->translate('Add New')?></a>
 				</li>
 
 			</ul>
-			
+
 			<ul class="lfloat selection hidden_elem" ref="selection">
 				<li><span class="count-value"></span></li>
 				<li><a class="btn-icon"><i class="icon-download"></i></a></li>
@@ -27,15 +27,15 @@
 
 
 			<ul class="rfloat" ref="control">
-				<li><label class="fwb fcg fsm" for="limit">แสดง</label>
+				<li><label class="fwb fcg fsm" for="limit">Show</label>
 				<select ref="selector" id="limit" name="limit" class="inputtext"><?php
 					echo '<option value="20">20</option>';
 					echo '<option selected value="50">50</option>';
 					echo '<option value="100">100</option>';
 					echo '<option value="200">200</option>';
-				?></select><span id="more-link">คำนวณ...</span></li>
+				?></select><span id="more-link">Loading...</span></li>
 			</ul>
-			
+
 		</div>
 		<div class="clearfix mbl mtm">
 			<ul class="rfloat" ref="control">
@@ -48,7 +48,7 @@
 				</form></li>
 			</ul>
 		</div>
-		
+
 	</div>
 
 </div>
