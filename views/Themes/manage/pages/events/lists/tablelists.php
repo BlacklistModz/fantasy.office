@@ -3,11 +3,11 @@
 $tr = "";
 $tr_total = "";
 
-if( !empty($this->results['lists']) ){ 
+if( !empty($this->results['lists']) ){
     //print_r($this->results); die;
 
     $seq = 0;
-    foreach ($this->results['lists'] as $i => $item) { 
+    foreach ($this->results['lists'] as $i => $item) {
 
         $cls = $i%2 ? 'even' : "odd";
 
@@ -36,7 +36,7 @@ if( !empty($this->results['lists']) ){
 
         $time = date("H:i", strtotime($item['start']));
         if( $time == '00:00' ){
-            $time = '(ทั้งวัน)';
+            $time = '(all day)';
         }
 
         $tr .= '<tr class="'.$cls.'" data-id="'.$item['id'].'"">'.
