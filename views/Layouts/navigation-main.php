@@ -1,6 +1,6 @@
 <?php
 
-$users[] = array('key'=>'users', 'text'=>'จัดการสมาชิก', 'link'=>$url.'users', 'icon'=>'users');
+$users[] = array('key'=>'users', 'text'=>'Customers', 'link'=>$url.'customers', 'icon'=>'users');
 $users[] = array('key'=>'sales', 'text'=>'จัดการพนักงานขาย', 'link'=>$url.'sales', 'icon'=>'user');
 if( !empty($users) ){
 	echo $this->fn->manage_nav($users, $this->getPage('on'));
