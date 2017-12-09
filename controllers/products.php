@@ -21,6 +21,118 @@ class Products extends Controller {
     	}
     	$this->view->render($render);
     }
+    public function settings($section='basic', $id=null){
+        $id = isset($_REQUEST["id"]) ? $_REQUEST["id"] : $id;
+
+        if( !empty($id) ){
+            $item = $this->model->get($id);
+            if( empty($item) ) $this->error();
+
+            $this->view->setData('item', $item);
+        }
+
+        $this->view->setPage('title', 'จัดการสินค้า');
+        $this->view->setPage('on', 'products');
+
+        if( $section != 'basic' && empty($item) ){
+            header('location:'.URL.'products/settings/basic');
+        }
+
+        if( $section == 'basic' ){
+            $this->view->setData('category', $this->model->category());
+        }
+
+        $this->view->setData('section', $section);
+        $this->view->render('products/settings/display');
+    }
+    public function update($section='basic', $id=null){
+        $id = isset($_REQUEST["id"]) ? $_REQUEST["id"] : $id;
+
+        if( !empty($id) ){
+            $item = $this->model->get($id);
+            if( empty($item) ) $this->error();
+        }
+
+        if( $section == 'basic' ){
+            try{
+                $form = new Form();
+                $form   ->post('pds_categories_id')->val('is_empty')
+                        ->post('pds_code')
+                        ->post('pds_name')->val('is_empty')
+                        ->post('pds_detail')
+                        ->post('pds_barcode');
+                $form->submit();
+                $postData = $form->fetch();
+
+                if( empty($arr['error']) ){
+                    if( !empty($id) ){
+                        $this->model->update($id, $postData);
+                    }
+                    else{
+                        $this->model->insert($postData);
+                        $id = $postData['id'];
+                    }
+
+                    $arr['message'] = 'Saved !';
+                    $arr['url'] = URL.'products/settings/howtouse/'.$id;
+                }
+
+            } catch (Exception $e) {
+                $arr['error'] = $this->_getError($e->getMessage()); 
+            }
+        }
+        elseif( $section == 'howtouse' ){
+            if( empty($item) ) $this->error();
+
+            try{
+                $form = new Form();
+                $form   ->post('pds_howtouse')
+                        ->post('pds_capacity');
+                $form->submit();
+                $postData = $form->fetch();
+
+                if( empty($arr['error']) ){
+                    $this->model->update($id, $postData);
+
+                    $this->model->update($id, $postData);
+
+                    $arr['message'] = 'Saved !';
+                    $arr['url'] = URL.'products/settings/pricing/'.$id;
+                }
+            } catch (Exception $e) {
+                $arr['error'] = $this->_getError($e->getMessage());
+            }
+        }
+        elseif( $section == 'pricing' ){
+
+            try{
+                $form = new Form();
+                $form   ->post('frontend')
+                        ->post('vat');
+                $form->submit();
+                $postData = $form->fetch();
+
+                if( !empty($item['pricing']) ) $postData['id'] = $item['pricing']['id'];
+
+                if( empty($arr['error']) ){
+                    $this->model->setPrice($postData);
+
+                    $arr['message'] = 'Saved !';
+                    $arr['url'] = URL.'products/settings/photos/'.$id;
+                }
+            } catch (Exception $e) {
+                $arr['error'] = $this->_getError($e->getMessage());
+            }
+        }
+        elseif( $section == 'photos' ){
+            
+        }
+        else{
+            $this->error();
+        }
+
+        echo json_encode($arr);
+    }
 
     public function set_comission($id=null){
     	$id = isset($_REQUEST["id"]) ? $_REQUEST["id"] : $id;

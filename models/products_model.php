@@ -136,7 +136,7 @@ class Products_Model extends Model{
         }
     }
     public function getPrice($id){
-        $sth = $this->db->prepare("SELECT frontend, seller, wholesales, employee FROM products_pricing WHERE product_id = :id LIMIT 1");
+        $sth = $this->db->prepare("SELECT id, frontend, seller, wholesales, employee, vat FROM products_pricing WHERE product_id = :id LIMIT 1");
         $sth->execute( array(
             ':id' => $id
         ) );
@@ -144,5 +144,10 @@ class Products_Model extends Model{
         return $sth->rowCount()==1
             ? $this->convert( $sth->fetch( PDO::FETCH_ASSOC ) )
             : array();
+    }
+
+    #CATEGORY
+    public function category(){
+        return $this->db->select("SELECT id,name_en,name_th FROM categories WHERE status='A' ORDER BY seq ASC");
     }
 }

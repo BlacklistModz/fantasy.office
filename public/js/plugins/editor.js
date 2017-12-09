@@ -49,7 +49,7 @@ if ( typeof Object.create !== 'function' ) {
             if (typeof $.fn['tinymce'] == 'undefined') {
             	
 				// var host = "http://"+window.location.hostname;
-				var url = URL + "public/js/tinymce/";
+				var url = Event.URL + "public/js/tinymce/";
 				
 				self.getScript(url+"tinymce.min.js" ).done(function () {
 					self.getScript(url+"jquery.tinymce.min.js" ).done(function () {
