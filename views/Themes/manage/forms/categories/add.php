@@ -1,12 +1,12 @@
-<?php 
+<?php
 
-$title = 'หมวดหมู่สินค้า';
+$title = 'Categories';
 if( !empty($this->item) ){
-	$arr['title'] = "แก้ไข {$title}";
+	$arr['title'] = "Edit {$title}";
 	$arr['hiddenInput'][] = array('name'=>'id', 'value'=>$this->item['id']);
 }
 else{
-	$arr['title'] = "เพิ่ม {$title}";
+	$arr['title'] = "Add {$title}";
 }
 
 $form = new Form();
@@ -16,19 +16,19 @@ $form = $form->create()
 	->addClass('form-insert');
 
 $form 	->field("firstCode")
-		->label("คำขึ้นต้น *")
+		->label("Prologue *")
 		->autocomplete('off')
 		->addClass('inputtext')
 		->value( !empty($this->item['fristCode']) ? $this->item['fristCode'] : '' );
 
 $form 	->field("name_th")
-		->label("ชื่อภาษาไทย *")
+		->label("Thai name *")
 		->autocomplete('off')
 		->addClass('inputtext')
 		->value( !empty($this->item['name_th']) ? $this->item['name_th'] : '' );
 
 $form 	->field("name_en")
-		->label("ชื่อภาษาอังกฤษ *")
+		->label("English name *")
 		->autocomplete('off')
 		->addClass('inputtext')
 		->value( !empty($this->item['name_en']) ? $this->item['name_en'] : '' );
@@ -37,18 +37,18 @@ $ck = '';
 if( !empty($this->item) ){
 	if( !empty($this->item['is_sub']) ) $ck='checked="1"';
 }
-$is_sub = '<label class="checkbox control-label"><input type="checkbox" '.$ck.' name="is_sub" value="1"> ทำให้เป็นเมนูย่อยของหมวดหมู่อื่น</label>';
+$is_sub = '<label class="checkbox control-label"><input type="checkbox" '.$ck.' name="is_sub" value="1"> Make a sub menu of another category.</label>';
 $form 	->field("is_sub")
 		->text( $is_sub );
 
 $form 	->field("cate_id")
-		->label("หมวดหมู่หลัก")
+		->label("Main category")
 		->addClass('inputtext')
 		->select( $this->category['lists'], 'id', 'name_th' )
 		->value( !empty($this->item['cate_id']) ? $this->item['cate_id'] : '' );
 
 $form 	->field('status')
-		->label('สถานะ')
+		->label('Status')
 		->autocomplete('off')
 		->addClass('inputtext')
 		->select($this->status)

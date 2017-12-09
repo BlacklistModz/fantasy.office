@@ -2,33 +2,33 @@
 
 	<div data-plugins="ManageCategories">
 		<div role="main" class="pal">
-			
+
 			<div style="max-width: 750px">
-				
+
 				<div class="mbm clearfix">
 					<div class="lfloat">
-						<h2><i class="icon-database mrs"></i>หมวดหมู่สินค้า</h2>
-						<span style="color:blue;" class="fwb mts">* ให้คลิ๊กที่ชื่อของหมวดหมู่ค้างไว้ และลากขึ้น หรือลากลงได้ตามต้องการ</span>
+						<h2><i class="icon-database mrs"></i>Categories</h2>
+						<span style="color:blue;" class="fwb mts">* Click on the name of the category and drag up or down as you like.</span>
 					</div>
 					<div class="rfloat">
-						<a href="<?=URL?>categories/add" class="btn btn-blue" data-plugins="dialog"><i class="icon-plus"></i> เพิ่ม</a>
+						<a href="<?=URL?>categories/add" class="btn btn-blue" data-plugins="dialog"><i class="icon-plus"></i> Add</a>
 					</div>
 				</div>
 				<!-- <div class="uiBoxYellow pam mbm">กดลากเพื่อจัดลำดับ ประเภทโปรแกรมทัวร์</div> -->
 
 				<ul class="listsdata-table-lists">
 					<li class="head">
-						<div class="ID"><label class="label">ลำดับ</label></div>
-						<div class="name"><label class="label">หมวดหมู่สินค้า</label></div>
-						<div class="num"><label class="label">จำนวนสินค้า</label></div>
-						<div class="date"><label class="label">สถานะ</label></div>
-						<div class="actions"><label class="label">จัดการ</label></div>
+						<div class="ID"><label class="label">Order</label></div>
+						<div class="name"><label class="label">Categories</label></div>
+						<div class="num"><label class="label">Product Number</label></div>
+						<div class="date"><label class="label">Status</label></div>
+						<div class="actions"><label class="label">Actions</label></div>
 					</li>
 				</ul>
 				<ul class="listsdata-table-lists" rel="listsbox">
-					<?php 
+					<?php
 					$seq = 0;
-					foreach ($this->results['lists'] as $key => $value) { 
+					foreach ($this->results['lists'] as $key => $value) {
 						$seq++;
 
 						?>
@@ -50,7 +50,7 @@
 								</span>
 							</div>
 						</li>
-						<?php }?> 
+						<?php }?>
 
 					</ul>
 				</div>
@@ -66,4 +66,3 @@
 
 	</div>
 </div>
-

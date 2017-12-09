@@ -1,19 +1,19 @@
 <?php
 
-$arr['title'] = "ยืนยันการลบ";
+$arr['title'] = "Confirm deletion";
 if ( !empty($this->item['permit']['del']) ) {
-	
+
 	$arr['form'] = '<form class="js-submit-form" action="'.URL. 'categories/del"></form>';
 	$arr['hiddenInput'][] = array('name'=>'id','value'=>$this->item['id']);
-	$arr['body'] = "คุณต้องการลบ <span class=\"fwb\">\"{$this->item['name_th']} ({$this->item['name_en']})\"</span> หรือไม่?";
-	
+	$arr['body'] = "You want to delete <span class=\"fwb\">\"{$this->item['name_th']} ({$this->item['name_en']})\"</span> ?";
+
 	$arr['button'] = '<button type="submit" class="btn btn-danger btn-submit"><span class="btn-text">'.$this->lang->translate('Delete').'</span></button>';
 	$arr['bottom_msg'] = '<a class="btn" role="dialog-close"><span class="btn-text">'.$this->lang->translate('Cancel').'</span></a>';
 }
 else{
 
-	$arr['body'] = "คุณไม่สามารถลบ <span class=\"fwb\">\"{$this->item['name_th']} ({$this->item['name_en']})\"</span> ได้?";	
-	$arr['button'] = '<a href="#" class="btn btn-cancel" role="dialog-close"><span class="btn-text">ปิด</span></a>';
+	$arr['body'] = "You can not delete <span class=\"fwb\">\"{$this->item['name_th']} ({$this->item['name_en']})\"</span> ?";
+	$arr['button'] = '<a href="#" class="btn btn-cancel" role="dialog-close"><span class="btn-text">Close</span></a>';
 }
 
 
