@@ -3,11 +3,11 @@
 $tr = "";
 $tr_total = "";
 
-if( !empty($this->results['lists']) ){ 
+if( !empty($this->results['lists']) ){
     //print_r($this->results); die;
 
     $seq = 0;
-    foreach ($this->results['lists'] as $i => $item) { 
+    foreach ($this->results['lists'] as $i => $item) {
 
         $cls = $i%2 ? 'even' : "odd";
 
@@ -21,16 +21,16 @@ if( !empty($this->results['lists']) ){
             $address .= $item['address'];
         }
         if( !empty($item['street']) ){
-            $address .= ' <span class="fwb">ถนน </span>'.$item['street'];
+            $address .= ' <span class="fwb">Road </span>'.$item['street'];
         }
         if( !empty($item['supdistrict']) ){
-            $address .= ' <span class="fwb">แขวง/ตำบล </span>'.$item['supdistrict'];
+            $address .= ' <span class="fwb">District </span>'.$item['supdistrict'];
         }
         if( !empty($item['district']) ){
-            $address .= ' <span class="fwb">เขต/อำเภอ </span>'.$item['district'];
+            $address .= ' <span class="fwb">Area </span>'.$item['district'];
         }
         if( !empty($item['province_name']) ){
-            $address .= ' <span class="fwb">จังหวัด </span>'.$item['province_name'];
+            $address .= ' <span class="fwb">Province </span>'.$item['province_name'];
         }
         if( !empty($item['zip']) ){
             $address .= ' <span class="fwb">'.$item['zip'].'</span>';

@@ -1,19 +1,19 @@
-<?php 
+<?php
 $address = '';
 if( !empty($this->item['address']) ){
 	$address .= $this->item['address'];
 }
 if( !empty($this->item['street']) ){
-	$address .= ' <span class="fwb">ถนน </span>'.$this->item['street'];
+	$address .= ' <span class="fwb">Road </span>'.$this->item['street'];
 }
 if( !empty($this->item['supdistrict']) ){
-	$address .= ' <span class="fwb">แขวง/ตำบล </span>'.$this->item['supdistrict'];
+	$address .= ' <span class="fwb">District </span>'.$this->item['supdistrict'];
 }
 if( !empty($this->item['district']) ){
-	$address .= ' <span class="fwb">เขต/อำเภอ </span>'.$this->item['district'];
+	$address .= ' <span class="fwb">Area </span>'.$this->item['district'];
 }
 if( !empty($this->item['province_name']) ){
-	$address .= ' <span class="fwb">จังหวัด </span>'.$this->item['province_name'];
+	$address .= ' <span class="fwb">Province </span>'.$this->item['province_name'];
 }
 if( !empty($this->item['country_name']) ){
 	$address .= ' <span class="fwb">'.$this->item['country_name'].'</span>';
@@ -88,8 +88,8 @@ $total = 0;
 									</tr>
 								</thead>
 								<tbody>
-									<?php 
-									if( !empty($this->item['check']) ) { 
+									<?php
+									if( !empty($this->item['check']) ) {
 										$no=0;
 										foreach ($this->item['check'] as $key => $value) {
 											$no++;
@@ -104,7 +104,7 @@ $total = 0;
 												<td class="contact"><?=$value['bank_name']?> (<?=$value['bank_code']?>)</td>
 												<td class="price"><?=number_format($value['price'],2)?></td>
 												<td class="status">
-													<?php if( !empty($value['image_id']) ) { 
+													<?php if( !empty($value['image_id']) ) {
 														echo '<span class="gbtn"><a href="'.URL.'paycheck/showPicture/'.$value['id'].'" data-plugins="dialog" class="btn btn-blue btn-no-padding"><i class="icon-eye"></i></a></span>';
 													}else{
 														echo "-";
@@ -121,7 +121,7 @@ $total = 0;
 													</div>
 												</td>
 											</tr>
-											<?php 
+											<?php
 										}
 									}
 									else{
@@ -158,7 +158,7 @@ $total = 0;
 								<tbody>
 									<?php if( !empty($this->events['lists']) ){
 										$no=0;
-										foreach ($this->events['lists'] as $key => $value) { $no++; 
+										foreach ($this->events['lists'] as $key => $value) { $no++;
 											$time = 'ทั้งวัน';
 											$start_time = date("H:i", strtotime($value['start']));
 											if( $start_time != '00:00') {
@@ -181,9 +181,9 @@ $total = 0;
 													</span>
 												</td>
 											</tr>
-											<?php 
+											<?php
 										}
-									} 
+									}
 									else{
 										echo '<tr>
 												<td colspan="5" style="text-align:center;">

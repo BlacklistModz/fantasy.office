@@ -5,8 +5,8 @@
 			<thead>
 				<tr>
 					<th class="ID">CODE</th>
-					<th class="name">ชื่อเซลล์</th>
-					<th class="status">ดูรายการ</th>
+					<th class="name">Saller name</th>
+					<th class="status">View items</th>
 					<th class="status_str">Comission</th>
 				</tr>
 			</thead>
@@ -40,7 +40,7 @@
 				<tr>
 					<th colspan="3">
 						<div class="tar">
-							<span class="fwb" style="font-size:20px;">รวม</span>
+							<span class="fwb" style="font-size:20px;">Total</span>
 						</div>
 					</th>
 					<th>

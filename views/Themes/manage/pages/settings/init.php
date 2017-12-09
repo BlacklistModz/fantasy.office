@@ -17,7 +17,7 @@ if( !empty($sub) ){
 }
 
 $sub = array();
-$sub[] = array('text'=>'จัดการผู้ดูแลระบบ', 'key'=>'admins', 'url'=>URL.'settings/accounts/admins');
+$sub[] = array('text'=>'Manage Administrator', 'key'=>'admins', 'url'=>URL.'settings/accounts/admins');
 if( !empty($sub) ){
 	$this->count_nav+=count($sub);
 	$menu[] = array('text'=>'Accounts', 'url'=>URL.'settings/company', 'sub'=>$sub);
@@ -25,14 +25,14 @@ if( !empty($sub) ){
 
 $sub = array();
 // $sub[] = array('text' => 'ธนาคาร', 'key'=>'bank', 'url' => URL.'settings/payments/bank');
-$sub[] = array('text' => 'บัญชีธนาคาร', 'key'=>'account', 'url' => URL.'settings/payments/account');
+$sub[] = array('text' => 'Bank account', 'key'=>'account', 'url' => URL.'settings/payments/account');
 if( !empty($sub) ){
 	$this->count_nav+=count($sub);
 	$menu[] = array('text' => 'Payments', 'url' => URL.'settings/company', 'sub' => $sub);
 }
 
 $sub = array();
-$sub[] = array('text' => 'ประเภทซัพพลายเออร์', 'key'=>'type', 'url' => URL.'settings/suppliers/type');
+$sub[] = array('text' => 'Supplier categories', 'key'=>'type', 'url' => URL.'settings/suppliers/type');
 if( !empty($sub) ){
 	$this->count_nav+=count($sub);
 	$menu[] = array('text' => 'Suppliers', 'url' => URL.'settings/suppliers', 'sub' => $sub);

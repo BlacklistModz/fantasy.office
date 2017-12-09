@@ -56,7 +56,7 @@
 					<label for="status" class="label">Select status</label>
 					<select ref="selector" name="status" class="inputtext">
 						<?php
-						echo '<option value="">--- เลือกสถานะ ---</option>';
+						echo '<option value="">--- Select status ---</option>';
 						foreach ($this->status as $key => $value) {
 							echo '<option value="'.$value['id'].'">'.$value['name'].'</option>';
 						}
