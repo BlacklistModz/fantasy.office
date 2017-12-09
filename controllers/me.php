@@ -7,7 +7,7 @@ class Me extends Controller {
     }
 
     public function index() {
-        
+
         // print_r($this->me); die;
         $this->error();
         // header('location:'.URL.'manage/products');
@@ -15,11 +15,11 @@ class Me extends Controller {
 
     public function navTrigger() {
         if( $this->format!='json' ) $this->error();
-        
+
 
         if( isset($_REQUEST['status']) ){
 
-            Session::init();                          
+            Session::init();
             Session::set('isPushedLeft', $_REQUEST['status']);
         }
     }
@@ -29,7 +29,7 @@ class Me extends Controller {
     public function updated($avtive='') {
 
         if( empty($_POST) || empty($this->me) || $this->format!='json' || $avtive=="" ) $this->error();
-        
+
         /**/
         /* account */
         if( $avtive=='account' ){
@@ -41,7 +41,7 @@ class Me extends Controller {
                 $dataPost = $form->fetch();
 
                 if( $this->model->query('admins')->is_user( $dataPost['username'] ) && $this->me['username']!=$dataPost['username'] ){
-                    $arr['error']['username'] = 'ชื่อผู้ใช้นี้ถูกใช้ไปแล้ว';
+                    $arr['error']['username'] = 'This username has already been used.';
                 }
 
                 // Your username must be longer than 4 characters.
@@ -49,11 +49,11 @@ class Me extends Controller {
                 if( empty($arr['error']) ){
 
                     $this->model->query('admins')->update( $this->me['id'], $dataPost );
-  
+
                     $arr['url'] = 'refresh';
-                    $arr['message'] = 'บันทึกเรียบร้อย';
+                    $arr['message'] = 'Save successfully.';
                 }
-                
+
             } catch (Exception $e) {
                 $arr['error'] = $this->_getError($e->getMessage());
             }
@@ -76,11 +76,11 @@ class Me extends Controller {
                 if( empty($arr['error']) ){
 
                     $this->model->query('admins')->update( $this->me['id'], $dataPost );
-  
+
                     $arr['url'] = 'refresh';
-                    $arr['message'] = 'บันทึกเรียบร้อย';
+                    $arr['message'] = 'Save successfully.';
                 }
-                
+
             } catch (Exception $e) {
                 $arr['error'] = $this->_getError($e->getMessage());
             }
@@ -96,15 +96,15 @@ class Me extends Controller {
             $data = $_POST;
             $arr = array();
             if( !$this->model->query('admins')->loginLaravel($this->me['username'], $data['password_old']) ){
-                $arr['error']['password_old'] = "รหัสผ่านไม่ถูกต้อง";
+                $arr['error']['password_old'] = "Password is incorrect.";
             } elseif ( strlen($data['password_new']) < 4 ){
-                $arr['error']['password_new'] = "รหัสผ่านสั้นเกินไป อย่างน้อย 4 ตัวอักษรขึ้นไป";
+                $arr['error']['password_new'] = "Passwords are too short for at least 4 characters.";
 
             } elseif ($data['password_new'] == $data['password_old']){
-                $arr['error']['password_new'] = "รหัสผ่านต้องต่างจากรหัสผ่านเก่า";
+                $arr['error']['password_new'] = "Passwords must be different from old passwords.";
 
             } elseif ($data['password_new'] != $data['password_confirm']){
-                $arr['error']['password_confirm'] = "คุณต้องใส่รหัสผ่านที่เหมือนกันสองครั้งเพื่อเป็นการยืนยัน";
+                $arr['error']['password_confirm'] = "You must enter the same password twice to confirm.";
             }
 
             if( !empty($arr['error']) ){
@@ -116,7 +116,7 @@ class Me extends Controller {
                 ));
 
                 $arr['url'] = 'refresh';
-                $arr['message'] = 'บันทึกข้อมูลเรียนร้อย';
+                $arr['message'] = 'Save completed.';
             }
 
             echo json_encode($arr);
@@ -126,7 +126,7 @@ class Me extends Controller {
         $this->error();
     }
     /*public function change_password() {
-        
+
         if( empty($this->me) || $this->format!='json' ) $this->error();
 
         if( !empty($_POST) ){

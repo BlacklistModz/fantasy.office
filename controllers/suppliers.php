@@ -102,7 +102,7 @@ class Suppliers extends Controller {
             	if( $item['name'] == $postData['sup_name'] ) $has_name = false;
             }
             if( $this->model->is_name($postData['sup_name']) && $has_name ){
-            	$arr['error']['sup_name'] = 'ตรวจพบชื่อซ้ำในระบบ';
+            	$arr['error']['sup_name'] = 'Detected names in the system.';
             }
 
     		if( empty($arr['error']) ){
@@ -116,7 +116,7 @@ class Suppliers extends Controller {
     				$this->model->insert($postData);
     			}
 
-    			$arr['message'] = 'บันทึกเรียบร้อย';
+    			$arr['message'] = 'Save successfully.';
     			$arr['url'] = 'refresh';
     		}
 
@@ -143,11 +143,11 @@ class Suppliers extends Controller {
     	if( !empty($_POST) ){
     		if( !empty($item['permit']['del']) ){
     			$this->model->delete($id);
-    			$arr['message'] = 'ลบข้อมูลเรียบร้อย';
+    			$arr['message'] = 'Delete data successfully.';
     			$arr['url'] = !empty($_POST["next"]) ? $_POST["next"] : 'refresh';
     		}
     		else{
-    			$arr['message'] = 'ไม่สามารถลบข้อมูลได้';
+    			$arr['message'] = 'Data can not be deleted.';
     		}
     		echo json_encode($arr);
     	}
@@ -164,7 +164,7 @@ class Suppliers extends Controller {
         $data['sup_'.$field] = isset($_REQUEST['value'])? $_REQUEST['value']:'';
         $this->model->update($id, $data);
 
-        $arr['message'] = 'บันทึกเรียบร้อย';
+        $arr['message'] = 'Save successfully.';
         echo json_encode($arr);
 	}
 
@@ -206,7 +206,7 @@ class Suppliers extends Controller {
                 if( $item['name'] == $postData['name'] ) $has_name = false;
             }
             if( $this->model->is_type($postData['name']) && $has_name ){
-                $arr['error']['type_name'] = 'ตรวจพบชื่อซ้ำในระบบ';
+                $arr['error']['type_name'] = 'Detected names in the system.';
             }
 
             if( empty($arr['error']) ){
@@ -216,7 +216,7 @@ class Suppliers extends Controller {
                 else{
                     $this->model->insertType($postData);
                 }
-                $arr['message'] = 'บันทึกเรียบร้อย';
+                $arr['message'] = 'Save successfully.';
                 $arr['url'] = 'refresh';
             }
 
@@ -235,11 +235,11 @@ class Suppliers extends Controller {
         if( !empty($_POST) ){
             if( !empty($item['permit']['del']) ){
                 $this->model->deleteType($id);
-                $arr['message'] = 'ลบข้อมูลเรียบร้อย';
+                $arr['message'] = 'Delete data successfully.';
                 $arr['url'] = 'refresh';
             }
             else{
-                $arr['message'] = 'ไม่สามารถลบข้อมูลได้';
+                $arr['message'] = 'Data can not be deleted.';
             }
             echo json_encode($arr);
         }
@@ -329,15 +329,15 @@ class Suppliers extends Controller {
                             $this->model->import( $input );
                         }
 
-                        $arr['message'] = 'บันทึกเรียบร้อย';
+                        $arr['message'] = 'Save successfully';
                         $arr['url'] = 'refresh';
                     }
                     else{
-                        $arr['error']['file'] = 'รองรับ .xls หรือ .xlsx เท่านั้น';
+                        $arr['error']['file'] = '.xls or .xlsx only';
                     }
                 }
                 else{
-                    $arr['error']['file'] = 'กรุณาเลือกไฟล์';
+                    $arr['error']['file'] = 'Please select a file.';
                 }
 
             } catch (Exception $e) {

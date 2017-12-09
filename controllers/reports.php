@@ -1,4 +1,4 @@
-<?php 
+<?php
 class Reports extends Controller {
 
     public function __construct() {
@@ -8,7 +8,7 @@ class Reports extends Controller {
     public function comission(){
 
         $this->view->setPage('on', 'comission');
-        $this->view->setPage('title', 'รายการค่าคอมมิชชั่น');
+        $this->view->setPage('title', 'Comissions');
 
     	$month = isset($_REQUEST["month"]) ? $_REQUEST["month"] : date("m");
     	$year = isset($_REQUEST["year"]) ? $_REQUEST["year"] : date("Y");
@@ -59,7 +59,7 @@ class Reports extends Controller {
     public function revenue(){
 
         $this->view->setPage('on', 'revenue');
-        $this->view->setPage('title', 'รายงานรายรับ');
+        $this->view->setPage('title', 'Receipt report.');
 
         $start = isset($_REQUEST["period_start"]) ? $_REQUEST["period_start"] : date("Y-m-d");
         $end = isset($_REQUEST["period_end"]) ? $_REQUEST["period_end"] : date("Y-m-d");
@@ -77,7 +77,7 @@ class Reports extends Controller {
         $this->view->setData('results', $results);
 
         if( empty($_GET["main"]) ){
-           $this->view->render('reports/revenue/display'); 
+           $this->view->render('reports/revenue/display');
         }
         else{
             $this->view->render('reports/revenue/sections/order-lists');
