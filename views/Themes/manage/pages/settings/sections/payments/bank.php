@@ -11,14 +11,14 @@ $url = URL .'payments/';
 
 </div>
 
-<div class="setting-title"><i class="icon-credit-card"></i> ธนาคาร</div>
+<div class="setting-title"><i class="icon-credit-card"></i> Bank</div>
 </div>
 
 <section class="setting-section">
 	<table class="settings-table admin"><tbody>
 		<tr>
-			<th class="status">อักษรย่อ</th>
-			<th class="name">ธนาคาร</th>
+			<th class="status">Acronym</th>
+			<th class="name">Bank</th>
 			<th class="actions"><?=$this->lang->translate('Action')?></th>
 		</tr>
 
@@ -30,7 +30,7 @@ $url = URL .'payments/';
 			<td class="actions whitespace">
 				<span class=""><a data-plugins="dialog" href="<?=$url?>edit_bank/<?=$item['id'];?>" class="btn btn-orange"><i class="icon-pencil"></i></a></span>
 				<span class=""><a data-plugins="dialog" href="<?=$url?>del_bank/<?=$item['id'];?>" class="btn btn-red"><i class="icon-trash"></i></a></span>
-					
+
 			</td>
 
 		</tr>

@@ -4,7 +4,7 @@
 		<table class="table-bordered mtm">
 			<thead>
 				<tr>
-					<th class="ID">CODE</th>
+					<th class="ID">Code</th>
 					<th class="name">Saller name</th>
 					<th class="status">View items</th>
 					<th class="status_str">Comission</th>

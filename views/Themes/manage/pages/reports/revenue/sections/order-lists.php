@@ -5,11 +5,11 @@
 		<table class="table-bordered mtm">
 			<thead>
 				<tr>
-					<th class="ID">ลำดับ</th>
-					<th class="date">วันที่</th>
-					<th class="address">เลขที่ Order</th>
-					<th class="name">ชื่อร้าน / ชื่อผู้สั่ง</th>
-					<th class="price">ราคารวม</th>
+					<th class="ID">Order</th>
+					<th class="date">Date</th>
+					<th class="address">Order number</th>
+					<th class="name">Store Name / Order Name</th>
+					<th class="price">Total price</th>
 				</tr>
 			</thead>
 			<tbody>

@@ -11,7 +11,7 @@ $url = URL .'pallets/';
 
 </div>
 
-<div class="setting-title">ยี่ห้อพาเลท</div>
+<div class="setting-title">Pallets Type</div>
 </div>
 
 <section class="setting-section">
@@ -29,10 +29,10 @@ $url = URL .'pallets/';
 			<td class="status" style="width: 90px;"><?=$item["status_arr"]["name"]?></td>
 
 			<td class="actions whitespace">
-				
+
 				<span class=""><a data-plugins="dialog" href="<?=$url?>edit_brand/<?=$item['id'];?>" class="btn btn-orange"><i class="icon-pencil"></i></a></span>
 				<span class=""><a data-plugins="dialog" href="<?=$url?>del_brand/<?=$item['id'];?>" class="btn btn-red"><i class="icon-trash"></i></a></span>
-					
+
 			</td>
 
 		</tr>
