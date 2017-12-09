@@ -3,11 +3,11 @@
 $tr = "";
 $tr_total = "";
 
-if( !empty($this->results['lists']) ){ 
+if( !empty($this->results['lists']) ){
     //print_r($this->results); die;
 
     $seq = 0;
-    foreach ($this->results['lists'] as $i => $item) { 
+    foreach ($this->results['lists'] as $i => $item) {
 
         $cls = $i%2 ? 'even' : "odd";
 
@@ -17,9 +17,9 @@ if( !empty($this->results['lists']) ){
 
             '<td class="name">'.
                 '<div class="ellipsis"><a title="'.$item['name_store'].'" class="fwb" href="'.URL.'customers/'.$item['id'].'">'.(!empty($item['name_store']) ? $item['name_store'] : "-").'</a></div>'.
-                '<div class="date-float fsm fcg">เพิ่มเมื่อ: '. ( $item['created_at'] != '0000-00-00 00:00:00' ? $this->fn->q('time')->live( $item['created_at'] ):'-' ) .'</div>'.
+                '<div class="date-float fsm fcg">Add on: '. ( $item['created_at'] != '0000-00-00 00:00:00' ? $this->fn->q('time')->live( $item['created_at'] ):'-' ) .'</div>'.
 
-                '<div class="date-float fsm fcg">แก้ไขล่าสุด: '. ( $item['updated_at'] != '0000-00-00 00:00:00' ? $this->fn->q('time')->live( $item['updated_at'] ):'-' ) .'</div>'.
+                '<div class="date-float fsm fcg">Recent changes: '. ( $item['updated_at'] != '0000-00-00 00:00:00' ? $this->fn->q('time')->live( $item['updated_at'] ):'-' ) .'</div>'.
 
             '</td>'.
 

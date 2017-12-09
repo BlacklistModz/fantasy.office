@@ -1,12 +1,12 @@
 <?php
 
-$title[] = array('key'=>'ID', 'text'=>'รหัสลูกค้า', 'sort'=>'sub_code');
-$title[] = array('key'=>'name', 'text'=>'ชื่อร้านค้า / ลูกค้า', 'sort'=>'name_store');
-$title[] = array('key'=>'contact', 'text'=>'เซลล์', 'sort'=>'sale_code');
-$title[] = array('key'=>'email', 'text'=>'จังหวัด', 'sort'=>'province');
-$title[] = array('key'=>'phone', 'text'=>'หมายเลขโทรศัพท์', 'sort'=>'phone');
-$title[] = array('key'=>'status', 'text'=>'สถานะ');
-$title[] = array('key'=>'actions', 'text'=>'จัดการ');
+$title[] = array('key'=>'ID', 'text'=>'Customer code', 'sort'=>'sub_code');
+$title[] = array('key'=>'name', 'text'=>'Shop name / customer', 'sort'=>'name_store');
+$title[] = array('key'=>'contact', 'text'=>'Sale', 'sort'=>'sale_code');
+$title[] = array('key'=>'email', 'text'=>'Province', 'sort'=>'province');
+$title[] = array('key'=>'phone', 'text'=>'Telephone number', 'sort'=>'phone');
+$title[] = array('key'=>'status', 'text'=>'Status');
+$title[] = array('key'=>'actions', 'text'=>'Actions');
 
 $this->tabletitle = $title;
 $this->getURL =  URL.'customers/';

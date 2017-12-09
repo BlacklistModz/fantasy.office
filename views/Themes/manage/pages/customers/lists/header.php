@@ -5,13 +5,13 @@
 
 			<ul class="lfloat" ref="actions">
 				<li class="mt">
-					<h2><i class="icon-users mrs"></i><span> รายชื่อร้านค้า/ลูกค้า</span></h2>
+					<h2><i class="icon-users mrs"></i><span> Store / customer list</span></h2>
 				</li>
 
 				<li class="mt"><a class="btn js-refresh" data-plugins="tooltip" data-options="<?=$this->fn->stringify(array('text'=>'refresh'))?>"><i class="icon-refresh"></i></a></li>
 
 				<li class="divider"></li>
-				
+
 				 <!-- data-plugins="dialog" -->
 				<li class="mt">
 					<a href="<?=URL?>customers/import" data-plugins="dialog" class="btn btn-blue"><i class="icon-plus"></i> Import Excel</a>
@@ -24,7 +24,7 @@
 				</li>
 
 			</ul>
-			
+
 			<ul class="lfloat selection hidden_elem" ref="selection">
 				<li><span class="count-value"></span></li>
 				<li><a class="btn-icon"><i class="icon-download"></i></a></li>
@@ -33,30 +33,30 @@
 
 
 			<ul class="rfloat" ref="control">
-				<li><label class="fwb fcg fsm" for="limit">แสดง</label>
+				<li><label class="fwb fcg fsm" for="limit">Show</label>
 				<select ref="selector" id="limit" name="limit" class="inputtext"><?php
 					echo '<option value="20">20</option>';
 					echo '<option selected value="50">50</option>';
 					echo '<option value="100">100</option>';
 					echo '<option value="200">200</option>';
-				?></select><span id="more-link">คำนวณ...</span></li>
+				?></select><span id="more-link">Loading...</span></li>
 			</ul>
-			
+
 		</div>
 		<div class="clearfix mbl mtm">
 			<ul class="lfloat" ref="control">
 				<li>
-					<label class="label">เลือกเซลล์</label>
+					<label class="label">Select sale</label>
 					<select ref="selector" name="sale" class="inputtext">
 						<option value="">-</option>
-						<?php 
+						<?php
 						foreach ($this->sales as $key => $value) {
 							echo '<option value="'.$value['code'].'">'.$value['name'].'</option>';
 						}
 						?>
 					</select>
 				</li>
-				
+
 			</ul>
 			<ul class="rfloat" ref="control">
 				<li class="mt"><form class="form-search" action="#">
@@ -68,7 +68,7 @@
 				</form></li>
 			</ul>
 		</div>
-		
+
 	</div>
 
 </div>

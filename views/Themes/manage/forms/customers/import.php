@@ -6,26 +6,26 @@ $form = $form->create()
 	->addClass('form-insert');
 
 $form 	->field("file")
-		->label("เลือกไฟล์")
+		->label("Select file")
 		->addClass('inputtext')
 		->type('file')
 		->attr('accept', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel')
 		->value('');
 
 $form 	->field("start_row")
-		->label("เริ่มอ่านข้อมูลในแถวที่")
+		->label("Read the data in rows.")
 		->addClass('inputtext')
 		->type('number')
 		->value(1);
 
 $form 	->field("tap")
-		->label("หน้าที่ต้องการ Import (แถบด้านล่าง แถบที่ 1 ใส่ 0)")
+		->label("The page you want to import (the bar below the 1st bar, enter 0)")
 		->addClass('inputtext')
 		->type('number')
 		->value(0);
 
 # set form
-$arr['title'] = 'Import ไฟล์ xls, xlsx';
+$arr['title'] = 'Import File xls, xlsx';
 
 $arr['form'] = '<form class="js-submit-form" method="post" action="'.URL. 'customers/import" enctype="multipart/form-data"></form>';
 

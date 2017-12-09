@@ -16,15 +16,15 @@
 			<div class="clearfix">
 				<div class="span12">
 					<div class="uiBoxOverlay pam pas">
-						<h3 class="mbm fwb"><i class="icon-user"></i> ข้อมูลลูกค้า</h3>
+						<h3 class="mbm fwb"><i class="icon-user"></i> Customer data</h3>
 						<ul>
 							<li>
-								<label><span class="fwb">ชื่อร้านค้า : </span><?=$this->item['name_store']?></label>
+								<label><span class="fwb">Store name : </span><?=$this->item['name_store']?></label>
 							</li>
 							<li>
-								<label><span class="fwb">รหัส : </span><?=$this->item['sub_code']?></label>
+								<label><span class="fwb">Code : </span><?=$this->item['sub_code']?></label>
 							</li>
-							<?php 
+							<?php
 							$num=1;
 							foreach ($this->item['address'] as $key => $value) {
 
@@ -33,16 +33,16 @@
 									$address .= $value['address'];
 								}
 								if( !empty($value['road']) ){
-									$address .= ' <span class="fwb">ถนน</span> '.$value['road'];
+									$address .= ' <span class="fwb">Road</span> '.$value['road'];
 								}
 								if( !empty($value['district']) ){
-									$address .= ' <span class="fwb">แขวง/ตำบล</span> '.$value['district'];
+									$address .= ' <span class="fwb">District</span> '.$value['district'];
 								}
 								if( !empty($value['area']) ){
-									$address .= ' <span class="fwb">เขต/อำเภอ</span> '.$value['area'];
+									$address .= ' <span class="fwb">Area</span> '.$value['area'];
 								}
 								if( !empty($value['province']) ){
-									$address .= ' <span class="fwb">จังหวัด</span> '.$value['province'];
+									$address .= ' <span class="fwb">Province</span> '.$value['province'];
 								}
 								if( !empty($value['post_code']) ){
 									$address .= ' '.$value['post_code'];
@@ -53,7 +53,7 @@
 
 								echo '<li>
 										<label>
-											<span class="fwb">(ที่อยู่ '.$num.')</span> '.$address.'
+											<span class="fwb">(Address '.$num.')</span> '.$address.'
 										</label>
 									 </li>';
 								$num++;
@@ -71,18 +71,18 @@
 							<table class="table-bordered">
 								<thead>
 									<tr>
-										<th class="ID">ลำดับ</th>
+										<th class="ID">Order</th>
 										<th class="name">ORDER CODE</th>
-										<th class="price">ยอดรวม</th>
+										<th class="price">Total</th>
 									</tr>
 								</thead>
 								<tbody>
-									<?php 
-									$num=0; 
+									<?php
+									$num=0;
 									$total_price = 0;
 									if( !empty($this->item['orders']) ){
-										foreach ($this->item['orders'] as $key => $value) { 
-											$num++; 
+										foreach ($this->item['orders'] as $key => $value) {
+											$num++;
 											$total_price += $value['price'];
 											?>
 											<tr>
@@ -94,15 +94,15 @@
 												</td>
 												<td class="price"><?=number_format($value['price'],2)?></td>
 											</tr>
-											<?php 
-										} 
+											<?php
+										}
 									}else{
-										echo '<td colspan="3" style="text-align:center; color:red;" class="fwb">ไม่พบข้อมูลการซื้อสินค้า</td>';
+										echo '<td colspan="3" style="text-align:center; color:red;" class="fwb">No purchase information found.</td>';
 									}
 									?>
 								</tbody>
 								<tfoot>
-									<th colspan="2" style="text-align: right;" class="fwb">รวม</th>
+									<th colspan="2" style="text-align: right;" class="fwb">Total</th>
 									<th class="fwb" style="text-align: center;"><?=number_format($total_price, 2)?></th>
 								</tfoot>
 							</table>
