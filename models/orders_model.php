@@ -34,9 +34,9 @@ class Orders_model extends Model{
 
             'sort' => isset($_REQUEST['sort'])? $_REQUEST['sort']: 'created_at',
             'dir' => isset($_REQUEST['dir'])? $_REQUEST['dir']: 'DESC',
-            
+
             'time'=> isset($_REQUEST['time'])? $_REQUEST['time']:time(),
-            
+
             'q' => isset($_REQUEST['q'])? $_REQUEST['q']:null,
 
         ), $options);
@@ -64,8 +64,8 @@ class Orders_model extends Model{
             foreach ($arrQ as $key => $value) {
                 $wq .= !empty( $wq ) ? " OR ":'';
                 $wq .= "ord_code LIKE :q{$key}
-                        OR user_code LIKE :q{$key} 
-                        OR user_name LIKE :q{$key} 
+                        OR user_code LIKE :q{$key}
+                        OR user_name LIKE :q{$key}
                         OR ord_sale_code LIKE :q{$key}";
                 $where_arr[":q{$key}"] = "%{$value}%";
                 $where_arr[":s{$key}"] = "{$value}%";
@@ -226,7 +226,7 @@ class Orders_model extends Model{
                          , a.account_number
                          , a.account_name
                          , a.account_branch";
-    private $p_table = "payments p 
+    private $p_table = "payments p
                         LEFT JOIN payments_type t ON p.pay_type_id=t.type_id
                         LEFT JOIN payments_bank b ON p.pay_bank_id=b.bank_id
                         LEFT JOIN payments_account a ON p.pay_account_id=a.account_id";
@@ -250,11 +250,11 @@ class Orders_model extends Model{
     #TYPE OF PAYMENTS
     public function term_of_payment(){
 
-        $a[] = array('id'=>1, 'name'=>'เงินสด');
-        $a[] = array('id'=>2, 'name'=>'เครดิต 30 วัน');
-        $a[] = array('id'=>3, 'name'=>'บัตรเครดิต');
-        $a[] = array('id'=>4, 'name'=>'โอนเงิน');
-        $a[] = array('id'=>5, 'name'=>'แบ่งจ่าย');
+        $a[] = array('id'=>1, 'name'=>'Cash');
+        $a[] = array('id'=>2, 'name'=>'30 day credit');
+        $a[] = array('id'=>3, 'name'=>'Credit Cards');
+        $a[] = array('id'=>4, 'name'=>'transfer money');
+        $a[] = array('id'=>5, 'name'=>'sperately pay');
 
         return $a;
     }
