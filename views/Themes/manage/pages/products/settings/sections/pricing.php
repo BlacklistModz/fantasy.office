@@ -9,10 +9,10 @@ $form = $form->create()
 	->addClass('js-submit-form');
 
 $form 	->field("frontend")
-		->label("ราคาสมาชิก")
+		->label("Exclude Price")
 		->addClass('inputtext')
 		->autocomplete('off')
-		->value( !empty($this->item['pricing']['frontend']) ? $this->item['pricing']['frontend'] : '' );
+		->value( !empty($this->item['pricing']['frontend']) ? round($this->item['pricing']['frontend']) : '' );
 
 /* $form 	->field("member")
 		->label("ราคาสมาชิก")
@@ -21,9 +21,9 @@ $form 	->field("frontend")
 		->value( !empty($this->item['pricing']['member']) ? $this->item['pricing']['member'] : '' ); */
 
 $form 	->field("vat")
-		->label("ราคา VAT")
+		->label("VAT")
 		->addClass('inputtext')
 		->autocomplete('off')
-		->value( !empty($this->item['pricing']['vat']) ? $this->item['pricing']['vat'] : '' );
+		->value( !empty($this->item['pricing']['vat']) ? round($this->item['pricing']['vat']) : '' );
 
 echo $form->html();

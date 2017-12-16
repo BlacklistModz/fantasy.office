@@ -1,8 +1,8 @@
-<?php 
+<?php
 
 $list = array();
 
-$list[] = array('label'=> 'รายละเอียดเบื้องต้น', 'section'=>'basic');
-$list[] = array('label'=> 'วิธีการใช้งาน / ผลิตภัณฑ์', 'section'=>'howtouse');
-$list[] = array('label'=> 'ราคาสินค้า', 'section'=>'pricing');
-$list[] = array('label'=> 'รูปภาพสินค้า', 'section'=>'photos');
+$list[] = array('label'=> 'Introduction', 'section'=>'basic');
+$list[] = array('label'=> 'How to use / product', 'section'=>'howtouse');
+$list[] = array('label'=> 'Price', 'section'=>'pricing');
+$list[] = array('label'=> 'Product Image', 'section'=>'photos');

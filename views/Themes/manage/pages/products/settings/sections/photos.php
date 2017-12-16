@@ -6,10 +6,10 @@ $form = $form->create()
 	->elem('div')
 	->addClass('form-insert');
 
-for ($i=1; $i <= 3 ; $i++) { 
+for ($i=1; $i <= 3 ; $i++) {
 	$form 	->field("image_{$i}")
 			->name("image[$i]")
-			->label("อัพโหลดรูปสินค้า {$i} *ควรมีขนาด 350 x 350")
+			->label("Upload a photo {$i} *Should be 350 x 350")
 			->type("file")
 			->addClass('inputtext')
 			->autocomplete('off')

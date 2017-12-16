@@ -9,26 +9,26 @@ $form = $form->create()
 	->addClass('form-insert');
 
 $form   ->field("pds_categories_id")
-        ->label("หมวดหมู่สินค้า")
+        ->label("Categories")
         ->addClass('inputtext')
         ->autocomplete('off')
         ->select( $this->category, 'id', 'name_th' )
         ->value( !empty($this->item['pds_categories_id']) ? $this->item['pds_categories_id'] : '' );
 
 $form   ->field("pds_code")
-        ->label("รหัสสินค้า")
+        ->label("Product code")
         ->addClass('inputtext')
         ->autocomplete('off')
         ->value( !empty($this->item['pds_code']) ? $this->item['pds_code'] : '' );
 
 $form   ->field("pds_name")
-        ->label("ชื่อสินค้า")
+        ->label("Product name")
         ->addClass('inputtext')
         ->autocomplete('off')
         ->value( !empty($this->item['pds_name']) ? $this->item['pds_name'] : '' );
 
 $form   ->field("pds_detail")
-        ->label("รายละเอียด")
+        ->label("Description")
         ->addClass('inputtext')
         ->type('textarea')
         ->attr('data-plugins', 'editor')
@@ -41,7 +41,7 @@ $form   ->field("pds_detail")
         ->value( !empty($this->item['pds_detail']) ?$this->fn->q('text')->strip_tags_editor(  $this->item['pds_detail']): '' );
 
 $form   ->field("pds_barcode")
-        ->label("บาร์โค้ด")
+        ->label("Barcode")
         ->addClass('inputtext')
         ->autocomplete('off')
         ->value( !empty($this->item['pds_barcode']) ? $this->item['pds_barcode'] : '' );

@@ -7,7 +7,7 @@ $form = $form->create()
 	->addClass('form-insert');
 
 $form 	->field("pds_howtouse")
-		->label("วิธีใช้งาน")
+		->label("How to use")
 		->addClass('inputtext')
 		->type('textarea')
 		->autocomplete('off')
@@ -20,7 +20,7 @@ $form 	->field("pds_howtouse")
         ->value( !empty($this->item['pds_howtouse']) ?$this->fn->q('text')->strip_tags_editor(  $this->item['pds_howtouse']): '' );
 
 $form 	->field("pds_capacity")
-		->label("ขนาดสินค้า")
+		->label("Product dimensions")
 		->addClass('inputtext')
 		->autocomplete('off')
 		->value( !empty($this->item['pds_capacity']) ? $this->item['pds_capacity'] : '' );

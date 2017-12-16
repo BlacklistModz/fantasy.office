@@ -3,12 +3,12 @@
     <?php foreach ($list as $key => $value) {
 
         $class = '';
-        
+
         if( $this->section == $value['section'] ){
             $class .= !empty($class) ? ' ':'';
             $class .= 'openPanel';
         }
-        
+
      ?>
     <li class="<?=$class?>">
         <div class="clearfix settingsListLink hidden_elem">
@@ -16,7 +16,7 @@
         </div>
         <div class="content">
             <form class="js-submit-form" action="<?=URL?>products/update/<?=$this->section?>/<?=$id?>" enctype="multipart/form-data">
-                <?php 
+                <?php
                 if( $this->section == $value['section'] ){
                     require "sections/{$value['section']}.php";
                 }
@@ -25,8 +25,8 @@
                 }
                 ?>
                 <div class="mtl clearfix">
-                    <button type="submit" class="btn-submit btn btn-green lfloat"><i class="icon-floppy-o"></i> บันทึก</button>
-                    <a href="<?=URL?>products" class="btn btn-red rfloat"><i class="icon-remove"></i> กลับ</a>
+                    <button type="submit" class="btn-submit btn btn-green lfloat"><i class="icon-floppy-o"></i> Save</button>
+                    <a href="<?=URL?>products" class="btn btn-red rfloat"><i class="icon-remove"></i> Back</a>
                 </div>
             </form>
         </div>

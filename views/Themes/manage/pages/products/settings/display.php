@@ -12,7 +12,7 @@ if( !empty($this->item) ){
 	<div class="profile-left" role="left" data-width="300">
 
 		<div class="profile-left-header" role="leftHeader">
-			
+
 			<div class="profile-left-title">
 				<h2><?=$title?> an Products</h2>
 				<?php if( !empty($this->item['updated']) ) { ?>
@@ -35,11 +35,11 @@ if( !empty($this->item) ){
 		<div class="profile-left-details form-insert-people" role="leftContent">
 
 	    <!--  -->
-	    <ul class="nav" style="box-shadow: rgba(255, 255, 255, .5) 0px 1px 0px 0px;border-bottom: 1px solid rgb(211, 211, 211);"><?php  
+	    <ul class="nav" style="box-shadow: rgba(255, 255, 255, .5) 0px 1px 0px 0px;border-bottom: 1px solid rgb(211, 211, 211);"><?php
 
 	    	$section_name = '';
 
-	    	foreach ($list as $key => $value) { 
+	    	foreach ($list as $key => $value) {
 
 	    		$cls = '';
 	    		if( $this->section == $value['section'] ){
@@ -64,7 +64,7 @@ if( !empty($this->item) ){
 	    <div style="box-shadow: rgba(255, 255, 255, .5) 0px 1px 0px 0px;border-bottom: 1px solid rgb(211, 211, 211);"></div>
 
 	    <div class="mvm">
-	    	<a style="width: 100%;text-align: left;" class="btn btn-red" href="<?=URL?>products/del/<?=$id?>" data-plugins="dialog"><i class="icon-trash-o mrs"></i><span>ลบ</span></a>
+	    	<a style="width: 100%;text-align: left;" class="btn btn-red" href="<?=URL?>products/del/<?=$id?>" data-plugins="dialog"><i class="icon-trash-o mrs"></i><span>Remove</span></a>
 	    </div>
 	    <?php } ?>
 
@@ -74,9 +74,9 @@ if( !empty($this->item) ){
 	<div role="content">
 		<div role="toolbar" class="cashier-toolbar">
 			<div class="mhl phl ptl clearfix">
-				
+
 				<h1 style="display: inline-block;"><?=( !empty($this->item['pds_name']) ? $this->item['pds_name'] : 'New Product' )?></h1>
-				<div>ตั้งค่า -> <?=$section_name?></div>
+				<div>Settings -> <?=$section_name?></div>
 			</div>
 		</div>
 		<!-- End: toolbar -->
