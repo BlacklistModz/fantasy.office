@@ -2149,3 +2149,124 @@ to{opacity:0;margin-top:80px;-webkit-transform:rotate(10deg);transform:rotate(10
 /* .ui-box-input .inputtext:disabled{
 	background-color: transparent !important;
 } */
+
+.editor-content {
+    line-height: 1.58
+}
+.editor-content h1,
+.editor-content h2,
+.editor-content h3,
+.editor-content h4,
+.editor-content h5,
+.editor-content h6 {
+    font-weight: 500;
+    margin: 25px 0 15px
+}
+.editor-content .img {
+    width: 100% !important;
+    height: auto !important
+}
+.editor-content * {
+    background-position: initial
+}
+.editor-content a[href] {
+    color: #00f;
+    text-decoration: none
+}
+.editor-content a[href]:hover {
+    text-decoration: underline
+}
+.editor-content h1 {
+    font-size: 34px
+}
+.editor-content h2 {
+    font-size: 30px
+}
+.editor-content h3 {
+    font-size: 26px
+}
+.editor-content h4 {
+    font-size: 22px
+}
+.editor-content h5 {
+    font-size: 18px
+}
+.editor-content h6 {
+    font-size: 14px
+}
+.editor-content p {
+    margin: 25px 0
+}
+.editor-content ol,
+.editor-content ul {
+    margin-left: 15px;
+    list-style-position: outside;
+    margin-bottom: 20px
+}
+.editor-content ol li,
+.editor-content ul li {
+    margin-left: 10px;
+    margin-bottom: 10px;
+    color: #626262
+}
+.editor-content ul {
+    list-style-type: disc
+}
+.editor-content ol {
+    list-style-type: decimal
+}
+.editor-content a[href] {
+    text-decoration: underline
+}
+.editor-content table {
+    width: 100%;
+    border-spacing: 0;
+    border-collapse: separate;
+    margin: 25px 0
+}
+.editor-content table td {
+    border: 1px solid #aaa;
+    vertical-align: top
+}
+.editor-content table td>h1:first-child,
+.editor-content table td>h2:first-child,
+.editor-content table td>h3:first-child,
+.editor-content table td>p:first-child {
+    margin-top: 0
+}
+.editor-content table td>h1:last-child,
+.editor-content table td>h2:last-child,
+.editor-content table td>h3:last-child,
+.editor-content table td>p:last-child {
+    margin-bottom: 0
+}
+.editor-content table caption,
+.editor-content table td,
+.editor-content table th {
+    padding: 15px 20px;
+    font: inherit
+}
+.editor-content table th {
+    font-weight: 400;
+    color: #6e6e6e;
+    background-position: 100% 100%;
+    background-size: 2px 10px;
+    background-repeat: no-repeat
+}
+.editor-content table th:last-child {
+    background: 0
+}
+.editor-content hr {
+    border-top: 2px solid #BBB
+}
+.editor-content blockquote {
+    border-left: 5px solid rgba(255, 59, 59, 0.3);
+    margin: 28px 0;
+    padding: 1px 20px;
+    color: #fff;
+    background-color: #ff7676
+}
+.editor-content ol li {
+    list-style: decimal;
+    display: list-item
+}

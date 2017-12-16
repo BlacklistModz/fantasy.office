@@ -31,12 +31,12 @@ $form   ->field("pds_detail")
         ->label("Description")
         ->addClass('inputtext')
         ->type('textarea')
-        ->attr('data-plugins', 'editor')
-        ->attr('data-options', $this->fn->stringify(array(
-            'image_upload_url' => URL .'media/set',
-            'album_obj_type'=>'products',
-            'album_obj_id'=>'2'
-        )))
+        ->attr('data-plugins', 'editor2')
+        // ->attr('data-options', $this->fn->stringify(array(
+        //     'image_upload_url' => URL .'media/set',
+        //     'album_obj_type'=>'products',
+        //     'album_obj_id'=>'2'
+        // )))
         ->autocomplete('off')
         ->value( !empty($this->item['pds_detail']) ?$this->fn->q('text')->strip_tags_editor(  $this->item['pds_detail']): '' );
 
