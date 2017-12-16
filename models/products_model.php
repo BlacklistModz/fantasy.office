@@ -107,6 +107,12 @@ class Products_Model extends Model{
     		$data['image_url'] = "http://fantasy.co.th/fileUploads/products/{$data['pds_FilePhoto']}";
     	}
 
+        $data['permit']['del'] = true;
+        $data['total_order'] = $this->db->count('orders_item', 'itm_id=:id' , array(':id'=>$data['id']));
+        if( !empty($data['total_order']) ){
+            $data['permit']['del'] = false;
+        }
+
         /* for($i=1;$i<=3;$i++){
             if( !empty($data['pds_image_'.$i.'_id']) ){
                 $image = $this->query('media')->get($data['pds_image_'.$i.'_id']);
