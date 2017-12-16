@@ -55,8 +55,6 @@ class Products extends Controller {
     public function update($section='basic', $id=null){
         $id = isset($_REQUEST["id"]) ? $_REQUEST["id"] : $id;
 
-        
-
         if( !empty($id) ){
             $item = $this->model->get($id);
             if( empty($item) ) $this->error();
@@ -189,8 +187,8 @@ class Products extends Controller {
             $arr['url'] = URL.'products/settings/photos/'.$id;
         } */
         elseif( $section == 'photos' ){
-            
-            for ($i=1; $i <= 3 ; $i++) { 
+
+            for ($i=1; $i <= 3 ; $i++) {
                 if( !empty($_FILES['image']['name'][$i]) ){
                     $userfile = array(
                         'name' => $_FILES['image']['name'][$i],
@@ -230,7 +228,7 @@ class Products extends Controller {
                         }
                         $_image = array(
                             'pds_id' => $id,
-                            'media_id' => $media['media_id'], 
+                            'media_id' => $media['media_id'],
                             'seq' => $seq
                         );
                         $this->model->setPermitPhotos( $_image );
@@ -303,9 +301,39 @@ class Products extends Controller {
             echo json_encode($arr);
         }
         else{
-            $this->view->item = $item;
             $this->view->setPage('path', 'Themes/manage/forms/products');
             $this->view->render('del_image');
         }
     }
+
+    // ลบสินค้า
+    public function del($id=null) {
+      // print_r($item);die;
+
+      $id = isset($_REQUEST["id"]) ? $_REQUEST["id"] : $id;
+      if( empty($id) || empty($this->me) || $this->format!='json' ) $this->error();
+
+      $item = $this->model->query('products')->get($id);
+      if( empty($item) ) $this->error();
+
+      if( !empty($_POST) ){
+        if( !empty($item['permit']['del']) ){
+    			// $this->model->delete($id);
+          $this->model->query('products')->del($id);
+    			$arr['message'] = 'Delete data successfully.';
+    			$arr['url'] = 'refresh';
+    		}
+    		else{
+    			$arr['message'] = 'Data can not be deleted.';
+    		}
+    		echo json_encode($arr);
+      }
+      else{
+        $this->view->setData('item', $item);
+        $this->view->setPage('path', 'Themes/manage/forms/products');
+        $this->view->render('del_item');
+      }
+
+    }
+
 }
