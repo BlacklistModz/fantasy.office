@@ -34,7 +34,7 @@ class Settings extends Controller {
             }
 
             $arr['url'] = 'refresh';
-            $arr['message'] = 'บันทึกเรียบร้อย';
+            $arr['message'] = 'Save successfully.';
 
             echo json_encode($arr);
         }

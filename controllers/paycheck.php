@@ -1,4 +1,4 @@
-<?php 
+<?php
 class paycheck extends Controller {
 
     public function __construct() {
@@ -8,7 +8,7 @@ class paycheck extends Controller {
     public function index(){
 
         $this->view->setPage('on', 'paycheck');
-        $this->view->setPage('title', 'รายการจ่ายเช็ค');
+        $this->view->setPage('title', 'Check lists');
 
         if( $this->format=='json' ){
             $results = $this->model->lists();
@@ -75,7 +75,7 @@ class paycheck extends Controller {
                 if( $item['number'] == $postData['check_number'] ) $has_check = false;
             }
             if( $this->model->is_check($postData['check_number']) && $has_check ){
-                $arr['error']['check_number'] = 'ตรวจพบเช็คใบนี้อยู่ในระบบแล้ว';
+                $arr['error']['check_number'] = 'This check has been detected in the system.';
             }
 
             if( empty($arr['error']) ){
@@ -133,7 +133,7 @@ class paycheck extends Controller {
                     }
                 }
 
-                $arr['message'] = 'บันทึกเรียบร้อย';
+                $arr['message'] = 'Save successfully.';
                 $arr['url'] = 'refresh';
             }
 
@@ -157,11 +157,11 @@ class paycheck extends Controller {
                 }
 
                 $this->model->delete($id);
-                $arr['message'] = 'ลบข้อมูลเรียบร้อย';
+                $arr['message'] = 'Delete data successfully.';
                 $arr['url'] = 'refresh';
             }
             else{
-                $arr['message'] = 'ไม่สามารถลบข้อมูลได้';
+                $arr['message'] = 'Data can not be deleted.';
             }
             echo json_encode($arr);
         }

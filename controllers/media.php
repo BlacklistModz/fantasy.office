@@ -3,9 +3,9 @@
 class Media extends Controller  {
 
     public function __construct() {
-        parent::__construct();        
+        parent::__construct();
     }
-    
+
     public function index() {
         $this->error();
     }
@@ -54,7 +54,7 @@ class Media extends Controller  {
         if( empty($media['error']) ){
             $media = $this->model->convert($media);
         }
-        
+
         echo json_encode( $media );
     }
 
@@ -67,7 +67,7 @@ class Media extends Controller  {
 
         $this->model->del( $id );
 
-        $arr['message'] = 'ลบรูปแล้ว';
+        $arr['message'] = 'Image deleted.';
         echo json_encode($arr);
     }
 
@@ -84,7 +84,7 @@ class Media extends Controller  {
 
             $this->model->query('media')->del($id);
 
-            $arr['message'] = 'ลบรูปแล้ว';
+            $arr['message'] = 'Image deleted.';
             echo json_encode($arr);
         }
         else{
@@ -92,12 +92,12 @@ class Media extends Controller  {
             $this->view->setData('item', $item);
             $this->view->setPage('path','Themes/manage/forms/media');
             $this->view->render("del");
-        }        
+        }
     }
 
 
     public function set_caption() {
-        
+
         $id = isset($_REQUEST['id']) ? $_REQUEST['id']: $id;
         if( empty($this->me) || $this->format!='json' || empty($id) ) $this->error();
 
@@ -112,14 +112,14 @@ class Media extends Controller  {
             foreach ($caption as $key => $value) {
                 if( !empty($value) ){
                     $a[$key] = $value;
-                } 
+                }
             }
             $caption = json_encode($a);
         }
 
         $this->model->set_caption($id, $caption);
 
-        $arr['message'] = 'บันทึกข้อมูลเรียบร้อย';
+        $arr['message'] = 'Save completed.';
         echo json_encode($arr);
     }
     public function set_sequence() {
@@ -132,7 +132,7 @@ class Media extends Controller  {
             $this->model->set_sequence($id, $seq);
         }
 
-        $arr['message'] = 'บันทึกข้อมูลเรียบร้อย';
+        $arr['message'] = 'Save completed.';
         echo json_encode($arr);
     }
 
@@ -158,12 +158,12 @@ class Media extends Controller  {
 
         $this->model->query('albums')->up_media( $id, array('media_caption'=> json_encode($data) ) );
 
-        $arr['message'] = 'บันทึกข้อมูลเรียบร้อย';
+        $arr['message'] = 'Save completed.';
         echo json_encode($arr);
     }
 
     public function lists() {
-        
+
         if( empty($this->me) || $this->format!='json' ) $this->error();
         echo json_encode( $this->model->lists() );
     }

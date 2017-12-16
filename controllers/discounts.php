@@ -9,7 +9,7 @@ class Discounts extends Controller {
     public function index($id=null){
 
     	$this->view->setPage('on', 'discounts');
-    	$this->view->setPage('title', 'จัดการส่วนลด');
+    	$this->view->setPage('title', 'Discount deal');
 
     	$id = isset($_REQUEST["id"]) ? $_REQUEST["id"] : $id;
     	if( !empty($id) ){
@@ -39,7 +39,7 @@ class Discounts extends Controller {
         $this->view->setData('products', $products);
 
     	$this->view->setPage('on', 'discounts');
-    	$this->view->setPage('title', 'เพิ่มส่วนลด');
+    	$this->view->setPage('title', 'Add a discount');
 
     	$this->view->render('discounts/forms/add');
     }
@@ -48,7 +48,7 @@ class Discounts extends Controller {
     	if( empty($id) || empty($this->me) ) $this->error();
 
     	$this->view->setPage('on', 'discounts');
-    	$this->view->setPage('title', 'แก้ไขส่วนลด');
+    	$this->view->setPage('title', 'Edit discount');
 
         $products = $this->model->query('products')->lists( array('unlimit'=>true) );
         $this->view->setData('products', $products);
@@ -86,11 +86,11 @@ class Discounts extends Controller {
     			if( $item['name'] == $postData['dis_name'] ) $has_name = false;
     		}
     		if( $this->model->is_name($postData['dis_name']) && $has_name ){
-    			$arr['error']['dis_name'] = 'มีชื่อนี้อยู่ในระบบแล้ว';
+    			$arr['error']['dis_name'] = 'This name is already in the system.';
     		}
 
     		if( empty($_POST["items"]) ){
-    			$arr['error']['items'] = 'กรุณาเลือกสินค้า';
+    			$arr['error']['items'] = 'Please select product.';
     		}
 
     		if( empty($arr['error']) ){
@@ -119,7 +119,7 @@ class Discounts extends Controller {
     					$data = array(
     						'item_parent_id'=>$item_id,
     						'item_dis_id'=>$id,
-                            'item_price'=> !empty($price['frontend']) ? $price['frontend'] : "0.00" 
+                            'item_price'=> !empty($price['frontend']) ? $price['frontend'] : "0.00"
     					);
 
     					if( !empty($_items[$key]) ){
@@ -139,7 +139,7 @@ class Discounts extends Controller {
     				$this->model->update($id, array('dis_item'=>$total));
     			}
 
-    			$arr['message'] = 'บันทึกเรียบร้อย';
+    			$arr['message'] = 'Save successfully.';
     			$arr['url'] = URL.'discounts';;
     		}
 
@@ -158,11 +158,11 @@ class Discounts extends Controller {
     	if( !empty($_POST) ){
     		if( !empty($item['permit']['del']) ){
     			$this->model->delete($id);
-    			$arr['message'] = 'ลบข้อมูลเรียบร้อย';
+    			$arr['message'] = 'Delete data successfully.';
     			$arr['url'] = 'refresh';
     		}
     		else{
-    			$arr['message'] = 'ไม่สามารถลบข้อมูลได้';
+    			$arr['message'] = 'Data can not be deleted.';
     		}
     		echo json_encode($arr);
     	}

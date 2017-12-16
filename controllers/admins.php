@@ -44,10 +44,10 @@ class Admins extends Controller {
 
     		if( empty($item) ){
     			if( empty($_POST["password"]) ) {
-    				$arr['error']['password'] = 'กรุณากรอกพาสเวิร์ด';
+    				$arr['error']['password'] = 'Please enter the password.';
     			}
     			elseif( strlen($_POST['password']) < 4 ){
-    				$arr['error']['password'] = 'กรุณากรอกรหัสผ่านตั้งแต่ 4 ตัวอักษรขึ้นไป';
+    				$arr['error']['password'] = 'Please enter 4 or more characters.';
     			}
     			else{
     				$postData['password'] = $this->fn->q('password')->encryptPasswordLaravel($_POST["password"]);
@@ -61,7 +61,7 @@ class Admins extends Controller {
     			}
     		}
     		if( $this->model->is_user($postData['username']) && $has_user ){
-    			$arr['error']['username'] = 'มีชื่อผู้ใช้นี้ในระบบแล้ว';
+    			$arr['error']['username'] = 'This username has already been entered.';
     		}
 
     		if( empty($arr['error']) ){
@@ -72,7 +72,7 @@ class Admins extends Controller {
     				$this->model->insert($postData);
     			}
 
-    			$arr['message'] = 'บันทึกเรียบร้อย';
+    			$arr['message'] = 'Save successfully.';
     			$arr['url'] = 'refresh';
     		}
 
@@ -91,11 +91,11 @@ class Admins extends Controller {
     	if( !empty($_POST) ){
     		if( !empty($item['permit']['del']) ){
     			$this->model->delete($id);
-    			$arr['message'] = 'ลบข้อมูลเรียบร้อย';
+    			$arr['message'] = 'Delete data successfully.';
     			$arr['url'] = 'refresh';
     		}
     		else{
-    			$arr['message'] = 'ไม่สามารถลบข้อมูลได้';
+    			$arr['message'] = 'Data can not be deleted.';
     		}
     		echo json_encode($arr);
     	}
@@ -114,17 +114,17 @@ class Admins extends Controller {
 
     	if( !empty($_POST) ){
     		if( strlen($_POST["password"]) < 4 ){
-    			$arr['error']['password'] = 'กรุณากรอกรหัสผ่านมากกว่า 4 ตัวอักษร';
+    			$arr['error']['password'] = 'Please enter more than 4 characters.';
     		}
     		if( $_POST["password"] != $_POST["password2"] ){
-    			$arr['error']['password2'] = 'รหัสผ่านไม่ตรงกัน';
+    			$arr['error']['password2'] = 'Passwords do not match.';
     		}
 
     		if( empty($arr['error']) ){
     			$password = $this->fn->q('password')->PasswordHash($_POST["password"]);
     			$this->model->update($id, array('password'=>$password));
 
-    			$arr['message'] = 'บันทึกรหัสผ่านใหม่เรียบร้อย';
+    			$arr['message'] = 'Save new passwords successfully.';
     			$arr['url'] = 'refresh';
     		}
 

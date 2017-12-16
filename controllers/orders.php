@@ -3,9 +3,9 @@
 class Orders extends Controller  {
 
     public function __construct() {
-        parent::__construct();        
+        parent::__construct();
     }
-    
+
     public function index() {
         $this->error();
     }
@@ -89,18 +89,18 @@ class Orders extends Controller  {
                                 $postData['created_at'] = date("Y-01-01 H:i:s");
                                 $postData['updated_at'] = date("Y-01-01 H:i:s");
                                 $this->model->insert($postData);
-                            } 
+                            }
                         }
 
-                        $arr['message'] = 'บันทึกเรียบร้อย';
+                        $arr['message'] = 'Save completed.';
                         $arr['url'] = 'refresh';
                     }
                     else{
-                        $arr['error']['file'] = 'รองรับ .xls หรือ .xlsx เท่านั้น';
+                        $arr['error']['file'] = '.xls or .xlsx only';
                     }
                 }
                 else{
-                    $arr['error']['file'] = 'กรุณาเลือกไฟล์';
+                    $arr['error']['file'] = 'Please select a file.';
                 }
 
             } catch (Exception $e) {

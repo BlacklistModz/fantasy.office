@@ -1,4 +1,4 @@
-<?php 
+<?php
 class Payments extends Controller {
 
     public function __construct() {
@@ -8,7 +8,7 @@ class Payments extends Controller {
     public function index($id=null){
 
     	$this->view->setPage('on', 'payments');
-    	$this->view->setPage('title', 'รายการเก็บเงิน');
+    	$this->view->setPage('title', 'Money list');
 
     	if( !empty($id) ){
             $options = array(
@@ -141,27 +141,27 @@ class Payments extends Controller {
                 if( $postData['pay_amount'] == $item['amount'] ) $has_check = false;
             }
             if( ($postData['pay_amount'] > $order['balance']) && $has_check){
-                $arr['error']['pay_amount'] = 'ไม่สามารถกรอกราคาเกินจากยอดคงค้างได้';
+                $arr['error']['pay_amount'] = 'Can not fill in excess of outstanding amount.';
             }
 
             #CHECK TYPE FOR CONDITION
             $type = $this->model->getType($postData['pay_type_id']);
             if( !empty($type['is_bank']) || !empty($type['is_check']) ){
                 if( empty($postData['pay_account_id']) ){
-                    $arr['error']['pay_account_id'] = 'กรุณาเลือกบัญชีธนาคาร';
+                    $arr['error']['pay_account_id'] = 'Please select a bank account.';
                 }
             }
 
             #CHECK NUMBER
             if( !empty($type['is_check']) ){
                 if( empty($postData['pay_check_date']) ) {
-                    $arr['error']['pay_check_date'] = 'กรุณากรอกวันที่เช็ค';
+                    $arr['error']['pay_check_date'] = 'Please enter a valid date.';
                 }
                 if( empty($postData['pay_check_bank']) ) {
-                    $arr['error']['pay_check_bank'] = 'กรุณาเลือกธนาคารเช็ค';
+                    $arr['error']['pay_check_bank'] = 'Please select a bank.';
                 }
                 if( empty($postData['pay_check_number']) ) {
-                    $arr['error']['pay_check_number'] = 'กรุณากรอกเลขที่เช็ค';
+                    $arr['error']['pay_check_number'] = 'Please fill in the check number.';
                 }
             }
 
@@ -182,10 +182,10 @@ class Payments extends Controller {
                                               : null;
             if( !empty($postData['pay_comission_amount']) ){
                 if( !is_numeric($postData['pay_comission_amount']) ){
-                    $arr['error']['pay_comission_amount'] = 'กรุณากรอกเป็นตัวเลขเท่านั้น';
+                    $arr['error']['pay_comission_amount'] = 'Please fill in the numbers only.';
                 }
                 if( $postData['pay_comission_amount'] > $order['total_comission'] ){
-                    $arr['error']['pay_comission_amount'] = 'ไม่สามารถกรอกค่าคอมมิชชั่นเกิน '.$order['total_comission'].' ได้';
+                    $arr['error']['pay_comission_amount'] = 'Can not complete the commissions '.$order['total_comission'].'.';
                 }
             }
 
@@ -245,7 +245,7 @@ class Payments extends Controller {
                     $this->model->update($id, array('pay_image_id'=>$media['id']));
                 }
 
-                $arr['message'] = 'บันทึกการจ่ายเงินเรียบร้อยแล้ว';
+                $arr['message'] = 'Payment successfully.';
                 $arr['url'] = 'refresh';
             }
 
@@ -266,11 +266,11 @@ class Payments extends Controller {
             if( !empty($item['permit']['del']) ){
                 $this->model->delete($id);
                 $this->model->query('media')->del($item['image_id']);
-                $arr['message'] = 'ลบข้อมูลการชำระเงินเรียบร้อย';
+                $arr['message'] = 'Delete payment information successfully.';
                 $arr['url'] = 'refresh';
             }
             else{
-                $arr['message'] = 'ไม่สามารถลบข้อมูลได้';
+                $arr['message'] = 'Data can not be deleted.';
             }
 
             echo json_encode($arr);
@@ -321,7 +321,7 @@ class Payments extends Controller {
                 if( $item['name'] == $postData['bank_name'] ) $has_name = false;
             }
             if( $this->model->is_bank($postData['bank_name']) && $has_name ){
-                $arr['error']['bank_name'] = 'มีธนาคารนี้อยู่ในระบบแล้ว';
+                $arr['error']['bank_name'] = 'This bank is already in the system.';
             }
 
             if( empty($arr['error']) ){
@@ -332,7 +332,7 @@ class Payments extends Controller {
                     $this->model->insertBank($postData);
                 }
 
-                $arr['message'] = 'บันทึกเรียบร้อย';
+                $arr['message'] = 'Save successfully.';
                 $arr['url'] = 'refresh';
             }
 
@@ -351,11 +351,11 @@ class Payments extends Controller {
         if( !empty($_POST) ){
             if( !empty($item['permit']['del']) ){
                 $this->model->deleteBank($id);
-                $arr['message'] = 'ลบข้อมูลเรียบร้อย';
+                $arr['message'] = 'Delete data successfully.';
                 $arr['url'] = 'refresh';
             }
             else{
-                $arr['message'] = 'ไม่สามารถลบข้อมูลได้';
+                $arr['message'] = 'Data can not be deleted.';
             }
         }
         else{
@@ -409,7 +409,7 @@ class Payments extends Controller {
                 if( $item['number'] == $postData['account_number'] ) $has_number = false;
             }
             if( $this->model->is_bank($postData['account_number']) && $has_number ){
-                $arr['error']['bank_number'] = 'มีบัญชีธนาคารนี้อยู่ในระบบแล้ว';
+                $arr['error']['bank_number'] = 'This bank account is already in use.';
             }
 
             if( empty($arr['error']) ){
@@ -420,7 +420,7 @@ class Payments extends Controller {
                     $this->model->insertAccount($postData);
                 }
 
-                $arr['message'] = 'บันทึกเรียบร้อย';
+                $arr['message'] = 'Save successfully.';
                 $arr['url'] = 'refresh';
             }
 
@@ -439,11 +439,11 @@ class Payments extends Controller {
         if( !empty($_POST) ){
             if( !empty($item['permit']['del']) ){
                 $this->model->deleteAccount($id);
-                $arr['message'] = 'ลบข้อมูลเรียบร้อย';
+                $arr['message'] = 'Delete data successfully.';
                 $arr['url'] = 'refresh';
             }
             else{
-                $arr['message'] = 'ไม่สามารถลบข้อมูลได้';
+                $arr['message'] = 'Data can not be deleted.';
             }
         }
         else{
@@ -487,14 +487,14 @@ class Payments extends Controller {
             $form->submit();
             $postData = $form->fetch();
 
-            if( empty($_POST["type_is"]) ) $arr['error']['type_is'] = 'กรุณาเลือกประเภทการชำระเงิน';
+            if( empty($_POST["type_is"]) ) $arr['error']['type_is'] = 'Please select a payment type.';
 
             $has_name = true;
             if( !empty($item) ){
                 if( $item['name'] == $postData['type_name'] ) $has_name = false;
             }
             if( $this->model->is_type($postData['type_name']) && $has_name ){
-                $arr['error'] = 'ตรวจพบเลขบัญชีนี้ในระบบ';
+                $arr['error'] = 'This account number has been detected in the system.';
             }
 
             if( $_POST["type_is"] == "cash" ){
@@ -517,7 +517,7 @@ class Payments extends Controller {
                     $this->model->insertType($postData);
                 }
 
-                $arr['message'] = 'บันทึกเรียบร้อย';
+                $arr['message'] = 'Save successfully.';
                 $arr['url'] = 'refresh';
             }
 
@@ -536,11 +536,11 @@ class Payments extends Controller {
         if( !empty($_POST) ){
             if( !empty($item['permit']['del']) ){
                 $this->model->deleteBank($id);
-                $arr['message'] = 'ลบข้อมูลเรียบร้อย';
+                $arr['message'] = 'Delete data successfully.';
                 $arr['url'] = 'refresh';
             }
             else{
-                $arr['message'] = 'ไม่สามารถลบข้อมูลได้';
+                $arr['message'] = 'Data can not be deleted.';
             }
         }
         else{
@@ -579,7 +579,7 @@ class Payments extends Controller {
         if( empty($type) ) $this->error();
 
         $this->view->setPage('on', 'lists1');
-        $this->view->setPage('title', 'รายการรับเงิน-'.$type['name']);
+        $this->view->setPage('title', 'Receiving money-'.$type['name']);
 
         if( $this->format=='json' ){
             $this->view->setData('results', $this->model->lists( array('type'=>1) ));
@@ -601,7 +601,7 @@ class Payments extends Controller {
         if( empty($type) ) $this->error();
 
         $this->view->setPage('on', 'lists2');
-        $this->view->setPage('title', 'รายการรับเงิน-'.$type['name']);
+        $this->view->setPage('title', 'Receiving money-'.$type['name']);
 
         if( $this->format=='json' ){
             $this->view->setData('results', $this->model->lists( array('type'=>2) ));
@@ -623,7 +623,7 @@ class Payments extends Controller {
         if( empty($type) ) $this->error();
 
         $this->view->setPage('on', 'lists3');
-        $this->view->setPage('title', 'รายการรับเงิน-'.$type['name']);
+        $this->view->setPage('title', 'Receiving money-'.$type['name']);
 
         if( $this->format=='json' ){
             $this->view->setData('results', $this->model->lists( array('type'=>3) ));

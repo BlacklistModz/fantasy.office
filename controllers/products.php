@@ -1,4 +1,4 @@
-<?php 
+<?php
 class Products extends Controller {
 
     public function __construct() {
@@ -8,7 +8,7 @@ class Products extends Controller {
     public function index(){
     	if( empty($this->me) ) $this->error();
 
-    	$this->view->setPage('title', 'รายการสินค้า');
+    	$this->view->setPage('title', 'Products');
     	$this->view->setPage('on', 'products');
 
     	if( $this->format=='json' ){
@@ -31,7 +31,7 @@ class Products extends Controller {
             $this->view->setData('item', $item);
         }
 
-        $this->view->setPage('title', 'จัดการสินค้า');
+        $this->view->setPage('title', 'Product Management');
         $this->view->setPage('on', 'products');
 
         if( $section != 'basic' && empty($item) ){
@@ -78,7 +78,7 @@ class Products extends Controller {
                 }
 
             } catch (Exception $e) {
-                $arr['error'] = $this->_getError($e->getMessage()); 
+                $arr['error'] = $this->_getError($e->getMessage());
             }
         }
         elseif( $section == 'howtouse' ){
@@ -180,6 +180,7 @@ class Products extends Controller {
             $arr['url'] = URL.'products/settings/photos/'.$id;
         } */
         elseif( $section == 'photos' ){
+            
             for ($i=1; $i <= 3 ; $i++) { 
                 if( !empty($_FILES['image']['name'][$i]) ){
                     $userfile = array(
@@ -253,16 +254,16 @@ class Products extends Controller {
     			$postData = $form->fetch();
 
     			if( !is_numeric($postData['pds_comission']) ) {
-    				$arr['error']['pds_comission'] = 'กรอกได้เฉพาะตัวเลขเท่านั้น';
+    				$arr['error']['pds_comission'] = 'Only numbers can be entered.';
     			}
     			if( $postData['pds_comission'] > 100 ){
-    				$arr['error']['pds_comission'] = 'ไม่สามารถกรอกคอมมิชชั่นเกิน 100% ได้';
+    				$arr['error']['pds_comission'] = 'Can not fill up 100% comissions.';
     			}
 
     			if( empty($arr['error']) ){
     				$this->model->update($id, $postData);
 
-    				$arr['message'] = 'บันทึกเรียบร้อย';
+    				$arr['message'] = 'Save successfully.';
     				$arr['url'] = 'refresh';
     			}
 

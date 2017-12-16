@@ -9,7 +9,7 @@ class Sales extends Controller {
     public function index($id=null){
 
     	$this->view->setPage('on', 'sales');
-    	$this->view->setPage('title', 'จัดการผู้ขาย');
+    	$this->view->setPage('title', 'Saller Management');
 
     	if( !empty($id) ){
     		$item = $this->model->get($id);
@@ -82,15 +82,15 @@ class Sales extends Controller {
           if( $item['username'] == $postData['username'] ) $has_username = false;
         }
         if( $this->model->is_username($postData['username']) && $has_username ){
-    			$arr['error']['username'] = 'ตรวจพบ Username นี้ในระบบ';
+    			$arr['error']['username'] = 'This user has been detected in the system.';
     		}
 
 
     		if (empty($item)) {
           if (empty($_POST['password'])) {
-            $arr['error']['password'] = 'ช่องนี้เว้นว่างไว้ไม่ได้';
+            $arr['error']['password'] = 'This field is blank.';
           } elseif (strlen($_POST['password']) < 4) {
-            $arr['error']['password'] = 'กรุณากรอกรหัสผ่านให้มากกว่า 4 ตัวอักศร';
+            $arr['error']['password'] = 'Please enter more than 4 passwords.';
           } else {
             $postData['password'] = $this->fn->q('password')->encryptPasswordLaravel($_POST['password']);
           }
@@ -104,7 +104,7 @@ class Sales extends Controller {
     				$this->model->insert($postData);
     			}
 
-    			$arr['message'] = 'บันทึกเรียบร้อย';
+    			$arr['message'] = 'Save successfully.';
     			$arr['url'] = 'refresh';
     		}
 
@@ -123,11 +123,11 @@ class Sales extends Controller {
     	if( !empty($_POST) ){
     		if( !empty($item['permit']['del']) ){
     			$this->model->delete($id);
-    			$arr['message'] = 'ลบข้อมูลเรียบร้อย';
+    			$arr['message'] = 'Delete data successfully.';
     			$arr['url'] = 'refresh';
     		}
     		else{
-    			$arr['message'] = 'ไม่สามารถลบข้อมูลได้';
+    			$arr['message'] = 'Data can not be deleted.';
     		}
     		echo json_encode($arr);
     	}
@@ -148,7 +148,7 @@ class Sales extends Controller {
             $this->model->update($id, array('seq'=>$seq));
         }
 
-        $arr['message'] = 'บันทึกเรียบร้อย';
+        $arr['message'] = 'Save successfully.';
     }
 
     //ฟักชั่นเปลี่ยนรหัสผ่าน
@@ -161,16 +161,16 @@ class Sales extends Controller {
 
     	if ( !empty($_POST) ) {
         if (strlen($_POST['password_1']) < 4) {
-          $arr['error']['password_1'] = 'รหัสผ่านต้องยาวกว่า 4 ตัวอักศร';
+          $arr['error']['password_1'] = 'Password must be longer than 4 characters.';
         }
         if ($_POST['password_1'] != $_POST['password_2']) {
-          $arr['error']['password_2'] = 'รหัสผ่านไม่ตรงกัน';
+          $arr['error']['password_2'] = 'Passwords do not match.';
         }
 
         if (empty($arr['error'])) {
           $password = $this->fn->q('password')->encryptPasswordLaravel($_POST["password_1"]);
           $this->model->update($id, array('password_1'=>$password));
-          $arr['message'] = 'บันทึกรหัสผ่านใหม่เรียบร้อย';
+          $arr['message'] = 'Save new passwords successfully.';
           $arr['url'] = 'refresh';
         }
         echo json_encode($arr);

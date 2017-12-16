@@ -10,7 +10,7 @@ class Customers extends Controller {
         $id = isset($_REQUEST["id"]) ? $_REQUEST["id"] : $id;
 
         $this->view->setPage('on', 'customers');
-        $this->view->setPage('title', 'รายชื่อลูกค้า');
+        $this->view->setPage('title', 'Customer list');
 
         if( !empty($id) ){
             $item = $this->model->get($id, array('orders'=>true));
@@ -84,13 +84,13 @@ class Customers extends Controller {
                                 $col++;
                             }
 
-                            $address = explode("ต.", $data[$r][3]);
+                            $address = explode("T.", $data[$r][3]);
                             $addrStr = $address[0];
 
                             $sub_dis = "";
                             $sub_dis = !empty($address[1]) ? $address[1] : "";
                             if( !empty($address[1]) ){
-                                $cut_dis = explode("อ.", $address[1]);
+                                $cut_dis = explode("A.", $address[1]);
                                 $sub_dis = empty($cut_dis[1]) ? $address[1] : $cut_dis[0];
 
                             	$add = explode(" ", $address[1]);
@@ -151,11 +151,11 @@ class Customers extends Controller {
                         }
                     }
                     else{
-                    	$arr['error']['file'] = 'กรุณาเลือกไฟล์ .xls หรือ .xlsx เท่านั้น';
+                    	$arr['error']['file'] = 'Please select only .xls or .xlsx files.';
                     }
 
                     if( empty($arr['error']) ){
-                    	$arr['message'] = 'บันทึกเรียบร้อย';
+                    	$arr['message'] = 'Save successfully.';
                     	$arr['url'] = 'refresh';
                     }
                 }
@@ -180,11 +180,11 @@ class Customers extends Controller {
         if( !empty($_POST) ){
             if( !empty($item['permit']['del']) ){
                 $this->model->delete($id);
-                $arr['message'] = 'ลบข้อมูลเรียบร้อย';
+                $arr['message'] = 'Delete data successfully.';
                 $arr['url'] = 'refresh';
             }
             else{
-                $arr['message'] = 'ไม่สามารถลบข้อมูลได้';
+                $arr['message'] = 'Data can not be deleted.';
             }
             echo json_encode($arr);
         }
@@ -217,12 +217,12 @@ class Customers extends Controller {
                         ->setCategory("Customer File");
 
         $objPHPExcel    ->setActiveSheetIndex(0)
-                        ->setCellValue('A1', 'รหัสลูกค้า')
-                        ->setCellValue('B1', 'ชื่อลูกค้า')
-                        ->setCellValue('C1', 'จังหวัด')
-                        ->setCellValue('D1', 'เซลล์')
-                        ->setCellValue('E1', 'เบอร์โทร')
-                        ->setCellValue('F1', 'เบอร์โทร (อื่นๆ)')
+                        ->setCellValue('A1', 'Customer code')
+                        ->setCellValue('B1', 'Customer name')
+                        ->setCellValue('C1', 'Province')
+                        ->setCellValue('D1', 'Sales')
+                        ->setCellValue('E1', 'Telephone number')
+                        ->setCellValue('F1', 'Phone Number (Other)')
                         ->setCellValue('G1', 'LineID');
 
         $i = 2;
@@ -252,7 +252,7 @@ class Customers extends Controller {
 
         if( !empty($_POST) ){
             $this->model->setUserPass();
-            $arr['message'] = 'ตั้งค่าเรียบร้อย';
+            $arr['message'] = 'Setup successfully';
             $arr['url'] = 'refresh';
 
             echo json_encode($arr);

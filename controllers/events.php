@@ -10,7 +10,7 @@ class Events extends Controller {
     	$id = isset($_REQUEST["id"]) ? $_REQUEST["id"] : $id;
 
         $this->view->setPage('on', 'events');
-        $this->view->setPage('title', 'รายการนัดหมาย');
+        $this->view->setPage('title', 'Appointment list');
 
     	if( !empty($id) ){
             $item = $this->model->get($id);
@@ -72,8 +72,8 @@ class Events extends Controller {
             $has_invite = isset($_REQUEST['has_invite']) ? $_REQUEST['has_invite']: 1;
 
             if( empty($_POST['invite']) && $has_invite==1 ){
-                $arr['error']['event_invite'] = 'กรุณาเลือกผู้ที่เกี่ยวข้อง';
-                $arr['message'] = 'กรุณาเลือกผู้ที่เกี่ยวข้อง';
+                $arr['error']['event_invite'] = 'Please select a relevant person.';
+                $arr['message'] = 'Please select a relevant person.';
             }
 
             $invite = isset($_POST['invite'])? $_POST['invite']: null;
@@ -88,7 +88,7 @@ class Events extends Controller {
                     if( $has_invite==1 ){
                         $this->model->deleteJoinEvent( $id );
                     }
-                    
+
                     $this->model->update( $id, $postData );
                     $postData['id'] = $id;
                 }
@@ -124,7 +124,7 @@ class Events extends Controller {
                     }
                 }
 
-                $arr['message'] = 'บันทึกเรียบร้อย';
+                $arr['message'] = 'Save successfully.';
                 $arr['url'] = 'refresh';
             }
 
@@ -144,9 +144,9 @@ class Events extends Controller {
 
             if ( !empty($item['permit']['del']) ) {
                 $this->model->delete($id);
-                $arr['message'] = 'ลบข้อมูลเรียบร้อย';
+                $arr['message'] = 'Delete data successfully.';
             } else {
-                $arr['message'] = 'ไม่สามารถลบข้อมูลได้';
+                $arr['message'] = 'Data can not be deleted.';
             }
 
             $arr['url'] = 'refresh';
@@ -154,7 +154,7 @@ class Events extends Controller {
         }
         else{
             $this->view->item = $item;
-            
+
             $this->view->setPage('path', 'Themes/manage/forms/events');
             $this->view->render("del");
         }

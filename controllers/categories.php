@@ -7,9 +7,9 @@ class Categories extends Controller {
     }
 
     public function index(){
-    	
+
     	$this->view->setPage('on', 'categories');
-    	$this->view->setPage('title', 'จัดการหมวดหมู่สินค้า');
+    	$this->view->setPage('title', 'Category Management');
 
     	$this->view->js('jquery/jquery-ui.min');
 
@@ -64,10 +64,10 @@ class Categories extends Controller {
     			if( $item['name_en'] == $postData['name_en'] ) $has_en = false;
     		}
     		if( $this->model->is_name_th($postData['name_th']) && $has_th ){
-    			$arr['error']['name_th'] = 'ตรวจพบชื่อนี้ในระบบ';
+    			$arr['error']['name_th'] = 'This name was detected in the system.';
     		}
     		if( $this->model->is_name_en($postData['name_en']) && $has_en ){
-    			$arr['error']['name_en'] = 'ตรวจพบชื่อนี้ในระบบ';
+    			$arr['error']['name_en'] = 'This name was detected in the system.';
     		}
 
             $postData['name_th'] = trim($postData['name_th']);
@@ -75,7 +75,7 @@ class Categories extends Controller {
 
             $postData['is_sub'] = !empty($_POST["is_sub"]) ? $_POST["is_sub"] : 0;
             if( !empty($postData['is_sub']) ){
-                if( empty($postData['cate_id']) ) $arr['error']['cate_id'] = 'กรุณาเลือกหมวดหมู่ที่ต้องการให้เป็นเมนูหลัก';
+                if( empty($postData['cate_id']) ) $arr['error']['cate_id'] = 'Please select the category that you want to be the main menu.';
             }else{
                 $postData['cate_id'] = 0;
             }
@@ -88,7 +88,7 @@ class Categories extends Controller {
     				$this->model->insert($postData);
     			}
 
-    			$arr['message'] = 'บันทึกเรียบร้อย';
+    			$arr['message'] = 'Save successfully.';
     			$arr['url'] = 'refresh';
     		}
 
@@ -107,11 +107,11 @@ class Categories extends Controller {
     	if( !empty($_POST) ){
     		if( !empty($item['permit']['del']) ){
     			$this->model->delete($id);
-    			$arr['message'] = 'ลบข้อมูลเรียบร้อย';
+    			$arr['message'] = 'Delete data successfully.';
     			$arr['url'] = 'refresh';
     		}
     		else{
-    			$arr['message'] = 'ไม่สามารถลบข้อมูลได้';
+    			$arr['message'] = 'Data can not be deleted.';
     		}
     		echo json_encode($arr);
     	}
@@ -133,6 +133,6 @@ class Categories extends Controller {
             $this->model->update($id, array('seq'=>$seq));
         }
 
-        $arr['message'] = 'บันทึกเรียบร้อย';
+        $arr['message'] = 'Save successfully.';
     }
 }
