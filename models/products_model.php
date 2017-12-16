@@ -113,16 +113,6 @@ class Products_Model extends Model{
             $data['permit']['del'] = false;
         }
 
-        /* for($i=1;$i<=3;$i++){
-            if( !empty($data['pds_image_'.$i.'_id']) ){
-                $image = $this->query('media')->get($data['pds_image_'.$i.'_id']);
-                if( !empty($image) ){
-                    $data['image_'.$i.'_url'] = $image['url'];
-                    $data['image_'.$i.'_arr'] = $image;
-                }
-            }
-        } */
-
         $data['photos'] = $this->getPhotos($data['id']);
         $data['pricing'] = $this->getPrice($data['id']);
         return $data;

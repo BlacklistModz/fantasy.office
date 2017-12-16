@@ -6,6 +6,7 @@ $form = $form->create()
 	->elem('div')
 	->addClass('form-insert');
 
+$count = 1;
 for ($i=1; $i <= 3 ; $i++) {
 	$form 	->field("image_{$i}")
 			->name("image[$i]")
@@ -26,6 +27,8 @@ for ($i=1; $i <= 3 ; $i++) {
 	}
 
 	$form 	->hr('<input type="hidden" name="seq['.$i.']" value="'.$i.'">');
+	$count++;
 }
 
+$form 	->hr('<input type="hidden" name="count" value="'.$count.'"');
 echo $form->html();
