@@ -265,10 +265,10 @@ class Controller {
 
                     $id = $this->model->query('admins')->loginLaravel($post['email'], $post['pass']);
                     $type = 'admin';
-                    if( empty($id) ){
+                    /*if( empty($id) ){
                         $id = $this->model->query('sales')->login($post['email'], $post['pass']);
                         $type = 'sale';
-                    }
+                    } */
 
                     if( !empty($id) ){
 
@@ -288,12 +288,13 @@ class Controller {
                     else{
 
                         if(!$this->model->query('admins')->is_user($post['email'])){
-                            if( !$this->model->query('sales')->is_username($post['email']) ){
+                            $error['email'] = 'ชื่อผู้ใช้ไม่ถูกต้อง'; 
+                            /*if( !$this->model->query('sales')->is_username($post['email']) ){
                                 $error['email'] = 'ชื่อผู้ใช้ไม่ถูกต้อง'; 
                             }
                             else{
                                 $error['pass'] = 'รหัสผ่านไม่ถูกต้อง';
-                            }
+                            }*/
                         }
                         else{
                             $error['pass'] = 'รหัสผ่านไม่ถูกต้อง';

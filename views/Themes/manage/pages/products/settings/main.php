@@ -15,7 +15,7 @@
             <div class="label"><?=$value['label']?></div>
         </div>
         <div class="content">
-            <form class="js-submit-form" action="<?=URL?>products/update/<?=$this->section?>/<?=$id?>">
+            <form class="js-submit-form" action="<?=URL?>products/update/<?=$this->section?>/<?=$id?>" enctype="multipart/form-data">
                 <?php 
                 if( $this->section == $value['section'] ){
                     require "sections/{$value['section']}.php";

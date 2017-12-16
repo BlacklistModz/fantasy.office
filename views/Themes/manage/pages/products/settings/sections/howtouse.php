@@ -14,8 +14,8 @@ $form 	->field("pds_howtouse")
 		->attr('data-plugins', 'editor')
 		->attr('data-options', $this->fn->stringify(array(
             'image_upload_url' => URL .'media/set',
-            'album_obj_type'=>'products',
-            'album_obj_id'=>'2'
+            'album_obj_type'=>'pds_detail',
+            'album_obj_id'=>'3'
         )))
         ->value( !empty($this->item['pds_howtouse']) ?$this->fn->q('text')->strip_tags_editor(  $this->item['pds_howtouse']): '' );
 

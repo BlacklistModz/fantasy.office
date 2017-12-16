@@ -22,7 +22,7 @@ if( !empty($this->results['lists']) ){
             '<td class="image">'.$image.'</td>'.
 
             '<td class="name">'.
-                '<div class="ellipsis"><a title="'.$item['pds_name'].'" class="fwb" data-plugins="dialog" href="'.URL.'products/set_comission/'.$item['id'].'">'.(!empty($item['pds_name']) ? $item['pds_name'] : "-").'</a></div>'.
+                '<div class="ellipsis"><a title="'.$item['pds_name'].'" class="fwb" href="'.URL.'products/settings/basic/'.$item['id'].'">'.(!empty($item['pds_name']) ? $item['pds_name'] : "-").'</a></div>'.
                 '<div class="date-float fsm fcg">Add on: '. ( $item['created_at'] != '0000-00-00 00:00:00' ? $this->fn->q('time')->live( $item['created_at'] ):'-' ) .'</div>'.
 
                 '<div class="date-float fsm fcg">Recent changes: '. ( $item['updated_at'] != '0000-00-00 00:00:00' ? $this->fn->q('time')->live( $item['updated_at'] ):'-' ) .'</div>'.

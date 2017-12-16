@@ -106,7 +106,19 @@ class Products_Model extends Model{
     	if( !empty($data['pds_FilePhoto']) ){
     		$data['image_url'] = "http://fantasy.co.th/fileUploads/products/{$data['pds_FilePhoto']}";
     	}
-        $data['pricing'] = $this->getPrice($data['pds_id']);
+
+        /* for($i=1;$i<=3;$i++){
+            if( !empty($data['pds_image_'.$i.'_id']) ){
+                $image = $this->query('media')->get($data['pds_image_'.$i.'_id']);
+                if( !empty($image) ){
+                    $data['image_'.$i.'_url'] = $image['url'];
+                    $data['image_'.$i.'_arr'] = $image;
+                }
+            }
+        } */
+
+        $data['photos'] = $this->getPhotos($data['id']);
+        $data['pricing'] = $this->getPrice($data['id']);
         return $data;
     }
 
@@ -149,5 +161,27 @@ class Products_Model extends Model{
     #CATEGORY
     public function category(){
         return $this->db->select("SELECT id,name_en,name_th FROM categories WHERE status='A' ORDER BY seq ASC");
+    }
+
+    #PHOTOS
+    public function getPhotos($id){
+        $data = array();
+        
+        $results = $this->db->select("SELECT * FROM products_media_permit WHERE pds_id=:id ORDER BY seq ASC", array(":id"=>$id));
+        foreach ($results as $key => $value) {
+            $image = $this->query('media')->get($value['media_id']);
+            if( !empty($image) ){
+                $data[$value['seq']]['url'] = $image['url'];
+                $data[$value['seq']] = $image;
+            }
+        }
+
+        return $data;
+    }
+    public function setPermitPhotos($data){
+        $this->db->insert('products_media_permit', $data);
+    }
+    public function delPermitPhotos($pds_id, $media_id){
+        $this->db->delete('products_media_permit', "pds_id={$pds_id} AND media_id={$media_id}");
     }
 }

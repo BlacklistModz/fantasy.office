@@ -49,7 +49,7 @@ if ( typeof Object.create !== 'function' ) {
             if (typeof $.fn['tinymce'] == 'undefined') {
             	
 				// var host = "http://"+window.location.hostname;
-				var url = Event.URL + "public/js/tinymce/";
+				var url =  Event.URL + "public/js/tinymce/";
 				
 				self.getScript(url+"tinymce.min.js" ).done(function () {
 					self.getScript(url+"jquery.tinymce.min.js" ).done(function () {
@@ -161,7 +161,7 @@ if ( typeof Object.create !== 'function' ) {
 
 			var dom = tinymce.DOM, editorContainer;
 			self.$toolbar = $('<div/>', {class: 'editor-toolbar'});
-			var toolbar = ['bold italic | link | numlist bullist | blockquote | image' ];
+			var toolbar = ['bold italic | link | list-ol list-ul | quote-right | image' ];
 
 			$.each(toolbar, function(i, rows){
 
@@ -179,10 +179,10 @@ if ( typeof Object.create !== 'function' ) {
 								// "data-command": cell
 							}).append( $('<i/>', {class: 'icon-'+cell}) )[0];
 
-						if( cell=="numlist" || cell=="bullist" ){
+						if( cell=="list-ol" || cell=="list-ul" ){
 
 
-							btn.command = cell=="numlist"? "InsertOrderedList": "InsertUnorderedList";
+							btn.command = cell=="list-ol"? "InsertOrderedList": "InsertUnorderedList";
 						}
 						else{
 							btn.command = cell;
@@ -257,7 +257,7 @@ if ( typeof Object.create !== 'function' ) {
 					Editor.insertlink.click(editor, btn);
 				});
 			}
-			else if(command=='blockquote'){
+			else if(command=='quote-right'){
 				
 				$btn.click(function(){
 					editor.execCommand("FormatBlock", false, "blockquote");
@@ -265,7 +265,7 @@ if ( typeof Object.create !== 'function' ) {
 			}
 
 			// 
-			$btn.not('.mc-link,.mc-image,.ed-blockquote').click(function(){
+			$btn.not('.mc-link,.mc-image,.ed-quote-right').click(function(){
 				editor.execCommand(command, false, null);
 			});
 			
@@ -668,7 +668,7 @@ if ( typeof Object.create !== 'function' ) {
 	};
 
 	$.fn.editor.options = {
-		content_css: URL +  "public/css/editor.css",
+		content_css: Event.URL +  "public/css/editor.css",
 		height: 300,
 		language:'th_TH',
 		text: "",
