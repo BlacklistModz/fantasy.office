@@ -11,12 +11,12 @@ $form 	->field("pds_howtouse")
 		->addClass('inputtext')
 		->type('textarea')
 		->autocomplete('off')
-		->attr('data-plugins', 'editor')
-		->attr('data-options', $this->fn->stringify(array(
-            'image_upload_url' => URL .'media/set',
-            'album_obj_type'=>'pds_detail',
-            'album_obj_id'=>'3'
-        )))
+		->attr('data-plugins', 'editor2')
+		// ->attr('data-options', $this->fn->stringify(array(
+  //           'image_upload_url' => URL .'media/set',
+  //           'album_obj_type'=>'pds_detail',
+  //           'album_obj_id'=>'3'
+  //       )))
         ->value( !empty($this->item['pds_howtouse']) ?$this->fn->q('text')->strip_tags_editor(  $this->item['pds_howtouse']): '' );
 
 $form 	->field("pds_capacity")

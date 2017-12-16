@@ -31,6 +31,13 @@ class Products extends Controller {
             $this->view->setData('item', $item);
         }
 
+        $this->view
+            ->js( 'plugins/loadImage')
+            ->js( 'plugins/lightbox')
+            ->js( 'plugins/mediaGallery')
+            ->js( 'tinymce/jquery.tinymce.min')
+            ->js( 'tinymce/tinymce.min');
+
         $this->view->setPage('title', 'Product Management');
         $this->view->setPage('on', 'products');
 
@@ -47,6 +54,8 @@ class Products extends Controller {
     }
     public function update($section='basic', $id=null){
         $id = isset($_REQUEST["id"]) ? $_REQUEST["id"] : $id;
+
+        
 
         if( !empty($id) ){
             $item = $this->model->get($id);

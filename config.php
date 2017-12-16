@@ -3,7 +3,7 @@
 date_default_timezone_set("Asia/Bangkok");
 
 // Always provide a TRAILING SLASH (/) AFTER A PATH
-define('URL', 'http://localhost/php/fantasy.office/');
+define('URL', 'http://localhost/fantasy.office/');
 
 define('DB_TYPE', 'mysql');
 define('DB_HOST', 'localhost');
@@ -29,6 +29,9 @@ define('JS', URL . 'public/js/');
 define('IMAGES', URL . 'public/images/');
 define('AVATAR', URL . 'public/images/avatar/');
 define('UPLOADS', URL . "public/uploads/");
+
+define('WWW_PHOTOS', ROOT . DS . "public". DS. 'photos' . DS);
+define('PHOTOS', URL . "public/photos/");
 
 define('LANG', 'th');
 define('COOKIE_KEY_EMP', 'emp_id');
