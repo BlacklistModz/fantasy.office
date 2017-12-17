@@ -62,8 +62,12 @@ if( !empty($this->item) ){
 
 	    <?php if( !empty($this->item) ) { ?>
 	    <div style="box-shadow: rgba(255, 255, 255, .5) 0px 1px 0px 0px;border-bottom: 1px solid rgb(211, 211, 211);"></div>
-			<div class="mvm"><label class="checkbox"><input type="checkbox" /> VAT Product</label></div>
-			<div style="box-shadow: rgba(255, 255, 255, .5) 0px 1px 0px 0px;border-bottom: 1px solid rgb(211, 211, 211);"></div>
+		<div class="mvm">
+			<label class="checkbox fwb"><input<?=!empty($this->item['pds_has_vat'])?' checked="1"':''?> type="checkbox" name="pds_has_vat" data-plugins="_update" data-options="<?=$this->fn->stringify(array(
+    			'url' => URL. 'products/_update/'.$this->item['id'].'/pds_has_vat'
+    		))?>" /> VAT Product</label>
+		</div>
+		<div style="box-shadow: rgba(255, 255, 255, .5) 0px 1px 0px 0px;border-bottom: 1px solid rgb(211, 211, 211);"></div>
 	    <div class="mvm">
 	    	<a style="width: 100%;text-align: left;" class="btn btn-red" href="<?=URL?>products/del/<?=$id?>" data-plugins="dialog"><i class="icon-trash-o mrs"></i><span>Remove</span></a>
 	    </div>

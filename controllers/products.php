@@ -336,5 +336,19 @@ class Products extends Controller {
       }
 
     }
+    public function _update($id, $field=null){
+        $id = isset($_REQUEST["id"]) ? $_REQUEST["id"] : $id;
+        $field = isset($_REQUEST["field"]) ? $_REQUEST["field"] : $field;
+        if( empty($id) || empty($field) || empty($this->me) || $this->format != 'json' ) $this->error();
 
+        $item = $this->model->get($id);
+        if( empty($item) ) $this->error();
+
+        $data[$field] = $_POST['value'];
+        $this->model->update($id, $data);
+
+        $arr['message'] = 'บันทึกเรียบร้อย';
+
+        echo json_encode($arr);
+    }
 }
