@@ -10,7 +10,7 @@ $count = 1;
 for ($i=1; $i <= 3 ; $i++) {
 	$form 	->field("image_{$i}")
 			->name("image[$i]")
-			->label("Upload a photo {$i} *Should be 350 x 350")
+			->label("Upload a photo {$i} (350px * 350px)")
 			->type("file")
 			->addClass('inputtext')
 			->autocomplete('off')

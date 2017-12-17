@@ -189,56 +189,69 @@ class Products extends Controller {
         } */
         elseif( $section == 'photos' ){
 
-            for ($i=1; $i <= $_POST["count"] ; $i++) {
+            for($i=1; $i <= $_POST["count"]; $i++){
                 if( !empty($_FILES['image']['name'][$i]) ){
-                    $userfile = array(
-                        'name' => $_FILES['image']['name'][$i],
-                        'type' => $_FILES['image']['type'][$i],
-                        'tmp_name' => $_FILES['image']['tmp_name'][$i],
-                        'error' => $_FILES['image']['error'][$i],
-                        'size' => $_FILES['image']['size'][$i]
-                    );
+                    list($imageWidth, $imageHeight, $imageType, $imageAttr) = getimagesize($_FILES['image']['tmp_name'][$i]);
 
-                    $album_options = array(
-                        'album_obj_type' => 'products',
-                        'album_obj_id' => 2,
-                    );
-                    $album = $this->model->query('media')->searchAlbum( $album_options );
-                    if( empty($album) ){
-                        $this->model->query('media')->setAlbum( $album_options );
-                        $album = $album_options;
-                    }
-
-                    // set Media
-                    $media = array(
-                        'media_album_id' => $album['album_id'],
-                        'media_type' => isset($_REQUEST['media_type']) ? $_REQUEST['media_type']: strtolower(substr(strrchr($userfile['name'],"."),1))
-                    );
-                    $media_options = array(
-                        'folder' => $album['album_id'],
-                    );
-
-                    $this->model->query('media')->set( $userfile, $media , $media_options);
-
-                    // update id image to Model
-                    $seq = $_POST['seq'][$i];
-                    if( !empty($media['media_id']) ){
-                        if( !empty($item['photos'][$seq]['id']) ){
-                            $this->model->query('media')->del($item['photos'][$seq]['id']);
-                            $this->model->delPermitPhotos($id, $item['photos'][$seq]['id']);
-                        }
-                        $_image = array(
-                            'pds_id' => $id,
-                            'media_id' => $media['media_id'],
-                            'seq' => $seq
-                        );
-                        $this->model->setPermitPhotos( $_image );
+                    if( $imageWidth > 350 || $imageHeight < 350 ){
+                        $arr['error']['image_'.$i] = 'ขนาดภาพต้องไม่เกิน 350px * 350px';
                     }
                 }
             }
 
-            $arr['message'] = 'Saved !';
-            $arr['url'] = 'refresh';
+            if( empty($arr['error']) ){
+
+                for ($i=1; $i <= $_POST["count"] ; $i++) {
+                    if( !empty($_FILES['image']['name'][$i]) ){
+                        $userfile = array(
+                            'name' => $_FILES['image']['name'][$i],
+                            'type' => $_FILES['image']['type'][$i],
+                            'tmp_name' => $_FILES['image']['tmp_name'][$i],
+                            'error' => $_FILES['image']['error'][$i],
+                            'size' => $_FILES['image']['size'][$i]
+                        );
+
+                        $album_options = array(
+                            'album_obj_type' => 'products',
+                            'album_obj_id' => 2,
+                        );
+                        $album = $this->model->query('media')->searchAlbum( $album_options );
+                        if( empty($album) ){
+                            $this->model->query('media')->setAlbum( $album_options );
+                            $album = $album_options;
+                        }
+
+                        // set Media
+                        $media = array(
+                            'media_album_id' => $album['album_id'],
+                            'media_type' => isset($_REQUEST['media_type']) ? $_REQUEST['media_type']: strtolower(substr(strrchr($userfile['name'],"."),1))
+                        );
+                        $media_options = array(
+                            'folder' => $album['album_id'],
+                        );
+
+                        $this->model->query('media')->set( $userfile, $media , $media_options);
+
+                        // update id image to Model
+                        $seq = $_POST['seq'][$i];
+                        if( !empty($media['media_id']) ){
+                            if( !empty($item['photos'][$seq]['id']) ){
+                                $this->model->query('media')->del($item['photos'][$seq]['id']);
+                                $this->model->delPermitPhotos($id, $item['photos'][$seq]['id']);
+                            }
+                            $_image = array(
+                                'pds_id' => $id,
+                                'media_id' => $media['media_id'],
+                                'seq' => $seq
+                            );
+                            $this->model->setPermitPhotos( $_image );
+                        }
+                    }
+                }
+
+                $arr['message'] = 'Saved !';
+                $arr['url'] = 'refresh';
+            }
         }
         else{
             $this->error();

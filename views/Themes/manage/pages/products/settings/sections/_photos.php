@@ -13,14 +13,14 @@ $form   ->field("image".$i)
         !empty($this->item['image_'.$i.'_arr']) 
             ? $this->fn->stringify( array_merge( 
                 array( 
-                    'scaledX'=> 350,
-                    'scaledY'=> 350,
+                    'scaledX'=> 720,
+                    'scaledY'=> 720,
                     'action_url' => URL.'products/del_image_cover/'.$this->item['id'],
                     // 'top_url' => IMAGES_PRODUCTS
                 ), $this->item['image_'.$i.'_arr'] ) )
             : $this->fn->stringify( array( 
-                    'scaledX'=> 350,
-                    'scaledY'=> 350
+                    'scaledX'=> 720,
+                    'scaledY'=> 720
                 ) )
             ).'">
         <div class="loader">
