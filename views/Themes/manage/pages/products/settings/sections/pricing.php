@@ -8,22 +8,28 @@ $form = $form->create()
     // ->method('post')
 	->addClass('js-submit-form');
 
-$form 	->field("frontend")
-		->label("Exclude Price")
-		->addClass('inputtext')
-		->autocomplete('off')
-		->value( !empty($this->item['pricing']['frontend']) ? round($this->item['pricing']['frontend']) : '' );
+	$form 	->field("frontend")
+			->label("Member Price")
+			->addClass('inputtext')
+			->autocomplete('off')
+			->value( !empty($this->item['pricing']['frontend']) ? round($this->item['pricing']['frontend']) : '' );
+
+	$form 	->field("vat")
+			->label("Exclude VAT Price")
+			->addClass('inputtext')
+			->autocomplete('off')
+			->value( !empty($this->item['pricing']['vat']) ? round($this->item['pricing']['vat']) : '' );
+
+	$form 	->field("website")
+			->label("Website Price")
+			->addClass('inputtext')
+			->autocomplete('off')
+			->value( !empty($this->item['pricing']['website']) ? round($this->item['pricing']['website']) : '' );
 
 /* $form 	->field("member")
 		->label("ราคาสมาชิก")
 		->addClass('inputtext')
 		->autocomplete('off')
 		->value( !empty($this->item['pricing']['member']) ? $this->item['pricing']['member'] : '' ); */
-
-$form 	->field("vat")
-		->label("VAT")
-		->addClass('inputtext')
-		->autocomplete('off')
-		->value( !empty($this->item['pricing']['vat']) ? round($this->item['pricing']['vat']) : '' );
 
 echo $form->html();
