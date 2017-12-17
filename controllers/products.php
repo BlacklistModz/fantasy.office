@@ -115,7 +115,8 @@ class Products extends Controller {
             try{
                 $form = new Form();
                 $form   ->post('frontend')
-                        ->post('vat');
+                        ->post('vat')
+                        ->post('website');
                 $form->submit();
                 $postData = $form->fetch();
 

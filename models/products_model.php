@@ -46,7 +46,7 @@ class Products_Model extends Model{
             foreach ($arrQ as $key => $value) {
                 $wq .= !empty( $wq ) ? " OR ":'';
                 $wq .= "pds_code LIKE :q{$key}
-                        OR pds_barcode LIKE :q{$key} 
+                        OR pds_barcode LIKE :q{$key}
                         OR pds_name LIKE :q{$key} ";
                 $where_arr[":q{$key}"] = "%{$value}%";
                 $where_arr[":s{$key}"] = "{$value}%";
@@ -79,7 +79,7 @@ class Products_Model extends Model{
 
         if( ($options['pager']*$options['limit']) >= $arr['total'] ) $options['more'] = false;
         $arr['options'] = $options;
-        
+
         return $arr;
     }
     public function buildFrag($results, $options=array()) {
@@ -144,7 +144,7 @@ class Products_Model extends Model{
         }
     }
     public function getPrice($id){
-        $sth = $this->db->prepare("SELECT id, frontend, seller, wholesales, employee, vat FROM products_pricing WHERE product_id = :id LIMIT 1");
+        $sth = $this->db->prepare("SELECT id, frontend, seller, wholesales, employee, vat, website FROM products_pricing WHERE product_id = :id LIMIT 1");
         $sth->execute( array(
             ':id' => $id
         ) );
@@ -162,7 +162,7 @@ class Products_Model extends Model{
     #PHOTOS
     public function getPhotos($id){
         $data = array();
-        
+
         $results = $this->db->select("SELECT * FROM products_media_permit WHERE pds_id=:id ORDER BY seq ASC", array(":id"=>$id));
         foreach ($results as $key => $value) {
             $image = $this->query('media')->get($value['media_id']);

@@ -3,9 +3,9 @@
 class Photos extends Controller  {
 
     public function __construct() {
-        parent::__construct();        
+        parent::__construct();
     }
-    
+
     public function index( $options=array() ) {
 
         if( count($options) < 2 ) $this->error();
@@ -29,7 +29,7 @@ class Photos extends Controller  {
         if( $set_width && $set_height ){
 
             if( $original_width > $original_height && $original_width > $set_width  ){
-                
+
                 $width = $set_width;
                 $height = round( ( $set_width*$original_height ) / $original_width );
 
@@ -98,7 +98,7 @@ class Photos extends Controller  {
         // echo $original_width.'__'.$original_height; die;
 
         // echo $path; die;
-        
+
         $tmp = imagecreatefromjpeg($path);
         $image = imagecreatetruecolor($set_width, $set_height);
 
@@ -116,7 +116,7 @@ class Photos extends Controller  {
 
         imagecopyresampled($image, $tmp, 0, 0, $dst[0], $dst[1], $width, $height, $original_width, $original_height);
 
-        
+
 
 
         // Set the content type header - in this case image/jpeg
@@ -125,7 +125,7 @@ class Photos extends Controller  {
 
         // Output the image
         imagejpeg($image);
-        
+
 
         // Free up memory
         imagedestroy($image);
@@ -137,9 +137,9 @@ class Photos extends Controller  {
         $albumsList = $this->model->albumsList();
         if( empty($albumsList) ){
             $album = array(
-                'obj_type' => 'site',
+                'obj_type' => 'photo',
                 'obj_id' => '',
-                'name' => 'Site Media',
+                'name' => 'Gallery',
             );
 
             $this->model->addAlbum($album);
@@ -153,7 +153,7 @@ class Photos extends Controller  {
         echo json_encode($this->model->lists());
     }
     public function album() {
-        
+
         $res = $this->model->lists( array('getSize'=>1) );
         // print_r($res); die;
         echo json_encode($res);
@@ -163,7 +163,7 @@ class Photos extends Controller  {
     public function upload(){
 
         // $arr['file'] = $_FILES['file1'];
-        // 
+        //
 
         $arr = $this->model->set( $_FILES['file1'], array(
             'album' => isset($_REQUEST['album']) ? $_REQUEST['album']: null,
