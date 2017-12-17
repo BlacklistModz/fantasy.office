@@ -16,9 +16,9 @@
 				<li class="mt">
 					<a href="<?=URL?>customers/import" data-plugins="dialog" class="btn btn-blue"><i class="icon-plus"></i> Import Excel</a>
 				</li>
-				<li class="mt">
+				<!-- <li class="mt">
 					<a href="<?=URL?>customers/export" class="btn btn-green" target="_blank"><i class="icon-file-excel-o"></i> Export Excel</a>
-				</li>
+				</li> -->
 				<li class="mt">
 					<a href="<?=URL?>customers/set_userpass" data-plugins="dialog" class="btn btn-orange"><i class="icon-retweet"></i> Refresh User&Pass</a>
 				</li>
