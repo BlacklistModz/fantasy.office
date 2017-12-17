@@ -142,7 +142,7 @@ class Customers_Model extends Model{
 
     #LISTS ORDERS
     public function listsOrders($id){
-        $data = $this->db->select("SELECT id, ord_code AS code, ord_sale_code AS sale_code, ord_type_commission AS comission, term_of_payment AS payments, ord_net_price AS price FROM orders WHERE ord_customer_id=:id", array(":id"=>$id));
+        $data = $this->db->select("SELECT id, ord_code AS code, ord_sale_code AS sale_code, ord_type_Comission AS comission, term_of_payment AS payments, ord_net_price AS price FROM orders WHERE ord_customer_id=:id", array(":id"=>$id));
 
         $arr = $this->query('orders')->buildFrag($data);
         return $arr;

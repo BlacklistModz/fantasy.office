@@ -11,7 +11,7 @@ if( !empty($events) ){
 	echo $this->fn->manage_nav($events, $this->getPage('on'));
 }
 
-$order[] = array('key'=>'payments', 'text'=>'Orders list', 'link'=>$url.'payments', 'icon'=>'cube ');
+$order[] = array('key'=>'payments', 'text'=>'Orders lists', 'link'=>$url.'payments', 'icon'=>'cube ');
 if( !empty($order) ){
 	echo $this->fn->manage_nav($order, $this->getPage('on'));
 }
@@ -40,8 +40,8 @@ if( !empty($products) ){
 	echo $this->fn->manage_nav($products, $this->getPage('on'));
 }
 
-$reports[] = array('key'=>'comission', 'text'=>'Commission reports', 'link'=>$url.'reports/comission', 'icon'=>'signal');
-$reports[] = array('key'=>'revenue', 'text'=>'Correct', 'link'=>$url.'reports/revenue', 'icon'=>'line-chart');
+$reports[] = array('key'=>'comission', 'text'=>'Comission reports', 'link'=>$url.'reports/comission', 'icon'=>'signal');
+$reports[] = array('key'=>'revenue', 'text'=>'Receipt report', 'link'=>$url.'reports/revenue', 'icon'=>'line-chart');
 if( !empty($reports) ){
 	echo $this->fn->manage_nav($reports, $this->getPage('on'));
 }

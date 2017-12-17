@@ -185,7 +185,7 @@ class Payments extends Controller {
                     $arr['error']['pay_comission_amount'] = 'Please fill in the numbers only.';
                 }
                 if( $postData['pay_comission_amount'] > $order['total_comission'] ){
-                    $arr['error']['pay_comission_amount'] = 'Can not complete the commissions '.$order['total_comission'].'.';
+                    $arr['error']['pay_comission_amount'] = 'Can not complete the comissions '.$order['total_comission'].'.';
                 }
             }
 

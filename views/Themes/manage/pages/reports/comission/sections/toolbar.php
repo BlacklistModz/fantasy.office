@@ -2,7 +2,7 @@
 	<div role="toolbar" class="mtm">
 		<div class="uiBoxWhite pam js-control">
 			<ul class="ui-list ui-list-horizontal clearfix" ref="actions">
-				<li class="ui-item"><h2><i class="icon-signal"></i> Comission</h2></li>
+				<li class="ui-item"><h2><i class="icon-signal"></i> Comission reports</h2></li>
 				<li class="js-control mtm">
 					<label for="month" class="label">Month</label>
 					<select class="inputtext" name="month" style="display:inline;">

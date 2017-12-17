@@ -102,7 +102,7 @@ $form 	->field("pay_image_id")
 
 if( empty($this->item) || empty($this->order['total_get_comission']) ){
 $form 	->field("pay_comission_amount")
-		->label("Commission ( not more than : ".number_format($this->order['total_comission'], 2)." Bath )")
+		->label("Comission ( not more than : ".number_format($this->order['total_comission'], 2)." Bath )")
 		->autocomplete('off')
 		->addClass('inputtext')
 		->type('number')

@@ -5,7 +5,7 @@
 
 			<ul class="lfloat" ref="actions">
 				<li class="mt">
-					<h2><i class="icon-users mrs"></i><span> Store / customer list</span></h2>
+					<h2><i class="icon-users mrs"></i><span> Customers</span></h2>
 				</li>
 
 				<li class="mt"><a class="btn js-refresh" data-plugins="tooltip" data-options="<?=$this->fn->stringify(array('text'=>'refresh'))?>"><i class="icon-refresh"></i></a></li>

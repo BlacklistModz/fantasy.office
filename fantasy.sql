@@ -97,10 +97,10 @@ INSERT INTO `categories` (`id`, `name_en`, `name_th`, `status`, `uid`, `created_
 -- --------------------------------------------------------
 
 --
--- Table structure for table `commission_orders`
+-- Table structure for table `Comission_orders`
 --
 
-CREATE TABLE `commission_orders` (
+CREATE TABLE `Comission_orders` (
   `id` int(11) NOT NULL,
   `ord_id` int(11) DEFAULT NULL,
   `sales_code` varchar(10) DEFAULT NULL,
@@ -114,13 +114,13 @@ CREATE TABLE `commission_orders` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `commission_sales`
+-- Table structure for table `Comission_sales`
 --
 
-CREATE TABLE `commission_sales` (
+CREATE TABLE `Comission_sales` (
   `id` int(11) NOT NULL,
   `sales_code` varchar(10) CHARACTER SET latin1 DEFAULT NULL,
-  `total_commission` varchar(10) CHARACTER SET latin1 DEFAULT NULL,
+  `total_Comission` varchar(10) CHARACTER SET latin1 DEFAULT NULL,
   `status` char(1) CHARACTER SET latin1 DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL
@@ -4839,7 +4839,7 @@ CREATE TABLE `orders` (
   `ord_customer_id` int(11) DEFAULT NULL,
   `ord_sale_code` varchar(50) CHARACTER SET latin1 DEFAULT NULL,
   `ord_dateCreate` datetime DEFAULT NULL,
-  `ord_type_commission` char(30) DEFAULT NULL,
+  `ord_type_Comission` char(30) DEFAULT NULL,
   `user_name` varchar(250) DEFAULT NULL,
   `user_code` varchar(50) DEFAULT NULL,
   `ord_process` char(1) CHARACTER SET latin1 DEFAULT NULL,
@@ -4857,7 +4857,7 @@ CREATE TABLE `orders` (
 -- Dumping data for table `orders`
 --
 
-INSERT INTO `orders` (`id`, `site_id`, `create_user_id`, `create_user_type`, `ord_code`, `ord_customer_id`, `ord_sale_code`, `ord_dateCreate`, `ord_type_commission`, `user_name`, `user_code`, `ord_process`, `term_of_payment`, `ord_status`, `order_note`, `created_at`, `updated_at`, `ord_net_price`, `ord_discount_extra`, `ord_tax`) VALUES
+INSERT INTO `orders` (`id`, `site_id`, `create_user_id`, `create_user_type`, `ord_code`, `ord_customer_id`, `ord_sale_code`, `ord_dateCreate`, `ord_type_Comission`, `user_name`, `user_code`, `ord_process`, `term_of_payment`, `ord_status`, `order_note`, `created_at`, `updated_at`, `ord_net_price`, `ord_discount_extra`, `ord_tax`) VALUES
 (1, NULL, 1, 'Sale', 'ORNC5802000542', 1097, '004', '2015-01-01 00:00:00', 'sales', 'ร้าน กุลวัลย์ (พัทยา)', '560043', '0', NULL, 'A', '', '2017-01-01 13:57:01', '2017-01-01 13:57:01', '16075.00', 0.00, NULL),
 (2, NULL, 1, 'Sale', 'ORNC5907000159', 1549, '010', '2016-01-01 00:00:00', 'sales', 'ร้าน At YOUR NAILS & SALON', '560708', '0', NULL, 'A', '', '2017-01-01 13:57:01', '2017-01-01 13:57:01', '1710.00', 0.00, NULL),
 (3, NULL, 1, 'Sale', 'ORNC5908000208', 1134, '010', '2016-01-01 00:00:00', 'sales', 'ร้าน เนส บิวตี้ &ซาลอน', '590419', '0', NULL, 'A', '', '2017-01-01 13:57:01', '2017-01-01 13:57:01', '4050.00', 0.00, NULL),
@@ -5094,7 +5094,7 @@ INSERT INTO `orders` (`id`, `site_id`, `create_user_id`, `create_user_type`, `or
 (234, NULL, 1, 'Sale', 'ORNC6008000329', 1341, '027', '2017-01-01 00:00:00', 'sales', 'ร้าน Mind hair', '570775', '0', NULL, 'A', 'ซอยk2', '2017-01-01 13:57:02', '2017-01-01 13:57:02', '3720.00', 0.00, NULL),
 (235, NULL, 1, 'Sale', 'ORNC6008000341', 1517, '027', '2017-01-01 00:00:00', 'sales', 'ร้าน หนูเน่ห์ ซาลอน', '580947', '0', NULL, 'A', '', '2017-01-01 13:57:02', '2017-01-01 13:57:02', '4000.00', 0.00, NULL),
 (236, NULL, 1, 'Sale', 'ORNC6008000342', 1517, '027', '2017-01-01 00:00:00', 'sales', 'ร้าน หนูเน่ห์ ซาลอน', '580947', '0', NULL, 'A', '', '2017-01-01 13:57:02', '2017-01-01 13:57:02', '2340.00', 0.00, NULL);
-INSERT INTO `orders` (`id`, `site_id`, `create_user_id`, `create_user_type`, `ord_code`, `ord_customer_id`, `ord_sale_code`, `ord_dateCreate`, `ord_type_commission`, `user_name`, `user_code`, `ord_process`, `term_of_payment`, `ord_status`, `order_note`, `created_at`, `updated_at`, `ord_net_price`, `ord_discount_extra`, `ord_tax`) VALUES
+INSERT INTO `orders` (`id`, `site_id`, `create_user_id`, `create_user_type`, `ord_code`, `ord_customer_id`, `ord_sale_code`, `ord_dateCreate`, `ord_type_Comission`, `user_name`, `user_code`, `ord_process`, `term_of_payment`, `ord_status`, `order_note`, `created_at`, `updated_at`, `ord_net_price`, `ord_discount_extra`, `ord_tax`) VALUES
 (237, NULL, 1, 'Sale', 'ORNC6008000360', 1326, '027', '2017-01-01 00:00:00', 'sales', 'ร้าน Aiza salon', '570417', '0', NULL, 'A', '', '2017-01-01 13:57:02', '2017-01-01 13:57:02', '4335.00', 0.00, NULL),
 (238, NULL, 1, 'Sale', 'ORNC6008000361', 1380, '027', '2017-01-01 00:00:00', 'sales', 'ร้าน FOCUS hairdesign', '570867', '0', NULL, 'A', '', '2017-01-01 13:57:02', '2017-01-01 13:57:02', '4320.00', 0.00, NULL),
 (239, NULL, 1, 'Sale', 'ORNC6008000377', 220, '005', '2017-01-01 00:00:00', 'sales', 'ร้าน HAIR CORNER (เพชรบุรี31)', '560063', '0', NULL, 'A', '', '2017-01-01 13:57:02', '2017-01-01 13:57:02', '4200.00', 0.00, NULL),
@@ -5333,7 +5333,7 @@ INSERT INTO `orders` (`id`, `site_id`, `create_user_id`, `create_user_type`, `or
 (472, NULL, 1, 'Sale', 'ORNC6010000238', 681, '005', '2017-01-01 00:00:00', 'sales', 'ร้าน หยก ซาลอน', '570001', '0', NULL, 'A', '', '2017-01-01 13:57:02', '2017-01-01 13:57:02', '8795.00', 0.00, NULL),
 (473, NULL, 1, 'Sale', 'ORNC6010000239', 253, '005', '2017-01-01 00:00:00', 'sales', 'คุณ ธัญภัทร โพธิ์ศรี', '560103', '0', NULL, 'A', '', '2017-01-01 13:57:02', '2017-01-01 13:57:02', '4320.00', 0.00, NULL),
 (474, NULL, 1, 'Sale', 'ORNC6010000240', 253, '005', '2017-01-01 00:00:00', 'sales', 'คุณ ธัญภัทร โพธิ์ศรี', '560103', '0', NULL, 'A', '', '2017-01-01 13:57:02', '2017-01-01 13:57:02', '3900.00', 0.00, NULL);
-INSERT INTO `orders` (`id`, `site_id`, `create_user_id`, `create_user_type`, `ord_code`, `ord_customer_id`, `ord_sale_code`, `ord_dateCreate`, `ord_type_commission`, `user_name`, `user_code`, `ord_process`, `term_of_payment`, `ord_status`, `order_note`, `created_at`, `updated_at`, `ord_net_price`, `ord_discount_extra`, `ord_tax`) VALUES
+INSERT INTO `orders` (`id`, `site_id`, `create_user_id`, `create_user_type`, `ord_code`, `ord_customer_id`, `ord_sale_code`, `ord_dateCreate`, `ord_type_Comission`, `user_name`, `user_code`, `ord_process`, `term_of_payment`, `ord_status`, `order_note`, `created_at`, `updated_at`, `ord_net_price`, `ord_discount_extra`, `ord_tax`) VALUES
 (475, NULL, 1, 'Sale', 'ORNC6010000241', 253, '005', '2017-01-01 00:00:00', 'sales', 'คุณ ธัญภัทร โพธิ์ศรี', '560103', '0', NULL, 'A', '', '2017-01-01 13:57:02', '2017-01-01 13:57:02', '3670.00', 0.00, NULL),
 (476, NULL, 1, 'Sale', 'ORNC6010000242', 1495, '027', '2017-01-01 00:00:00', 'sales', 'ร้าน เสริมสวย กิฟ', '560274', '0', NULL, 'A', '', '2017-01-01 13:57:02', '2017-01-01 13:57:02', '1200.00', 0.00, NULL),
 (477, NULL, 1, 'Sale', 'ORNC6010000244', 2122, '005', '2017-01-01 00:00:00', 'sales', 'ร้าน เมนี่ แฮร์ซาลอน', '600733', '0', NULL, 'A', '', '2017-01-01 13:57:02', '2017-01-01 13:57:02', '1140.00', 0.00, NULL),
@@ -5572,7 +5572,7 @@ INSERT INTO `orders` (`id`, `site_id`, `create_user_id`, `create_user_type`, `or
 (710, NULL, 1, 'Sale', '5912000409', 1179, '???????????', '2016-01-01 00:00:00', 'sales', 'ร้าน เสริมสวย พินทอง', '560671', '0', NULL, 'A', '089-9966729', '2017-01-01 20:45:34', '2017-01-01 20:45:34', '0.00', 0.00, NULL),
 (711, NULL, 1, 'Sale', '5912000456', 184, '?????', '2016-01-01 00:00:00', 'sales', 'ร้าน พลอยชมพู (เศรษฐกิจ)', '560537', '0', NULL, 'A', '092-5982200', '2017-01-01 20:45:34', '2017-01-01 20:45:34', '0.00', 0.00, NULL),
 (712, NULL, 1, 'Sale', '5912000764', 22, '??????????', '2016-01-01 00:00:00', 'sales', 'นัดธิดา', '570340', '0', NULL, 'A', '090-9615824', '2017-01-01 20:45:34', '2017-01-01 20:45:34', '0.00', 0.00, NULL);
-INSERT INTO `orders` (`id`, `site_id`, `create_user_id`, `create_user_type`, `ord_code`, `ord_customer_id`, `ord_sale_code`, `ord_dateCreate`, `ord_type_commission`, `user_name`, `user_code`, `ord_process`, `term_of_payment`, `ord_status`, `order_note`, `created_at`, `updated_at`, `ord_net_price`, `ord_discount_extra`, `ord_tax`) VALUES
+INSERT INTO `orders` (`id`, `site_id`, `create_user_id`, `create_user_type`, `ord_code`, `ord_customer_id`, `ord_sale_code`, `ord_dateCreate`, `ord_type_Comission`, `user_name`, `user_code`, `ord_process`, `term_of_payment`, `ord_status`, `order_note`, `created_at`, `updated_at`, `ord_net_price`, `ord_discount_extra`, `ord_tax`) VALUES
 (713, NULL, 1, 'Sale', '5912000940', 1102, '?????', '2016-01-01 00:00:00', 'sales', 'ร้าน คุณกวาง', '591070', '0', NULL, 'A', '081-5338235', '2017-01-01 20:45:34', '2017-01-01 20:45:34', '0.00', 0.00, NULL),
 (714, NULL, 1, 'Sale', '5912001092', 181, '??????????', '2016-01-01 00:00:00', 'sales', 'ร้าน นางสีดา บิวตี้', '560724', '0', NULL, 'A', '086-9705575', '2017-01-01 20:45:34', '2017-01-01 20:45:34', '0.00', 0.00, NULL),
 (715, NULL, 1, 'Sale', '5912001151', 1098, '?????', '2016-01-01 00:00:00', 'sales', 'ร้าน เก๋ บิวตี้', '570286', '0', NULL, 'A', '081-9258941,034-867600', '2017-01-01 20:45:34', '2017-01-01 20:45:34', '0.00', 0.00, NULL),
@@ -5802,7 +5802,7 @@ INSERT INTO `orders` (`id`, `site_id`, `create_user_id`, `create_user_type`, `or
 (939, NULL, 1, 'Sale', '6007000066', 1144, '?????????', '2017-01-01 00:00:00', 'sales', 'ร้าน พร ซาลอน', '600109', '0', NULL, 'A', '087-8243362', '2017-01-01 20:45:34', '2017-01-01 20:45:34', '0.00', 0.00, NULL),
 (940, NULL, 1, 'Sale', '6007000098', 1892, '????????', '2017-01-01 00:00:00', 'sales', 'ร้าน เสริมสวย สุรีย์พร', '600475', '0', NULL, 'A', '094-8929924', '2017-01-01 20:45:34', '2017-01-01 20:45:34', '0.00', 0.00, NULL),
 (941, NULL, 1, 'Sale', '6007000095', 1309, '???????', '2017-01-01 00:00:00', 'sales', 'ร้าน เอ๋ บิวตี้', '560152', '0', NULL, 'A', '092-2681964', '2017-01-01 20:45:34', '2017-01-01 20:45:34', '0.00', 0.00, NULL);
-INSERT INTO `orders` (`id`, `site_id`, `create_user_id`, `create_user_type`, `ord_code`, `ord_customer_id`, `ord_sale_code`, `ord_dateCreate`, `ord_type_commission`, `user_name`, `user_code`, `ord_process`, `term_of_payment`, `ord_status`, `order_note`, `created_at`, `updated_at`, `ord_net_price`, `ord_discount_extra`, `ord_tax`) VALUES
+INSERT INTO `orders` (`id`, `site_id`, `create_user_id`, `create_user_type`, `ord_code`, `ord_customer_id`, `ord_sale_code`, `ord_dateCreate`, `ord_type_Comission`, `user_name`, `user_code`, `ord_process`, `term_of_payment`, `ord_status`, `order_note`, `created_at`, `updated_at`, `ord_net_price`, `ord_discount_extra`, `ord_tax`) VALUES
 (942, NULL, 1, 'Sale', '6007000116', 19, '??????????', '2017-01-01 00:00:00', 'sales', 'คุณ พเยาว์ สิงห์บุตร', '560337', '0', NULL, 'A', '083-8265515', '2017-01-01 20:45:34', '2017-01-01 20:45:34', '0.00', 0.00, NULL),
 (943, NULL, 1, 'Sale', '6007000115', 928, '?????', '2017-01-01 00:00:00', 'sales', 'ร้าน ปูเป้ กะ ต๋อม', '580107', '0', NULL, 'A', '091-8415283', '2017-01-01 20:45:34', '2017-01-01 20:45:34', '0.00', 0.00, NULL),
 (944, NULL, 1, 'Sale', '6007000114', 1532, '????????', '2017-01-01 00:00:00', 'sales', 'ร้าน แฮร์ สไตล์ (หนูริ สมุทรปราการ)', '560803', '0', NULL, 'A', '089-4804362', '2017-01-01 20:45:34', '2017-01-01 20:45:34', '0.00', 0.00, NULL),
@@ -6033,7 +6033,7 @@ INSERT INTO `orders` (`id`, `site_id`, `create_user_id`, `create_user_type`, `or
 (1169, NULL, 1, 'Sale', '6009000015', 1190, '?????', '2017-01-01 00:00:00', 'sales', 'ร้าน อินเทรน บิวตี้ (อุตรดิตถ์)', '560268', '0', NULL, 'A', '081-7856178,055-832400', '2017-01-01 20:45:35', '2017-01-01 20:45:35', '0.00', 0.00, NULL),
 (1170, NULL, 1, 'Sale', '6009000017', 2038, '????????', '2017-01-01 00:00:00', 'sales', 'ร้าน บางกอกแฮร์บิวตี้', '560033', '0', NULL, 'A', '038-428222,081-762-9900', '2017-01-01 20:45:35', '2017-01-01 20:45:35', '0.00', 0.00, NULL),
 (1171, NULL, 1, 'Sale', '6009000012', 326, '????????????????????', '2017-01-01 00:00:00', 'sales', 'ร้าน Chic.co Salon (พี่เนตร )', '580386', '0', NULL, 'A', '081-6262224', '2017-01-01 20:45:35', '2017-01-01 20:45:35', '0.00', 0.00, NULL);
-INSERT INTO `orders` (`id`, `site_id`, `create_user_id`, `create_user_type`, `ord_code`, `ord_customer_id`, `ord_sale_code`, `ord_dateCreate`, `ord_type_commission`, `user_name`, `user_code`, `ord_process`, `term_of_payment`, `ord_status`, `order_note`, `created_at`, `updated_at`, `ord_net_price`, `ord_discount_extra`, `ord_tax`) VALUES
+INSERT INTO `orders` (`id`, `site_id`, `create_user_id`, `create_user_type`, `ord_code`, `ord_customer_id`, `ord_sale_code`, `ord_dateCreate`, `ord_type_Comission`, `user_name`, `user_code`, `ord_process`, `term_of_payment`, `ord_status`, `order_note`, `created_at`, `updated_at`, `ord_net_price`, `ord_discount_extra`, `ord_tax`) VALUES
 (1172, NULL, 1, 'Sale', '6009000013', 1074, '?????????', '2017-01-01 00:00:00', 'sales', 'คุณ ธรรมรัตน์ โพธิ์น้อย', '560194', '0', NULL, 'A', '089-1122196', '2017-01-01 20:45:35', '2017-01-01 20:45:35', '0.00', 0.00, NULL),
 (1173, NULL, 1, 'Sale', '6009000014', 9, '?????', '2017-01-01 00:00:00', 'sales', 'Be\' Cut', '560292', '0', NULL, 'A', '087-3738222', '2017-01-01 20:45:35', '2017-01-01 20:45:35', '0.00', 0.00, NULL),
 (1174, NULL, 1, 'Sale', '6009000016', 1190, '?????', '2017-01-01 00:00:00', 'sales', 'ร้าน อินเทรน บิวตี้ (อุตรดิตถ์)', '560268', '0', NULL, 'A', '081-7856178,055-832400', '2017-01-01 20:45:35', '2017-01-01 20:45:35', '0.00', 0.00, NULL),
@@ -6264,7 +6264,7 @@ INSERT INTO `orders` (`id`, `site_id`, `create_user_id`, `create_user_type`, `or
 (1399, NULL, 1, 'Sale', '6010000290', 782, '?????', '2017-01-01 00:00:00', 'sales', 'Suchada Beauty Salon', '590542', '0', NULL, 'A', '062-2435955', '2017-01-01 20:45:35', '2017-01-01 20:45:35', '0.00', 0.00, NULL),
 (1400, NULL, 1, 'Sale', '6010000297', 1404, '??????', '2017-01-01 00:00:00', 'sales', 'ร้าน เกรซ', '560873', '0', NULL, 'A', '090-4189991', '2017-01-01 20:45:35', '2017-01-01 20:45:35', '0.00', 0.00, NULL),
 (1401, NULL, 1, 'Sale', '6010000300', 2090, '??????', '2017-01-01 00:00:00', 'sales', 'ร้าน เสริมสวย น้ำงาม บิวตี้', '600669', '0', NULL, 'A', '061-1247041', '2017-01-01 20:45:35', '2017-01-01 20:45:35', '0.00', 0.00, NULL);
-INSERT INTO `orders` (`id`, `site_id`, `create_user_id`, `create_user_type`, `ord_code`, `ord_customer_id`, `ord_sale_code`, `ord_dateCreate`, `ord_type_commission`, `user_name`, `user_code`, `ord_process`, `term_of_payment`, `ord_status`, `order_note`, `created_at`, `updated_at`, `ord_net_price`, `ord_discount_extra`, `ord_tax`) VALUES
+INSERT INTO `orders` (`id`, `site_id`, `create_user_id`, `create_user_type`, `ord_code`, `ord_customer_id`, `ord_sale_code`, `ord_dateCreate`, `ord_type_Comission`, `user_name`, `user_code`, `ord_process`, `term_of_payment`, `ord_status`, `order_note`, `created_at`, `updated_at`, `ord_net_price`, `ord_discount_extra`, `ord_tax`) VALUES
 (1402, NULL, 1, 'Sale', '6009000296', 1905, '???????', '2017-01-01 00:00:00', 'sales', 'ร้าน เสริมสวย นธิวัตร (น้อย)', '600488', '0', NULL, 'A', '097-9244424', '2017-01-01 20:45:35', '2017-01-01 20:45:35', '0.00', 0.00, NULL),
 (1403, NULL, 1, 'Sale', '6009000304', 1274, '???????', '2017-01-01 00:00:00', 'sales', 'ร้าน แม็คซีน (ลำลูกกา)', '560431', '0', NULL, 'A', '02-5326018', '2017-01-01 20:45:35', '2017-01-01 20:45:35', '0.00', 0.00, NULL),
 (1404, NULL, 1, 'Sale', '6009000323', 66, '?????', '2017-01-01 00:00:00', 'sales', 'ร้าน เจ ซา ทีลอน (อ่างทอง)', '560176', '0', NULL, 'A', '063-2655978', '2017-01-01 20:45:35', '2017-01-01 20:45:35', '0.00', 0.00, NULL),
@@ -6495,7 +6495,7 @@ INSERT INTO `orders` (`id`, `site_id`, `create_user_id`, `create_user_type`, `or
 (1629, NULL, 2135, 'Customer', 'B001629', 2135, '029', '2017-12-05 00:00:00', 'sales', 'ร้าน กนกกร ซาลอน', '600804', '0', 1, 'A', '', NULL, NULL, '800.00', 0.00, '0.00'),
 (1630, 0, 3, 'Sale', 'B001630', 2100, '002', '2017-12-07 00:00:00', 'sales', 'ร้าน จีรนันทร์', '600679', '0', 1, 'A', 'asdfasdfasdfasdfasdfasdf', '2017-12-07 20:43:27', '2017-12-07 20:43:27', '1500.00', 0.00, '0.00'),
 (1631, NULL, 2100, 'Customer', 'B001631', 2100, '002', '2017-12-09 00:00:00', 'sales', 'ร้าน จีรนันทร์', '600679', '0', 1, 'A', '', '2017-12-09 13:21:20', '2017-12-09 13:46:40', '6200.00', 0.00, '0.00');
-INSERT INTO `orders` (`id`, `site_id`, `create_user_id`, `create_user_type`, `ord_code`, `ord_customer_id`, `ord_sale_code`, `ord_dateCreate`, `ord_type_commission`, `user_name`, `user_code`, `ord_process`, `term_of_payment`, `ord_status`, `order_note`, `created_at`, `updated_at`, `ord_net_price`, `ord_discount_extra`, `ord_tax`) VALUES
+INSERT INTO `orders` (`id`, `site_id`, `create_user_id`, `create_user_type`, `ord_code`, `ord_customer_id`, `ord_sale_code`, `ord_dateCreate`, `ord_type_Comission`, `user_name`, `user_code`, `ord_process`, `term_of_payment`, `ord_status`, `order_note`, `created_at`, `updated_at`, `ord_net_price`, `ord_discount_extra`, `ord_tax`) VALUES
 (1632, NULL, 2100, 'Customer', 'B001632', 2100, '002', '2017-12-09 00:00:00', 'sales', 'ร้าน จีรนันทร์', '600679', '0', 2, 'A', '', '2017-12-09 13:48:43', '2017-12-09 13:50:48', '6200.00', 0.00, '0.00'),
 (1633, 0, 6, 'Sale', 'B001633', 2128, '005', '2017-12-16 00:00:00', 'sales', 'ร้าน เสริมสวยแอร์เบสถ์ ซาลอน', '600803', '0', 1, 'A', '', '2017-12-16 09:37:53', '2017-12-16 09:37:53', '22200.00', 0.00, '0.00'),
 (1634, 0, 6, 'Sale', 'B001634', 2128, '005', '2017-12-16 00:00:00', 'sales', 'ร้าน เสริมสวยแอร์เบสถ์ ซาลอน', '600803', '0', 1, 'A', '', '2017-12-16 12:59:53', '2017-12-16 12:59:53', '66400.00', 0.00, '0.00'),
@@ -8100,15 +8100,15 @@ ALTER TABLE `categories`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `commission_orders`
+-- Indexes for table `Comission_orders`
 --
-ALTER TABLE `commission_orders`
+ALTER TABLE `Comission_orders`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `commission_sales`
+-- Indexes for table `Comission_sales`
 --
-ALTER TABLE `commission_sales`
+ALTER TABLE `Comission_sales`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -8356,14 +8356,14 @@ ALTER TABLE `admins`
 ALTER TABLE `categories`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 --
--- AUTO_INCREMENT for table `commission_orders`
+-- AUTO_INCREMENT for table `Comission_orders`
 --
-ALTER TABLE `commission_orders`
+ALTER TABLE `Comission_orders`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT for table `commission_sales`
+-- AUTO_INCREMENT for table `Comission_sales`
 --
-ALTER TABLE `commission_sales`
+ALTER TABLE `Comission_sales`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `country`

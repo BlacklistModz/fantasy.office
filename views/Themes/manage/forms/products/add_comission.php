@@ -12,7 +12,7 @@ $form = $form->create()
 	->addClass('form-insert');
 
 $form 	->field("pds_comission")
-		->label("Commission *")
+		->label("Comission *")
 		->autocomplete('off')
 		->addClass('inputtext')
 		->value( !empty($this->item['pds_comission']) ? $this->item['pds_comission'] : '' );
