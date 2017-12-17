@@ -13,9 +13,9 @@
 				<li class="divider"></li>
 
 				 <!-- data-plugins="dialog" -->
-				<!-- <li class="mt">
-					<a href="<?=URL?>customers/import" data-plugins="dialog" class="btn btn-blue"><i class="icon-plus"></i> Import Excel</a>
-				</li> -->
+				<li class="mt">
+					<a href="<?=URL?>products/settings/basic" class="btn btn-blue"><i class="icon-plus"></i> Add New</a>
+				</li>
 
 			</ul>
 

@@ -1,6 +1,6 @@
 <?php
 
-$users[] = array('key'=>'users', 'text'=>'Customers', 'link'=>$url.'customers', 'icon'=>'users');
+$users[] = array('key'=>'customers', 'text'=>'Customers', 'link'=>$url.'customers', 'icon'=>'users');
 $users[] = array('key'=>'sales', 'text'=>'Sales', 'link'=>$url.'sales', 'icon'=>'user');
 if( !empty($users) ){
 	echo $this->fn->manage_nav($users, $this->getPage('on'));
@@ -40,8 +40,13 @@ if( !empty($products) ){
 	echo $this->fn->manage_nav($products, $this->getPage('on'));
 }
 
+<<<<<<< HEAD
 $reports[] = array('key'=>'comission', 'text'=>'Comission reports', 'link'=>$url.'reports/comission', 'icon'=>'signal');
 $reports[] = array('key'=>'revenue', 'text'=>'Receipt report', 'link'=>$url.'reports/revenue', 'icon'=>'line-chart');
+=======
+$reports[] = array('key'=>'comission', 'text'=>'Commission reports', 'link'=>$url.'reports/comission', 'icon'=>'signal');
+$reports[] = array('key'=>'revenue', 'text'=>'Receipt reports', 'link'=>$url.'reports/revenue', 'icon'=>'line-chart');
+>>>>>>> 1b1eba48949e861fac44ae8fda45d3cbfd69e8ac
 if( !empty($reports) ){
 	echo $this->fn->manage_nav($reports, $this->getPage('on'));
 }
