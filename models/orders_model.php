@@ -11,7 +11,7 @@ class Orders_model extends Model{
     private $_field = "o.id
                        , ord_code AS code
     				   , ord_dateCreate AS date
-    				   , ord_type_Comission AS Comission
+    				   , ord_type_commission AS commission
                        , ord_customer_id AS customer_id
                        , ord_sale_code AS sale_code
     				   , user_name
@@ -157,7 +157,7 @@ class Orders_model extends Model{
     public function convert($data, $options=array()){
 
         $data['term_of_payment'] = $this->getTerm_of_payment($data['payment']);
-        $data['type_Comission'] = $this->getType_Comission($data['Comission']);
+        $data['type_commission'] = $this->getType_Comission($data['commission']);
 
     	if( !empty($options['items']) ){
     		$data['items'] = $this->listsItems($data['id']);
