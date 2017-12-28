@@ -134,12 +134,16 @@ class Products_Model extends Model{
 
     #Price
     public function setPrice($data){
+        
+        $data['updated_at'] = date("c");
+
         if( !empty($data['id']) ){
             $id = $data['id'];
             unset($data['id']);
             $this->db->update('products_pricing', $data, "id={$id}");
         }
         else{
+            $data['created_at'] = date("c");
             $this->db->insert('products_pricing', $data);
         }
     }

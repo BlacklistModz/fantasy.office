@@ -120,7 +120,13 @@ class Products extends Controller {
                 $form->submit();
                 $postData = $form->fetch();
 
-                if( !empty($item['pricing']) ) $postData['id'] = $item['pricing']['id'];
+                if( !empty($item['pricing']) ) {
+                    $postData['id'] = $item['pricing']['id'];
+                }
+                else{
+                    $postData['product_id'] = $id;
+                    $postData['status'] = "A";
+                }
 
                 if( empty($arr['error']) ){
                     $this->model->setPrice($postData);
