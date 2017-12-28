@@ -42,8 +42,8 @@ if( !empty($products) ){
 
 
 $reports[] = array('key'=>'comission', 'text'=>'Comission reports', 'link'=>$url.'reports/comission', 'icon'=>'signal');
-$reports[] = array('key'=>'revenue', 'text'=>'Receipt report', 'link'=>$url.'reports/revenue', 'icon'=>'line-chart');
-$reports[] = array('key'=>'comission', 'text'=>'Commission reports', 'link'=>$url.'reports/comission', 'icon'=>'signal');
+// $reports[] = array('key'=>'comission', 'text'=>'Commission reports', 'link'=>$url.'reports/comission', 'icon'=>'signal');
+// $reports[] = array('key'=>'revenue', 'text'=>'Receipt report', 'link'=>$url.'reports/revenue', 'icon'=>'line-chart');
 $reports[] = array('key'=>'revenue', 'text'=>'Receipt reports', 'link'=>$url.'reports/revenue', 'icon'=>'line-chart');
 
 if( !empty($reports) ){
