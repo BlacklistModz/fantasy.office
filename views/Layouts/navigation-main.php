@@ -16,9 +16,9 @@ if( !empty($order) ){
 	echo $this->fn->manage_nav($order, $this->getPage('on'));
 }
 
-$payments[] = array('key'=>'lists1', 'text'=>'Payments cash', 'link'=>$url.'payments/cash', 'icon'=>'money');
-$payments[] = array('key'=>'lists2', 'text'=>'Payments bank', 'link'=>$url.'payments/bank', 'icon'=>'cc-visa');
-$payments[] = array('key'=>'lists3', 'text'=>'Payments check', 'link'=>$url.'payments/check', 'icon'=>'credit-card-alt');
+$payments[] = array('key'=>'lists1', 'text'=>'Receipts cash', 'link'=>$url.'payments/cash', 'icon'=>'money');
+$payments[] = array('key'=>'lists2', 'text'=>'Receipts bank', 'link'=>$url.'payments/bank', 'icon'=>'cc-visa');
+$payments[] = array('key'=>'lists3', 'text'=>'Receipts check', 'link'=>$url.'payments/check', 'icon'=>'credit-card-alt');
 if( !empty($payments) ){
 	echo $this->fn->manage_nav($payments, $this->getPage('on'));
 }
