@@ -87,4 +87,30 @@ class Tax_Model extends Model{
 
     	return $data;
     }
+
+    /* CATEGORY */
+    public function category($id=null){
+        if( !empty($id) ){
+            $sth = $this->db->prepare("SELECT category_id AS id, category_name FROM tax_categories WHERE category_id=:id LIMIT 1");
+            $sth->execute( array(
+                ':id' => $id
+            ) );
+
+            return $sth->rowCount()==1
+            ? $sth->fetch( PDO::FETCH_ASSOC )
+            : array();
+        }
+        else{
+            return $this->db->select("SELECT category_id AS id, category_name AS name FROM tax_categories ORDER BY category_id DESC");
+        }
+    }
+    public function insertCategory($data){
+        $this->db->insert("tax_categories", $data);
+    }
+    public function updateCategory($id, $data){
+        $this->db->update("tax_categories", $data, "category_id={$id}");
+    }
+    public function deleteCategory($id){
+        $this->db->delete("tax_categories", "category_id={$id}");
+    }
 }

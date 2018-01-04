@@ -108,4 +108,17 @@ class Tax extends Controller {
             $this->view->render('del');
         }
     }
+
+    public function add_category(){
+
+    }
+    public function edit_category($id=null){
+
+    }
+    public function save_category(){
+
+    }
+    public function del_category($id=null){
+        
+    }
 }

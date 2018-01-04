@@ -1,4 +1,4 @@
-<?php
+<?php 
 class Reports extends Controller {
 
     public function __construct() {
@@ -8,27 +8,27 @@ class Reports extends Controller {
     public function comission(){
 
         $this->view->setPage('on', 'comission');
-        $this->view->setPage('title', 'Comissions');
+        $this->view->setPage('title', 'รายการค่าคอมมิชชั่น');
 
-    	$month = isset($_REQUEST["month"]) ? $_REQUEST["month"] : date("m");
-    	$year = isset($_REQUEST["year"]) ? $_REQUEST["year"] : date("Y");
+        $month = isset($_REQUEST["month"]) ? $_REQUEST["month"] : date("m");
+        $year = isset($_REQUEST["year"]) ? $_REQUEST["year"] : date("Y");
 
-    	$start = date("Y-m-d", strtotime("{$year}-{$month}-01"));
-    	$end = date("Y-m-t", strtotime($start));
+        $start = date("Y-m-d", strtotime("{$year}-{$month}-01"));
+        $end = date("Y-m-t", strtotime($start));
 
-    	$this->view->setData('results', $this->model->summaryComission( $start, $end ));
+        $this->view->setData('results', $this->model->summaryComission( $start, $end ));
 
-    	$monthStr = $this->fn->q('time')->month( $month, true );
-    	$this->view->setData('period', "{$monthStr} {$year}");
+        $monthStr = $this->fn->q('time')->month( $month, true );
+        $this->view->setData('period', "{$monthStr} {$year}");
 
-    	if( isset($_GET['main']) ){
-			$render = 'reports/comission/sections/main';
-		}
-		else{
-			$render = 'reports/comission/display';
-		}
+        if( isset($_GET['main']) ){
+            $render = 'reports/comission/sections/main';
+        }
+        else{
+            $render = 'reports/comission/display';
+        }
 
-    	$this->view->render( $render );
+        $this->view->render( $render );
     }
     public function showComission($id=null){
         $id = isset($_REQUEST["id"]) ? $_REQUEST["id"] : $id;
@@ -59,10 +59,13 @@ class Reports extends Controller {
     public function revenue(){
 
         $this->view->setPage('on', 'revenue');
-        $this->view->setPage('title', 'Receipt report.');
+        $this->view->setPage('title', 'รายงานรายรับ');
 
         $start = isset($_REQUEST["period_start"]) ? $_REQUEST["period_start"] : date("Y-m-d");
         $end = isset($_REQUEST["period_end"]) ? $_REQUEST["period_end"] : date("Y-m-d");
+
+        $this->view->setData('start', $start);
+        $this->view->setData('end', $end);
 
         $this->view->setData('periodStr', $this->fn->q('time')->str_event_date($start, $end).' '.date("Y", strtotime($end)));
 
@@ -77,7 +80,7 @@ class Reports extends Controller {
         $this->view->setData('results', $results);
 
         if( empty($_GET["main"]) ){
-           $this->view->render('reports/revenue/display');
+           $this->view->render('reports/revenue/display'); 
         }
         else{
             $this->view->render('reports/revenue/sections/order-lists');
@@ -86,9 +89,6 @@ class Reports extends Controller {
     public function revenue_total(){
         $start = isset($_REQUEST["period_start"]) ? $_REQUEST["period_start"] : date("Y-m-d");
         $end = isset($_REQUEST["period_end"]) ? $_REQUEST["period_end"] : date("Y-m-d");
-
-        $this->view->setData('start', $start);
-        $this->view->setData('end', $end);
 
         $this->view->setData('periodStr', $this->fn->q('time')->str_event_date($start, $end).' '.date("Y", strtotime($end)));
 
