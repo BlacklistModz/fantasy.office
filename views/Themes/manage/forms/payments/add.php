@@ -92,6 +92,12 @@ $form 	->field("pay_amount")
 		->addClass('inputtext')
 		->value( !empty($this->item['amount']) ? $this->item['amount'] : '' );
 
+$form 	->field("pay_point")
+		->label('Point for Customer  * 25฿ = 1 Point *( Calculate : <span id="point">0</span> )')
+		->autocomplete('off')
+		->addClass('inputtext')
+		->value( !empty($this->item['point']) ? $this->item['point'] : '' );
+
 $form 	->field("pay_image_id")
 		->label("Upload Picture ".$image)
 		->autocomplete('off')

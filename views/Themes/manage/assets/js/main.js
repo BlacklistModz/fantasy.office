@@ -2360,6 +2360,10 @@ if ( typeof Object.create !== 'function' ) {
 			self.$bankCheck = self.$elem.find('#pay_check_bank_fieldset');
 			self.$dateCheck = self.$elem.find('#pay_check_date_fieldset');
 
+			self.$cash = self.$elem.find("input#pay_amount");
+			self.$point = self.$elem.find("#point");
+			self.point = self.$elem.find("input#pay_point");
+
 			self.setElem();
 			self.Events()
 		},
@@ -2397,6 +2401,14 @@ if ( typeof Object.create !== 'function' ) {
 						self.setCheck();
 					}
 				}, 'json');
+			});
+
+			self.$cash.change(function(){
+				if( $(this).val() ){
+					var point = $(this).val() / 25;
+					self.$point.text( point );
+					self.point.val( point );
+				}
 			});
 		},
 		setCash: function(){

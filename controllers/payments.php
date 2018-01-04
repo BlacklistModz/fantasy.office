@@ -129,7 +129,8 @@ class Payments extends Controller {
                     ->post('pay_amount')->val('is_empty')
                     ->post('pay_note')
                     ->post('pay_sale_id')
-                    ->post('pay_order_id');
+                    ->post('pay_order_id')
+                    ->post('pay_point');
 
             $form->submit();
             $postData = $form->fetch();
@@ -245,6 +246,16 @@ class Payments extends Controller {
                     $this->model->update($id, array('pay_image_id'=>$media['id']));
                 }
 
+                #SET POINT FOR CUSTOMER
+                $customer = $this->model->query('customers')->get($order['customer_id']);
+                $point = $customer['point'];
+                if( !empty($item) ){
+                    $point -= $item['point'];
+                }
+                $this->model->query('customers')->update($customer['id'], array(
+                    'point'=>$point + $postData['pay_point']
+                ));
+
                 $arr['message'] = 'Payment successfully.';
                 $arr['url'] = 'refresh';
             }
@@ -262,10 +273,20 @@ class Payments extends Controller {
         $item = $this->model->get($id);
         if( empty($item) ) $this->error();
 
+        $order = $this->model->query('orders')->get($item['order_id']);
+        if( empty($order) ) $this->error();
+
         if( !empty($_POST) ){
             if( !empty($item['permit']['del']) ){
                 $this->model->delete($id);
                 $this->model->query('media')->del($item['image_id']);
+
+                #SET POINT
+                $customer = $this->model->query('customers')->get($order['customer_id']);
+                $this->model->query('customers')->update($order['customer_id'], array(
+                    'point'=>$customer['point'] - $item['point']
+                ));
+
                 $arr['message'] = 'Delete payment information successfully.';
                 $arr['url'] = 'refresh';
             }
