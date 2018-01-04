@@ -110,7 +110,7 @@ class Suppliers_Model extends Model{
 
         $data['name_str'] = $data['name'];
         if( !empty($data['code']) ){
-            $data['name_str'] = '('.$data['code'].') '.$data['name'];
+            $data['name_str'] = $data['code'].' - '.$data['name'];
         }
 
     	$prefix_name_str = $this->query('system')->getPrefixName($data['prefix_name']);
