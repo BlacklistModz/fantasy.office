@@ -2413,7 +2413,8 @@ if ( typeof Object.create !== 'function' ) {
 		},
 		setCash: function(){
 			var self = this;
-			self.$account.addClass('hidden_elem');
+			// self.$account.addClass('hidden_elem');
+			self.$account.removeClass('hidden_elem');
 			self.$check.addClass('hidden_elem');
 			self.$bankCheck.addClass('hidden_elem');
 			self.$dateCheck.addClass('hidden_elem');

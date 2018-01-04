@@ -4,7 +4,7 @@ $this->count_nav = 0;
 
 /* System */
 $sub = array();
-// $sub[] = array('text' => $this->lang->translate('Company'),'key' => 'company','url' => URL.'settings/company');
+$sub[] = array('text' => $this->lang->translate('Company'),'key' => 'company','url' => URL.'settings/company');
 // $sub[] = array('text'=>'Dealer','key'=>'dealer','url'=>URL.'settings/dealer');
 $sub[] = array('text' => 'Profile','key' => 'my','url' => URL.'settings/my');
 
@@ -33,6 +33,7 @@ if( !empty($sub) ){
 
 $sub = array();
 $sub[] = array('text' => 'Supplier categories', 'key'=>'type', 'url' => URL.'settings/suppliers/type');
+$sub[] = array('text' => 'Tax categories', 'key'=>'category', 'url' => URL.'settings/suppliers/category');
 if( !empty($sub) ){
 	$this->count_nav+=count($sub);
 	$menu[] = array('text' => 'Suppliers', 'url' => URL.'settings/suppliers', 'sub' => $sub);

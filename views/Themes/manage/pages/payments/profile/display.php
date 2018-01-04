@@ -222,7 +222,7 @@
 										<tfoot>
 											<tr>
 												<th colspan="4" style="text-align: right;">Total</th>
-												<th colspan="2" style="text-align: center;"><?=number_format($this->item['prices'], 2)?></th>
+												<th colspan="2" style="text-align: center;"><?=number_format($this->item['net_price'], 2)?></th>
 											</tr>
 											<tr>
 												<th colspan="4" style="text-align: right;">Paid</th>

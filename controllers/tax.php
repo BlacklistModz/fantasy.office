@@ -24,6 +24,7 @@ class Tax extends Controller {
     public function add(){
     	if( empty($this->me) || $this->format!='json' ) $this->error();
 
+        $this->view->setData('category', $this->model->category());
     	$this->view->setData('supplier', $this->model->query('suppliers')->lists( array('unlimit'=>true, 'sort'=>'code', 'dir'=>'ASC') ));
     	$this->view->setPage('path', 'Themes/manage/forms/vat/buy');
     	$this->view->render('add');
@@ -36,6 +37,7 @@ class Tax extends Controller {
     	if( empty($item) ) $this->error();
 
     	$this->view->setData('item', $item);
+        $this->view->setData('category', $this->model->category());
     	$this->view->setData('supplier', $this->model->query('suppliers')->lists( array('unlimit'=>true, 'sort'=>'code', 'dir'=>'ASC') ));
     	$this->view->setPage('path', 'Themes/manage/forms/vat/buy');
     	$this->view->render('add');
@@ -52,6 +54,7 @@ class Tax extends Controller {
         try{
             $form = new Form();
             $form   ->post('tax_date')
+                    ->post('tax_category_id')
                     ->post('tax_slipt')->val('is_empty')
                     ->post('tax_sup_id')->val('is_empty')
                     ->post('tax_total')->val('is_empty')
@@ -110,15 +113,84 @@ class Tax extends Controller {
     }
 
     public function add_category(){
+        if( empty($this->me) || $this->format!='json' ) $this->error();
 
+        $this->view->setPage('path','Themes/manage/forms/vat/category');
+        $this->view->render('add');
     }
     public function edit_category($id=null){
+        $id = isset($_REQUEST["id"]) ? $_REQUEST["id"] : $id;
+        if( empty($id) || empty($this->me) || $this->format!='json' ) $this->error();
 
+        $item = $this->model->category($id);
+        if( empty($item) ) $this->error();
+
+        $this->view->setData('item', $item);
+        $this->view->setPage('path','Themes/manage/forms/vat/category');
+        $this->view->render('add');
     }
     public function save_category(){
+        if( empty($_POST) ) $this->error();
 
+        $id = isset($_POST["id"]) ? $_POST["id"] : null;
+        if( !empty($id) ){
+            $item = $this->model->category($id);
+            if( empty($item) ) $this->error();
+        }
+
+        try{
+            $form = new Form();
+            $form   ->post('category_name')->val('is_empty');
+            $form->submit();
+            $postData = $form->fetch();
+
+            $has_name = true;
+            if( !empty($item) ){
+                if( $item['name'] == $postData['category_name'] ) $has_name = false;
+            }
+            if( $this->model->is_category($postData['category_name']) && $has_name ){
+                $arr['error']['category_name'] = 'This name have already !';
+            }
+
+            if( empty($arr['error']) ){
+                if(!empty($id)){
+                    $this->model->updateCategory($id, $postData);
+                }
+                else{
+                    $this->model->insertCategory($postData);
+                }
+
+                $arr['message'] = 'Saved !';
+                $arr['url'] = 'refresh';
+            }
+
+        } catch (Exception $e) {
+            $arr['error'] = $this->_getError($e->getMessage());
+        }
+        echo json_encode($arr);
     }
     public function del_category($id=null){
-        
+        $id = isset($_REQUEST["id"]) ? $_REQUEST["id"] : $id;
+        if( empty($id) || empty($this->me) || $this->format!='json' ) $this->error();
+
+        $item = $this->model->category($id);
+        if( empty($item) ) $this->error();
+
+        if( !empty($_POST) ){
+            if( !empty($item['permit']['del']) ){
+                $this->model->deleteCategory($id);
+                $arr['message'] = 'Deleted !';
+                $arr['url'] = 'refresh';
+            }
+            else{
+                $arr['message'] = 'Error : This can not delete by SYSTEM';
+            }
+            echo json_encode($arr);
+        }
+        else{
+            $this->view->setData('item', $item);
+            $this->view->setPage('path', 'Themes/manage/forms/vat/category');
+            $this->view->render('del');
+        }
     }
 }

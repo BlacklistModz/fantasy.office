@@ -19,7 +19,7 @@ class Settings extends Controller {
         $this->view->setData('tap', 'display');
         $this->view->setData('_tap', $tap);
 
-        if( empty($this->permit['company']['view']) ) $this->error();
+        // if( empty($this->permit['company']['view']) ) $this->error();
         // print_r($this->permit); die;
 
         if( $tap != 'basic' ){
@@ -98,6 +98,9 @@ class Settings extends Controller {
 
         if( $tap=='type' ){
             $data = $this->model->query('suppliers')->type();
+        }
+        elseif( $tap=='category' ){
+            $data = $this->model->query('tax')->category();
         }
         else{
             $this->error();

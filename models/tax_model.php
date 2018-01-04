@@ -91,13 +91,17 @@ class Tax_Model extends Model{
     /* CATEGORY */
     public function category($id=null){
         if( !empty($id) ){
-            $sth = $this->db->prepare("SELECT category_id AS id, category_name FROM tax_categories WHERE category_id=:id LIMIT 1");
+            $sth = $this->db->prepare("SELECT category_id AS id, category_name AS name FROM tax_categories WHERE category_id=:id LIMIT 1");
             $sth->execute( array(
                 ':id' => $id
             ) );
 
+            $fdata = $sth->fetch( PDO::FETCH_ASSOC );
+            $fdata['total'] = $this->db->count('tax', 'tax_category_id=:id', array(':id'=>$id));
+            $fdata['permit']['del'] = empty($fdata['total']) ? true : false;
+
             return $sth->rowCount()==1
-            ? $sth->fetch( PDO::FETCH_ASSOC )
+            ? $fdata
             : array();
         }
         else{
@@ -112,5 +116,8 @@ class Tax_Model extends Model{
     }
     public function deleteCategory($id){
         $this->db->delete("tax_categories", "category_id={$id}");
+    }
+    public function is_category($text){
+        return $this->db->count("tax_categories", "category_name=:text", array(":text"=>$text));
     }
 }

@@ -35,7 +35,8 @@ class Discounts extends Controller {
     public function add(){
     	if( empty($this->me) ) $this->error();
 
-        $products = $this->model->query('products')->lists( array('unlimit'=>true) );
+        // $products = $this->model->query('products')->lists( array('unlimit'=>true) );
+        $products = $this->model->listsProduct();
         $this->view->setData('products', $products);
 
     	$this->view->setPage('on', 'discounts');
@@ -50,7 +51,8 @@ class Discounts extends Controller {
     	$this->view->setPage('on', 'discounts');
     	$this->view->setPage('title', 'Edit discount');
 
-        $products = $this->model->query('products')->lists( array('unlimit'=>true) );
+        // $products = $this->model->query('products')->lists( array('unlimit'=>true) );
+        $products = $this->model->listsProduct();
         $this->view->setData('products', $products);
 
     	$item = $this->model->get($id, array('items'=>true));

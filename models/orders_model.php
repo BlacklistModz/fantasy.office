@@ -58,27 +58,23 @@ class Orders_model extends Model{
         }
 
         if( !empty($options['q']) ){
+            $arrQ = explode(' ', $options['q']);
+            $wq = '';
+            foreach ($arrQ as $key => $value) {
+                $wq .= !empty( $wq ) ? " OR ":'';
+                $wq .= "ord_code LIKE :q{$key}
+                        OR user_code LIKE :q{$key}
+                        OR user_name LIKE :q{$key}
+                        OR ord_sale_code LIKE :q{$key}";
+                $where_arr[":q{$key}"] = "%{$value}%";
+                $where_arr[":s{$key}"] = "{$value}%";
+                $where_arr[":f{$key}"] = $value;
+            }
 
-            // $arrQ = explode(' ', $options['q']);
-            // $wq = '';
-            // foreach ($arrQ as $key => $value) {
-            //     $wq .= !empty( $wq ) ? " OR ":'';
-            //     $wq .= "ord_code LIKE :q{$key}
-            //             OR user_code LIKE :q{$key}
-            //             OR user_name LIKE :q{$key}
-            //             OR ord_sale_code LIKE :q{$key}";
-            //     $where_arr[":q{$key}"] = "%{$value}%";
-            //     $where_arr[":s{$key}"] = "{$value}%";
-            //     $where_arr[":f{$key}"] = $value;
-            // }
-
-            // if( !empty($wq) ){
-            //     $where_str .= !empty( $where_str ) ? " AND ":'';
-            //     $where_str .= "($wq)";
-            // }
-            $where_str .= !empty($where_str) ? " AND " : "";
-            $where_str .= "ord_code LIKE :q OR user_code LIKE :q OR user_name LIKE :q OR ord_sale_code LIKE :q";
-            $where_arr[":q"] = "%{$options["q"]}%";
+            if( !empty($wq) ){
+                $where_str .= !empty( $where_str ) ? " AND ":'';
+                $where_str .= "($wq)";
+            }
         }
 
         if( isset($_REQUEST["sale"]) ){

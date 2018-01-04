@@ -56,7 +56,7 @@ $form 	->field("dis_price_6")
 		->value( !empty($this->item['price_6']) ? $this->item['price_6'] : '' );
 
 $products = array();
-foreach ($this->products['lists'] as $key => $value) {
+foreach ($this->products as $key => $value) {
 
 	$checked = false;
     if( !empty($this->item['items']) ){
@@ -69,7 +69,7 @@ foreach ($this->products['lists'] as $key => $value) {
     }
 
     $products[] = array(
-        'text' => $value['pds_name'], //.'('.$value['code'].')',
+        'text' => $value['name'], //.'('.$value['code'].')',
         'value' => $value['id'],
         'checked' => $checked
     );

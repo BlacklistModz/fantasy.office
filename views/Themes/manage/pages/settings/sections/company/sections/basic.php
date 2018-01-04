@@ -46,17 +46,29 @@ $form  	->field("fax")
 		->autocomplete("off")
 		->value( !empty($this->system['fax']) ? $this->system['fax']:'');
 
-$form  	->field("license")
-		->label($this->lang->translate('License No.'))
-		->addClass('inputtext')
-		->autocomplete("off")
-		->value( !empty($this->system['license']) ? $this->system['license']:'');
+// $form  	->field("license")
+// 		->label($this->lang->translate('License No.'))
+// 		->addClass('inputtext')
+// 		->autocomplete("off")
+// 		->value( !empty($this->system['license']) ? $this->system['license']:'');
 
 $form  	->field("email")
 		->label($this->lang->translate('Email'))
 		->addClass('inputtext')
 		->autocomplete("off")
 		->value( !empty($this->system['email']) ? $this->system['email']:'');
+
+$form  	->field("line")
+		->label($this->lang->translate('Line ID'))
+		->addClass('inputtext')
+		->autocomplete("off")
+		->value( !empty($this->system['line']) ? $this->system['line']:'');
+
+$form  	->field("facebook")
+		->label($this->lang->translate('Facebook ID'))
+		->addClass('inputtext')
+		->autocomplete("off")
+		->value( !empty($this->system['facebook']) ? $this->system['facebook']:'');
 
 $form  	->submit()
 		->addClass("btn-submit btn btn-blue")

@@ -129,4 +129,8 @@ class Discounts_Model extends Model{
     public function unsetItem($id){
     	$this->db->delete("discounts_items", "item_id={$id}");
     }
+
+    public function listsProduct(){
+        return $this->db->select("SELECT id, pds_name AS name, pds_barcode AS barcode FROM products");
+    }
 }

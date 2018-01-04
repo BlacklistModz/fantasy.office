@@ -27,6 +27,13 @@ $form 	->field("tax_slipt")
 		->autocomplete('off')
 		->value( !empty($this->item['slipt']) ? $this->item['slipt'] : '' );
 
+$form 	->field("tax_category_id")
+		->label("Category")
+		->addClass("inputtext")
+		->autocomplete('off')
+		->select( $this->category )
+		->value( !empty($this->item['category_id']) ? $this->item['category_id'] : '' );
+
 //  $form 	->field("tax_sup_code")
 // 		->label("Supplier Code")
 // 		->addClass("inputtext")
