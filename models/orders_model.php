@@ -123,6 +123,7 @@ class Orders_model extends Model{
         $orderby = $this->orderby( $options['sort'], $options['dir'] );
         $where_str = !empty($where_str) ? "WHERE {$where_str}":'';
         if( !empty($options["unlimit"]) ) $limit = "";
+
         $arr['lists'] = $this->buildFrag( $this->db->select("SELECT {$this->_field} FROM {$this->_table} {$where_str} {$orderby} {$limit}", $where_arr ), $options );
 
         if( ($options['pager']*$options['limit']) >= $arr['total'] ) $options['more'] = false;

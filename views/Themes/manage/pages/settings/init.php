@@ -20,7 +20,7 @@ $sub = array();
 $sub[] = array('text'=>'Manage Administrator', 'key'=>'admins', 'url'=>URL.'settings/accounts/admins');
 if( !empty($sub) ){
 	$this->count_nav+=count($sub);
-	$menu[] = array('text'=>'Accounts', 'url'=>URL.'settings/company', 'sub'=>$sub);
+	$menu[] = array('text'=>'Accounts', 'url'=>URL.'settings/accounts/admins', 'sub'=>$sub);
 }
 
 $sub = array();
@@ -28,7 +28,7 @@ $sub = array();
 $sub[] = array('text' => 'Bank account', 'key'=>'account', 'url' => URL.'settings/payments/account');
 if( !empty($sub) ){
 	$this->count_nav+=count($sub);
-	$menu[] = array('text' => 'Payments', 'url' => URL.'settings/company', 'sub' => $sub);
+	$menu[] = array('text' => 'Payments', 'url' => URL.'settings/payments/account', 'sub' => $sub);
 }
 
 $sub = array();
