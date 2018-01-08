@@ -12,7 +12,7 @@
 							if( $i == date("n") ){
 								$sel = ' selected="1"';
 							}
-							echo '<option'.$sel.' value="'.$i.'">'.$this->fn->q('time')->month($i, true).'</option>';
+							echo '<option'.$sel.' value="'.$i.'">'.$this->fn->q('time')->month($i, true, 'en').'</option>';
 						}
 						?>
 					</select>

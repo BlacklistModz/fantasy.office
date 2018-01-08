@@ -123,11 +123,11 @@ class Time_Fn extends _function {
 
        $arr = $short
             ? array(
-                'en' => array(1=>"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"),
+                'en' => array(1=>"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"),
                 'th' => array(1=>"มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"),
             )
             : array(
-                'en' => array(1=>"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"),
+                'en' => array(1=>"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"),
                 'th' => array(1=>"ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค."),
             );   
         

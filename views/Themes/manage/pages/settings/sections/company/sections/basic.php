@@ -29,22 +29,40 @@ $form  	->field("address")
 		->value( !empty($this->system['address']) ? $this->system['address']:'');
 
 $form  	->field("phone")
-		->label($this->lang->translate('Phone'))
+		->label($this->lang->translate('TEL'))
 		->addClass('inputtext')
 		->autocomplete("off")
 		->value( !empty($this->system['phone']) ? $this->system['phone']:'');
 
+$form  	->field("phone_2")
+		->label($this->lang->translate('TEL'))
+		->addClass('inputtext')
+		->autocomplete("off")
+		->value( !empty($this->system['phone_2']) ? $this->system['phone_2']:'');
+
 $form  	->field("mobile_phone")
-		->label($this->lang->translate('Mobile Phone'))
+		->label($this->lang->translate('Mobile Phone บัญชี'))
 		->addClass('inputtext')
 		->autocomplete("off")
 		->value( !empty($this->system['mobile_phone']) ? $this->system['mobile_phone']:'');
 
-$form  	->field("fax")
-		->label($this->lang->translate('Fax'))
+$form  	->field("mobile_phone_2")
+		->label($this->lang->translate('Mobile Phone ลูกค้าสัมพันธ์'))
 		->addClass('inputtext')
 		->autocomplete("off")
-		->value( !empty($this->system['fax']) ? $this->system['fax']:'');
+		->value( !empty($this->system['mobile_phone_2']) ? $this->system['mobile_phone_2']:'');
+
+$form  	->field("mobile_phone_3")
+		->label($this->lang->translate('Mobile Phone ช่าง'))
+		->addClass('inputtext')
+		->autocomplete("off")
+		->value( !empty($this->system['mobile_phone_3']) ? $this->system['mobile_phone_3']:'');
+
+// $form  	->field("fax")
+// 		->label($this->lang->translate('Fax'))
+// 		->addClass('inputtext')
+// 		->autocomplete("off")
+// 		->value( !empty($this->system['fax']) ? $this->system['fax']:'');
 
 // $form  	->field("license")
 // 		->label($this->lang->translate('License No.'))
@@ -58,11 +76,23 @@ $form  	->field("email")
 		->autocomplete("off")
 		->value( !empty($this->system['email']) ? $this->system['email']:'');
 
-$form  	->field("line")
-		->label($this->lang->translate('Line ID'))
+$form  	->field("line_1")
+		->label("Line บัญชี")
 		->addClass('inputtext')
 		->autocomplete("off")
-		->value( !empty($this->system['line']) ? $this->system['line']:'');
+		->value( !empty($this->system['line_1']) ? $this->system['line_1']:'');
+
+$form  	->field("line_2")
+		->label("Line ลูกค้าสัมพันธ์")
+		->addClass('inputtext')
+		->autocomplete("off")
+		->value( !empty($this->system['line_2']) ? $this->system['line_2']:'');
+
+$form  	->field("line_3")
+		->label("Line ช่าง")
+		->addClass('inputtext')
+		->autocomplete("off")
+		->value( !empty($this->system['line_3']) ? $this->system['line_3']:'');
 
 $form  	->field("facebook")
 		->label($this->lang->translate('Facebook ID'))

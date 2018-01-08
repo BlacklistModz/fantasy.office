@@ -30,6 +30,7 @@ if( !empty($paycheck) ){
 
 $suppliers[] = array('key'=>'suppliers', 'text'=>'Suppliers', 'link'=>$url.'suppliers', 'icon'=>'handshake-o');
 $suppliers[] = array('key'=>'tax', 'text'=>'VAT Buy', 'link'=>$url.'tax', 'icon'=>'diamond');
+$suppliers[] = array('key'=>'bills', 'text'=>'VAT Sale', 'link'=>$url.'bills', 'icon'=>'university');
 if( !empty($suppliers) ){
 	echo $this->fn->manage_nav($suppliers, $this->getPage('on'));
 }

@@ -18,7 +18,7 @@ class Reports extends Controller {
 
         $this->view->setData('results', $this->model->summaryComission( $start, $end ));
 
-        $monthStr = $this->fn->q('time')->month( $month, true );
+        $monthStr = $this->fn->q('time')->month( date("n", strtotime($month)), true );
         $this->view->setData('period', "{$monthStr} {$year}");
 
         if( isset($_GET['main']) ){
