@@ -262,4 +262,10 @@ class Customers extends Controller {
             $this->view->render('setUserPass');
         }
     }
+
+    /* JSON DATA */
+    public function get($id=null){
+        if( empty($this->me) || empty($id) ) $this->error();
+        echo json_encode($this->model->get($id));
+    }
 }

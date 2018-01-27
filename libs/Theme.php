@@ -97,10 +97,12 @@ class Theme extends View{
         }
 
 
-        $this   ->css( VIEW ."Themes/{$this->getPage('theme')}/assets/css/main.css", true )
+        $this   ->css('jquery-selector')
+                ->css( VIEW ."Themes/{$this->getPage('theme')}/assets/css/main.css", true )
                 ->css('bootstrap')
 
                 ->js( VIEW ."Themes/{$this->getPage('theme')}/assets/js/main.js", true )
+                ->js('jquery/jquery-selector.min')
                 ->js('custom')
                 ->js('plugins/dialog')
                 ->js('plugins/default')

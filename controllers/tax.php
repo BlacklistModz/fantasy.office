@@ -15,6 +15,7 @@ class Tax extends Controller {
     		$render = 'tax/lists/json';
     	}
     	else{
+            $this->view->setData('credit', $this->model->credit());
     		$render = 'tax/lists/display';
     	}
 
@@ -24,6 +25,7 @@ class Tax extends Controller {
     public function add(){
     	if( empty($this->me) || $this->format!='json' ) $this->error();
 
+        $this->view->setData('credit', $this->model->credit());
         $this->view->setData('category', $this->model->category());
     	$this->view->setData('supplier', $this->model->query('suppliers')->lists( array('unlimit'=>true, 'sort'=>'code', 'dir'=>'ASC') ));
     	$this->view->setPage('path', 'Themes/manage/forms/vat/buy');
@@ -37,6 +39,7 @@ class Tax extends Controller {
     	if( empty($item) ) $this->error();
 
     	$this->view->setData('item', $item);
+        $this->view->setData('credit', $this->model->credit());
         $this->view->setData('category', $this->model->category());
     	$this->view->setData('supplier', $this->model->query('suppliers')->lists( array('unlimit'=>true, 'sort'=>'code', 'dir'=>'ASC') ));
     	$this->view->setPage('path', 'Themes/manage/forms/vat/buy');
@@ -54,8 +57,10 @@ class Tax extends Controller {
         try{
             $form = new Form();
             $form   ->post('tax_date')
+                    ->post('tax_credit')
                     ->post('tax_category_id')
                     ->post('tax_slipt')->val('is_empty')
+                    ->post('tax_desc')->val('is_empty')
                     ->post('tax_sup_id')->val('is_empty')
                     ->post('tax_total')->val('is_empty')
                     ->post('tax_vat');

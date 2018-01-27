@@ -304,26 +304,49 @@ class Suppliers extends Controller {
                                 $col++;
                             }
 
-                            if( $data[$r][12] == "SP" ){
-                                $type = 1;
+                            $type = 1;
+                            if( $data[$r][6] == 'กรุงเทพ ฯ' ){
+                                $data[$r][6] = 'กรุงเทพมหานคร';
                             }
-                            else{
-                                $type = 2;
-                            }
-
                             $province_id = $this->model->query('system')->city_id($data[$r][6]);
+                            $country = '';
+                            switch ($data[$r][8]) {
+                                case 'Thailand':
+                                    $country = 3;
+                                    break;
+                                case 'Taiwan R.O.C.':
+                                    $country = 7;
+                                    break;
+                                case 'Myanmar':
+                                    $country = 6;
+                                    break;
+                                case 'Italy':
+                                    $country = 8;
+                                    break;
+                                case 'Italy':
+                                    $country = 8;
+                                    break;
+                                case 'South Korea':
+                                    $country = 9;
+                                default:
+                                    $country = 0;
+                                    break;
+                            }
 
                             $input = array(
                                 'sup_type_id'=>$type,
-                                'sup_code'=>$data[$r][1],
-                                'sup_name'=>$data[$r][2],
-                                'sup_address'=>$data[$r][3],
+                                'sup_code'=>$data[$r][0],
+                                'sup_name'=>$data[$r][1],
+                                'sup_address'=>$data[$r][2],
+                                'sup_street'=>$data[$r][3],
                                 'sup_supdistrict'=>$data[$r][4],
                                 'sup_district'=>$data[$r][5],
                                 'sup_province_id'=>$province_id,
                                 'sup_zip'=>$data[$r][7],
-                                'sup_mobile_phone'=>$data[$r][8],
-                                'sup_phone'=>$data[$r][9],
+                                'sup_country_id'=>$country,
+                                'sup_mobile_phone'=>$data[$r][9],
+                                'sup_phone'=>$data[$r][10],
+                                'sup_fax'=>$data[$r][11],
                             );
 
                             $this->model->import( $input );

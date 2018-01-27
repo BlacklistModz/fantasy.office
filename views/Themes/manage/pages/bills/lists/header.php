@@ -5,7 +5,7 @@
 
 			<ul class="lfloat" ref="actions">
 				<li class="mt">
-					<h2><i class="icon-diamond mrs"></i><span> VAT BUY</span></h2>
+					<h2><i class="icon-university mrs"></i><span> VAT Sale</span></h2>
 				</li>
 
 				<li class="mt"><a class="btn js-refresh" data-plugins="tooltip" data-options="<?=$this->fn->stringify(array('text'=>'refresh'))?>"><i class="icon-refresh"></i></a></li>
@@ -14,7 +14,7 @@
 
 				 <!-- data-plugins="dialog" -->
 				<li class="mt">
-					<a data-plugins="dialog" href="<?=URL?>tax/add" class="btn btn-blue"><i class="icon-plus"></i> <?=$this->lang->translate('Add New')?></a>
+					<a href="<?=URL?>bills/add" class="btn btn-blue"><i class="icon-plus"></i> <?=$this->lang->translate('Add New')?></a>
 				</li>
 
 			</ul>
@@ -50,14 +50,13 @@
 					<!-- <input ref="date" name="date"> -->
 				</li>
 				<li>
-					<label for="credit" class="label">Credit</label>
-					<select ref="selector" name="credit" class="inputtext">
+					<label for="term_of_payment" class="label">
+						เลือกเงื่อนไข
+					</label>
+					<select ref="selector" name="term_of_payment" class="inputtext">
 						<option value="">-</option>
-						<?php 
-						foreach ($this->credit as $key => $value) {
-							echo '<option value="'.$value['id'].'">'.$value['name'].'</option>';
-						}
-						?>
+						<option value="2">30 วัน</option>
+						<option value="1">เงินสด</option>
 					</select>
 				</li>
 			</ul>

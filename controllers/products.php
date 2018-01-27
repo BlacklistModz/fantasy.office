@@ -370,4 +370,9 @@ class Products extends Controller {
 
         echo json_encode($arr);
     }
+
+    public function lists(){
+        if( empty($this->me) || $this->format!='json' ) $this->error();
+        echo json_encode($this->model->lists());
+    }
 }

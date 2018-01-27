@@ -64,7 +64,7 @@ class Customers_Model extends Model{
         $where_str = !empty($where_str) ? "WHERE {$where_str}":'';
         $orderby = $this->orderby( $options['sort'], $options['dir'] );
         $limit = $this->limited( $options['limit'], $options['pager'] );
-
+        if( !empty($options["unlimit"]) ) $limit = '';
         $arr['lists'] = $this->buildFrag( $this->db->select("SELECT {$this->_field} FROM {$this->_table} {$where_str} {$orderby} {$limit}", $where_arr ), $options  );
 
         if( ($options['pager']*$options['limit']) >= $arr['total'] ) $options['more'] = false;
@@ -93,11 +93,37 @@ class Customers_Model extends Model{
     }
     public function convert($data , $options=array()){
 
+        $data['name_str'] = $data['sub_code'].' - '.$data['name_store'];
+
         if( !empty($options['orders']) ){
             $data['orders'] = $this->listsOrders($data['id']);
         }
 
         $data['address'] = $this->getAddress($data['id']);
+
+        $address = '';
+        if( !empty($data['address'][0]['address']) ){
+            $address .= $data['address'][0]['address'];
+        }
+        if( !empty($data['address'][0]['road']) ){
+            $address .= ' ถ.'.$data['address'][0]['road'];
+        }
+        if( !empty($data['address'][0]['district']) ){
+            $address .= ' ต.'.$data['address'][0]['district'];
+        }
+        if( !empty($data['address'][0]['area']) ){
+            $address .= ' อ.'.$data['address'][0]['area'];
+        }
+        if( !empty($data['address'][0]['province']) ){
+            $address .= ' จ.'.$data['address'][0]['province'];
+        }
+        if( !empty($data['address'][0]['post_code']) ){
+            $address .= ' '.$data['address'][0]['post_code'];
+        }
+        if( !empty($data['address'][0]['country_name']) ){
+            $address .= ' '.$data['address'][0]['country_name'];
+        }
+        $data["address_str"] = $address;
 
         $data['permit']['del'] = true;
         $data['total_order'] = $this->db->count('orders', "ord_customer_id=:id", array(":id"=>$data['id']));

@@ -21,11 +21,24 @@ $form 	->field("tax_date")
 		->autocomplete('off')
 		->value( !empty($this->item['date']) ? $this->item['date'] : '' );
 
+$form 	->field("tax_credit")
+		->label("Credit")
+		->addClass("inputtext")
+		->autocomplete('off')
+		->select( $this->credit )
+		->value( !empty($this->item['credit']) ? $this->item['credit'] : '' );
+
 $form 	->field("tax_slipt")
 		->label("SLIPT")
 		->addClass("inputtext")
 		->autocomplete('off')
 		->value( !empty($this->item['slipt']) ? $this->item['slipt'] : '' );
+
+$form 	->field("tax_desc")
+		->label("DESCRIPTION")
+		->addClass("inputtext")
+		->autocomplete('off')
+		->value( !empty($this->item['desc']) ? $this->item['desc'] : '' );
 
 $form 	->field("tax_category_id")
 		->label("Category")

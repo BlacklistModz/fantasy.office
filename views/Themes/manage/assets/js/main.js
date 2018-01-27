@@ -2930,6 +2930,489 @@ if ( typeof Object.create !== 'function' ) {
 		scaledY: 360
 	};
 
+	var billForm = {
+		init: function(options, elem) {
+			var self = this;
+			self.elem = elem;
+			self.$elem = $( elem );
+
+			self.options = $.extend( {}, $.fn.billForm.options, options );
+
+			self.is_keycodes = [37,38,39,40,13];
+            self.has_load = false;
+            self._otext = '';
+            self.is_focus = false;
+
+            self.$customer = self.$elem.find('input#bill_customer');
+            self.$customer.wrap( '<div class="ui-search"></div>' );
+            self.$customer.parent().append( 
+                  $('<div>', {class: 'loader loader-spin-wrap'}).html( $('<div>', {class: 'loader-spin'}) )
+                , $('<div>', {class: 'overlay'})
+            );
+            self.setMenuCustomer();
+
+            self.$vat = self.$elem.find('input[name=vat]');
+            self.$send_date = self.$elem.find('input[name=bill_send_date]');
+            // self.$submit_date = self.$elem.find('input[name=bill_submit_date]');
+            self.$submit_date = self.$elem.find('#submit_date');
+            self.$input_submit_date = self.$elem.find('input[name=bill_submit_date]');
+            self.$term_of_payment = self.$elem.find('input[name=bill_term_of_payment]');
+            self.currTerm_of_payment = self.$elem.find('input[name=bill_term_of_payment]:checked');
+
+            /* Current Data*/
+            self.currCus = self.options.cus_id;
+
+			self.setElem();
+			self.Events();
+		},
+		setElem: function(){
+			var self = this;
+
+			self.$listsitem = self.$elem.find('[role=listsitem]');
+			if( self.options.items.length==0 ){
+				self.getItem();
+			}else{
+				$.each( self.options.items, function (i, obj) {
+					self.getItem(obj);
+				} );
+			}
+
+			if( self.currCus != '' ){
+				$.get( Event.URL + 'customers/get/'+self.currCus, function(res) {
+					self.activeCustomer( res );
+				}, 'json');
+			}
+
+			if( self.currTerm_of_payment ){
+				var n = new Date();
+				n.setDate( n.getDate() + parseInt(self.currTerm_of_payment.data("date")) );
+				self.$submit_date.text( PHP.dateJStoShortDate(n) );
+				self.$input_submit_date.val( PHP.dateJStoPHP(n) );
+			}
+		},
+		Events: function(){
+			var self = this;
+
+			self.$send_date.datepicker({
+				onChange: function ( d ) {
+					var n = new Date();
+					var date = parseInt(self.$elem.find('input[name=bill_term_of_payment]:checked').data("date"));
+					n.setDate( d.getDate() + date );
+					self.$submit_date.text( PHP.dateJStoShortDate(n) );
+					self.$input_submit_date.val( PHP.dateJStoPHP(n) );
+				}
+			});
+
+			self.$term_of_payment.click(function(){
+				var n = new Date();
+				var date = parseInt( $(this).data("date") );
+				n.setDate( n.getDate() + date );
+				self.$submit_date.text( PHP.dateJStoShortDate(n) );
+				self.$input_submit_date.val( PHP.dateJStoPHP(n) );
+			});
+
+			var v;
+            self.$customer.keyup(function (e) {
+                var $this = $(this);
+                var value = $.trim($this.val());
+
+                if( self.is_keycodes.indexOf( e.which )==-1 && !self.has_load ){
+
+                    self.$customer.parent().addClass('has-load');
+                    self.hideCustomer();
+                    clearTimeout( v );
+
+                    if(value==''){
+
+                        self.$customer.parent().removeClass('has-load');
+                        return false;
+                    }
+
+                    v = setTimeout(function(argument) {
+
+                        self.has_load = true;
+                        self.searchCustomer( value );
+                    }, 500);
+
+                }
+            }).keydown(function (e) {
+                var keyCode = e.which;
+
+                if( keyCode==40 || keyCode==38 ){
+
+                    self.changeUpDownCustomer( keyCode==40 ? 'donw':'up' );
+                    e.preventDefault();
+                }
+
+                if( keyCode==13 && self.$menuCustomer.find('li.selected').length==1 ){
+
+                    self.activeCustomer(self.$menuCustomer.find('li.selected').data());
+                }
+            }).click(function (e) {
+                var value = $.trim($(this).val());
+
+                if(value!=''){
+
+                    if( self._otext==value ){
+                        self.displayCustomer();
+                    }
+                    else{
+
+                        self.$customer.parent().addClass('has-load');
+                        self.hideCustomer();
+                        clearTimeout( v );
+
+                        self.has_load = true;
+                        self.searchCustomer( value );
+                    }
+                }
+
+                e.stopPropagation();
+            }).blur(function () {
+
+                if( !self.is_focus ){
+                    self.hideCustomer();
+                }
+            });
+
+            self.$menuCustomer.delegate('li', 'mouseenter', function() {
+                $(this).addClass('selected').siblings().removeClass('selected');
+            });
+            self.$menuCustomer.delegate('li', 'click', function(e) {
+                $(this).addClass('selected').siblings().removeClass('selected');
+                self.activeCustomer($(this).data());
+
+                    // e.stopPropagation();
+                });
+            self.$menuCustomer.mouseenter(function() {
+                self.is_focus = true;
+            }).mouseleave(function() { 
+                self.is_focus = false;
+            });
+
+            $('html').on('click', function() {
+            	self.hideCustomer();
+            });
+
+            // item 
+			self.$elem.delegate('.js-add-item', 'click', function () {
+				var box = $(this).closest('tr');
+
+				if( box.find(':input').first().val()=='' ){
+					box.find(':input').first().focus();
+					return false;
+				}
+
+				var setItem = self.setItem({});
+				box.after( setItem );
+				setItem.find(':input').first().focus();
+
+				self.sortItem();
+			});
+
+			self.$elem.delegate('.js-remove-item', 'click', function () {
+				var box = $(this).closest('tr');
+
+				if( self.$listsitem.find('tr').length==1 ){
+					box.find(':input').val('');
+					box.find(':input').first().focus();
+				}
+				else{
+					box.remove();
+				}
+
+				self.sortItem();
+			});
+
+			self.$elem.delegate('.js-qty', 'change', function(){
+				var box = $(this).closest('tr');
+				self.summaryBox( box );
+				self.sortItem();
+			});
+
+			self.$elem.delegate('.js-sales', 'change', function(){
+				var box = $(this).closest('tr');
+				self.summaryBox( box );
+				self.sortItem();
+			});
+
+			self.$vat.change(function(){
+				self.sortItem();
+			});
+		},
+		setMenuCustomer: function(){
+			var self = this;
+
+			var $box = $('<div/>', {class: 'uiTypeaheadView selectbox-selectview'});
+            self.$menuCustomer = $('<ul/>', {class: 'search has-loading', role: "listbox"});
+
+            $box.html( $('<div/>', {class: 'bucketed'}).append( self.$menuCustomer ) );
+
+            var settings = self.$customer.offset();
+            settings.top += self.$customer.outerHeight();
+
+            uiLayer.get(settings, $box);
+            self.$layerCustomer = self.$menuCustomer.parents('.uiLayer');
+            self.$layerCustomer.addClass('hidden_elem');
+
+            self.$menuCustomer.mouseenter(function () {
+                self.is_focus = true;
+            }).mouseleave(function () {
+                self.is_focus = false;
+            });
+
+            self.resizeMenuCustomer();
+            $( window ).resize(function () {
+                self.resizeMenuCustomer();
+            });
+		},
+		resizeMenuCustomer: function() {
+            var self = this;
+
+            self.$menuCustomer.width( self.$customer.outerWidth()-2 );
+            var settings = self.$customer.offset();
+            settings.top += self.$customer.outerHeight();
+            settings.top -= 1;
+
+            self.$menuCustomer.css({
+                overflowY: 'auto',
+                overflowX: 'hidden',
+                maxHeight: $( window ).height()-settings.top
+            });
+
+            self.$menuCustomer.parents('.uiContextualLayerPositioner').css( settings );
+        },
+        displayCustomer: function () {
+            var self = this;
+
+            if( self.$menuCustomer.find('li').length == 0 ){
+                return false;
+            }
+
+            if( self.$menuCustomer.find('li.selected').length==0 ){
+                self.$menuCustomer.find('li').first().addClass('selected');
+            }
+
+            self.resizeMenuCustomer();
+            self.$layerCustomer.removeClass('hidden_elem');
+        },
+        hideCustomer: function() {
+            this.$layerCustomer.addClass('hidden_elem');
+        },
+        changeUpDownCustomer: function( active ) {
+            var self = this;
+
+            var length = self.$menuCustomer.find('li').length;
+            var index = self.$menuCustomer.find('li.selected').index();
+
+            if( active=='up' ) index--;
+            else index++;
+
+            if( index < 0) index=0;
+            if( index >= length) index=length-1;
+
+            self.$menuCustomer.find('li').eq( index ).addClass('selected').siblings().removeClass('selected');
+        },
+        activeCustomer: function ( data ) {
+            var self = this;
+
+            $remove = $('<button>', {type: 'button', class: 'remove'}).html( $('<i>', {class: 'icon-remove'}) );
+            self.$customer.prop('disabled', true).val('').parent().addClass('active').find('.overlay').empty().append(
+                $remove
+                // , $('<div>', { class: 'text'}).text( data.name_str )
+                , $('<input>', { type: 'hidden', class: 'hiddenInput', value:data.id, autocomplete:'off', name: 'bill_cus_id' })
+                );
+
+            self.$elem.find('input#bill_customer').val( data.name_str ).addClass('disabled').prop('disabled', true);
+            self.$elem.find('#address').text( data.address_str );
+            self.$elem.find('.notification').empty();
+
+            self.hideCustomer();
+            $remove.click(function() {
+                self.$elem.find('input#bill_customer').val( '' ).removeClass('disabled').prop('disabled', false);
+                self.$elem.find('#address').text("-");
+                self.$customer.prop('disabled', false).focus().parent().removeClass('active').find('.overlay').empty();
+            });
+        },
+        searchCustomer: function ( text ) {
+            var self = this;
+
+            var data = {
+                q: text,
+                limit: 5
+            };
+            self.$menuCustomer.empty();
+
+            $.ajax({
+                url: Event.URL + "bills/listsCustomer/",
+                data: data,
+                dataType: 'json'
+            }).done(function( results ) {
+
+                if( results.total==0 ){
+                    return false;
+                }
+
+                self.buildFragCustomer( results.lists );
+                self.displayCustomer();
+
+            }).fail(function() {
+
+            }).always(function() {
+
+                self._otext = text;
+                self.has_load = false;
+                self.$customer.parent().removeClass('has-load');
+            });
+        },
+        buildFragCustomer: function( results ) {
+            var self = this;
+
+            $.each(results, function (i, obj) {
+                var li = $('<li/>', {class:'picThumb'} ).html( $('<a>').append( 
+                	  $('<div>', {class:"avatar lfloat no-avatar mrm"}).append(
+                	  		$('<div>', {class:"initials"}).append(
+                	  			$('<i>', {class:"icon-home", style:"color:black;font-size: 30px;"})
+                	  		)
+                	  	)
+                    , $('<span/>', {class: 'text', text: obj.name_str})
+                    , $('<span/>', {class: 'subtext', text: obj.address_str})
+                    ) 
+                );
+
+                li.data(obj);
+                self.$menuCustomer.append( li );
+            }); 
+        },
+        getItem: function (data) {
+			var self = this;
+
+			self.$listsitem.append( self.setItem( data || {} ) );
+			self.sortItem();
+		},
+		setItem: function ( data ) {
+			var self = this;
+
+			var $select = $('<select>', {class: 'js-selector custom-select inputtext', name: 'item[pro_id][]'});
+			$select.append( $('<option>', {value:"", text:"-"}) );
+			$.each( self.options.products, function (i,obj) {
+				$select.append( $('<option>', {value:obj.id, text: obj.name, "data-id":obj.id}) );
+			});
+	
+			$tr = $('<tr>', {style:""});
+			$tr.append(
+				  $('<td>', {class: "no tac"})
+				, $('<td>', {class: "name"}).append( 
+						$select
+					)
+				, $('<td>').append(
+						$('<input>', {class:"inputtext tar js-qty", name:"item[qty][]", value:data.qty})
+					)
+				, $('<td>').append(
+						$('<input>', {class:"inputtext tac", name:"item[unit][]", value:data.unit})
+					)
+				, $('<td>').append(
+						$('<input>', {class:"inputtext tar js-sales", name:"item[sales][]", value:data.sales})
+					)
+				, $('<td>').append(
+						$('<input>', {class:"inputtext tar js-amount disabled", name:"item[amount][]", readonly:"1", value:data.amount})
+					)
+				, $('<td>').append(
+						$('<input>', {class:"inputtext", name:"item[remark][]", value:data.remark})
+					)
+				, $('<td>').append(
+						$('<div>', {class: 'whitespace'}).append(
+							$('<span>', {class:"gbtn"}).append(
+								$('<button>', {
+									type:"button",
+									class:"btn btn-no-padding js-add-item btn-blue",
+								}).html( $('<i>', {class: 'icon-plus'}) ), 
+							),
+							$('<span>', {class:"gbtn"}).append(
+								$('<button>', {
+									type:"button",
+									class:"btn btn-no-padding js-remove-item btn-red",
+								}).html( $('<i>', {class: 'icon-minus'}) )
+							)
+						)
+					)
+			);
+
+			$tr.find('[data-id='+data.pro_id+']').prop('selected', true);
+			$tr.find('.js-selector').customselect();
+
+			return $tr;
+		},
+		sortItem: function () {
+			var self = this;
+
+			var no = 0, total_price = 0, qty = 0; vat =0; amount = 0;
+			$.each(self.$listsitem.find('tr'), function (i, obj) {
+				no++;
+
+				$(this).find('.no').text( no );
+				$(this).find('.seq').val( no );
+
+				var input_qty = $(this).find('.js-qty').val();
+				if( input_qty == '' ) input_qty = 0;
+				qty += parseInt(input_qty);
+
+				total_price+=parseFloat( $(this).find(':input.js-amount').val() || 0 );
+			});
+
+			vat = (total_price * parseInt(self.$vat.val())) / 100;
+			amount = total_price + vat;
+
+			self.$elem.find('[summary=item]').text( qty );
+			self.$elem.find('[summary=total]').text( PHP.number_format( total_price , 2 ) );
+			self.$elem.find('[summary=vat]').text( PHP.number_format( vat , 2 ) );
+			self.$elem.find('[summary=amount]').text( PHP.number_format( amount , 2 ) );
+
+			/* UPDATE INPUT */
+			self.$elem.find('input[name=bill_total]').val( total_price );
+			self.$elem.find('input[name=bill_vat]').val( vat );
+			self.$elem.find('input[name=bill_amount]').val( amount );
+		},
+		summaryItem: function () {
+			var self = this;
+
+			var total = 0;
+			var $listsitem = self.$elem.find('[role="listsitems"]');
+			$.each(  $listsitem.find(':input.js-amount'), function (i, obj) {
+
+				var input = $(obj);
+				var val = parseFloat( input.val() ) || 0;
+
+				total += val
+				input.val( val );
+			});
+
+			$listsitem.find('[summary=total]').text( PHP.number_format( total , 2 ) );
+		},
+		summaryBox: function( box ){
+			var self = this;
+			var qty = box.find('.js-qty').val();
+			var sales = box.find('.js-sales').val();
+			var amount = box.find('.js-amount');
+
+			qty = parseInt(qty) || 0;
+			sales = parseInt(sales) || 0;
+
+			var $amount = parseInt(qty) * parseInt(sales);
+			amount.val( $amount );
+		}
+	}
+	$.fn.billForm = function( options ) {
+		return this.each(function() {
+			var $this = Object.create( billForm );
+			$this.init( options, this );
+			$.data( this, 'billForm', $this );
+		});
+	};
+	$.fn.billForm.options = {
+		items:[]
+	};
+
 })( jQuery, window, document );
 
 

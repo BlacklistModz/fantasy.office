@@ -1,20 +1,21 @@
-<?php 
-class Tax_Model extends Model{
+<?php
+
+class Bills_Model extends Model{
 
     public function __construct() {
         parent::__construct();
     }
 
-    private $_objName = "tax";
-    private $_field = "*";
-    private $_table = "tax";
-    private $_cutNamefield = "tax_";
+    private $_objName = "bills";
+    private $_table = "bills b LEFT JOIN customers c ON b.bill_cus_id=c.id";
+    private $_field = "b.*, c.sub_code";
+    private $_cutNamefield = "bill_";
 
     public function insert(&$data){
     	$data["{$this->_cutNamefield}created"] = date("c");
     	$data["{$this->_cutNamefield}updated"] = date("c");
-
     	$this->db->insert($this->_objName, $data);
+        $data['id'] = $this->db->lastInsertId();
     }
     public function update($id, $data){
     	$data["{$this->_cutNamefield}updated"] = date("c");
@@ -22,11 +23,13 @@ class Tax_Model extends Model{
     }
     public function delete($id){
     	$this->db->delete($this->_objName, "{$this->_cutNamefield}id={$id}");
+    	$this->deleteItems($id);
     }
-
-    public function lists( $options=array() ){
-
-    	$options = array_merge(array(
+    public function deleteItems($id){
+    	$this->db->delete("bills_item", "item_bill_id={$id}", $this->db->count("bills_item", "item_bill_id={$id}"));
+    }
+    public function lists($options=array()){
+        $options = array_merge(array(
             'pager' => isset($_REQUEST['pager'])? $_REQUEST['pager']:1,
             'limit' => isset($_REQUEST['limit'])? $_REQUEST['limit']:50,
             'more' => true,
@@ -45,15 +48,19 @@ class Tax_Model extends Model{
         $where_str = "";
         $where_arr = array();
 
-        if( isset($_REQUEST["credit"]) ){
-            $options["credit"] = $_REQUEST["credit"];
+        if( isset($_REQUEST["term_of_payment"]) ){
+            $options["term_of_payment"] = $_REQUEST["term_of_payment"];
+        }
+        if( !empty($options["term_of_payment"]) ){
+            $where_str .= !empty($where_str) ? " AND " : "";
+            $where_str .= "{$this->_cutNamefield}term_of_payment=:term_of_payment";
+            $where_arr[":term_of_payment"] = $options["term_of_payment"];
         }
 
-        if( !empty($options["credit"]) ){
-            $where_str .= !empty($where_str) ? " AND " : "";
-            $where_str .= "{$this->_cutNamefield}credit=:credit";
-            $where_arr[":credit"] = $options["credit"];
-        }
+        // if( !empty($options["q"]) ){
+        //     $where_str .= !empty($where_str) ? " AND " : "";
+        //     $where_str .= "{$this->_cutNamefield}bill =: "
+        // }
 
         $arr['total'] = $this->db->count($this->_table, $where_str, $where_arr);
 
@@ -92,60 +99,69 @@ class Tax_Model extends Model{
         return $data;
     }
     public function convert($data, $options=array()){
-    	$data = $this->cut($this->_cutNamefield, $data);
+        $data = $this->cut($this->_cutNamefield, $data);
+        $data["term_of_payment_arr"] = $this->getTerm_of_payment($data["term_of_payment"]);
+
+        if( !empty($options['items']) ){
+            $data['items'] = $this->listsItems($data['id']);
+        }
         $data['permit']['del'] = true;
 
-    	return $data;
+        return $data;
     }
+    #Lists
+    public function listsItems($id){
+        $data = $this->db->select("SELECT * FROM bills_item WHERE item_bill_id={$id}");
+        return $this->buildFragItem( $data );
+    }
+    public function buildFragItem($results){
+        $data = array();
+        foreach ($results as $key => $value) {
+            if( empty($value) ) continue;
+            $data[] = $this->convertItem( $value );
+        }
 
-    /* CATEGORY */
-    public function category($id=null){
-        if( !empty($id) ){
-            $sth = $this->db->prepare("SELECT category_id AS id, category_name AS name FROM tax_categories WHERE category_id=:id LIMIT 1");
-            $sth->execute( array(
-                ':id' => $id
-            ) );
+        return $data;
+    }
+    public function convertItem($data){
+        $data = $this->cut("item_", $data);
+        return $data;
+    }
+    public function setItem($data){
+        $data["item_updated"] = date("c");
 
-            $fdata = $sth->fetch( PDO::FETCH_ASSOC );
-            $fdata['total'] = $this->db->count('tax', 'tax_category_id=:id', array(':id'=>$id));
-            $fdata['permit']['del'] = empty($fdata['total']) ? true : false;
-
-            return $sth->rowCount()==1
-            ? $fdata
-            : array();
+        if( !empty($data['id']) ){
+            $id = $data['id'];
+            unset($data['id']);
+            $this->db->update("bills_item", $data, "item_id={$id}");
         }
         else{
-            return $this->db->select("SELECT category_id AS id, category_name AS name FROM tax_categories ORDER BY category_id DESC");
+            $data["item_created"] = date("c");
+            $this->db->insert("bills_item", $data);
         }
     }
-    public function insertCategory($data){
-        $this->db->insert("tax_categories", $data);
-    }
-    public function updateCategory($id, $data){
-        $this->db->update("tax_categories", $data, "category_id={$id}");
-    }
-    public function deleteCategory($id){
-        $this->db->delete("tax_categories", "category_id={$id}");
-    }
-    public function is_category($text){
-        return $this->db->count("tax_categories", "category_name=:text", array(":text"=>$text));
+    public function unsetItem($id){
+        $this->db->delete("bills_item", "item_id={$id}");
     }
 
-    #Credit
-    public function credit(){
+    public function listsProduct(){
+        return $this->db->select("SELECT id, pds_name AS name, pds_barcode AS barcode FROM products WHERE pds_has_vat=1");
+    }
+
+    public function term_of_payment(){
         $a[] = array('id'=>1, 'name'=>'เงินสด');
-        $a[] = array('id'=>2, 'name'=>'เครดิต 30 วัน');
+        $a[] = array('id'=>2, 'name'=>'30 วัน');
 
         return $a;
     }
-    public function getCredit($id=null){
+    public function getTerm_of_payment($id){
         $data = array();
-        foreach ($this->credit() as $key => $value) {
-            if(  $value['id'] == $id ){
+        foreach ($this->term_of_payment() as $key => $value) {
+            if( $id == $value["id"] ){
                 $data = $value;
                 break;
             }
         }
         return $data;
     }
-}
+} 
