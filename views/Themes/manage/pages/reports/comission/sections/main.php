@@ -6,6 +6,7 @@
 				<tr>
 					<th class="ID">Code</th>
 					<th class="name">Saller name</th>
+					<th class="status">Due</th>
 					<th class="status">View items</th>
 					<th class="status_str">Comission</th>
 				</tr>
@@ -23,6 +24,11 @@
 						<td class="name"><?=$value['sale_name']?></td>
 						<td class="status">
 							<span class="gbtn">
+								<a href="<?=URL?>reports/showDue/<?=$value["id"]?>" class="btn btn-orange btn-no-padding" data-plugins="dialog"><i class="icon-money"></i></a>
+							</span>
+						</td>
+						<td class="status">
+							<span class="gbtn">
 								<a href="<?=URL?>reports/showComission/<?=$value['id']?>/?month=<?=$month?>&year=<?=$year?>" class="btn btn-no-padding btn-blue" data-plugins="dialog">
 									<i class="icon-eye"></i>
 								</a>
@@ -38,7 +44,7 @@
 			</tbody>
 			<tfoot>
 				<tr>
-					<th colspan="3">
+					<th colspan="4">
 						<div class="tar">
 							<span class="fwb" style="font-size:20px;">Total</span>
 						</div>

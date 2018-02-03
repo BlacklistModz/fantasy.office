@@ -145,7 +145,7 @@ class Bills_Model extends Model{
     }
 
     public function listsProduct(){
-        return $this->db->select("SELECT id, pds_name AS name, pds_barcode AS barcode FROM products WHERE pds_has_vat=1");
+        return $this->db->select("SELECT p.id, pds_name AS name, pds_barcode AS barcode, pp.vat AS sales, pds_unit AS unit FROM products p LEFT JOIN products_pricing pp ON p.id=pp.product_id WHERE pds_has_vat=1");
     }
 
     public function term_of_payment(){

@@ -6,17 +6,27 @@ class System_Model extends Model{
         parent::__construct();
     }
 
-    public function pageMenu() {
+    public function pageMenu()
+    {
         $a = array();
 
-        $a[] = array('key'=>'dashboard', 'name'=>'Dashboard');
-        // $a[] = array('key'=>'calendar', 'name'=>'นัดหมาย');
-        $a[] = array('key'=>'customers', 'name'=>'ประวัติลูกค้า');
-        $a[] = array('key'=>'booking', 'name'=>'รายการจองรถยนต์');
-        $a[] = array('key'=>'stocks', 'name'=>'สต็อกรถยนต์');
+        $a[] = array('key'=>'customers', 'name'=>'Customers');
         $a[] = array('key'=>'sales', 'name'=>'Sales');
-        $a[] = array('key'=>'services', 'name'=>'งานบริการ');
-        $a[] = array('key'=>'reports', 'name'=>'รายงาน');
+        $a[] = array('key'=>'events', 'name'=>'Calendar');
+        $a[] = array('key'=>'payments', 'name'=>'Payments');
+        $a[] = array('key'=>'lists1', 'name'=>'Receipts Cash');
+        $a[] = array('key'=>'lists2', 'name'=>'Receipts Bank');
+        $a[] = array('key'=>'lists3', 'name'=>'Receipts Check');
+        $a[] = array('key'=>'paycheck', 'name'=>'Pay Check');
+        $a[] = array('key'=>'suppliers', 'name'=>'Suppliers');
+        $a[] = array('key'=>'tax', 'name'=>'VAT Buy');
+        $a[] = array('key'=>'bills', 'name'=>'VAT Sale');
+        $a[] = array('key'=>'discounts', 'name'=>'Discounts');
+        $a[] = array('key'=>'categories', 'name'=>'Categories');
+        $a[] = array('key'=>'products', 'name'=>'Products');
+        $a[] = array('key'=>'comission', 'name'=>'Comission reports');
+        $a[] = array('key'=>'revenue', 'name'=>'Receipt reports');
+        // $a[] = array('key'=>'settings', 'name'=>'Settings');
         
         return $a;
     }

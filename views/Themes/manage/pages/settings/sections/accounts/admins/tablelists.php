@@ -41,6 +41,9 @@ if( !empty($this->results['lists']) ){
 
                 '<div class="group-btn whitespace">'.
                 '<span class="gbtn">'.
+                    '<a data-plugins="dialog" href="'.$url.'permission/'.$item['id'].'" class="btn btn-no-padding btn-green"><i class="icon-check-square-o"></i></a>'.
+                '</span>'.
+                '<span class="gbtn">'.
                     '<a data-plugins="dialog" href="'.$url.'change_password/'.$item['id'].'" class="btn btn-no-padding btn-blue '.$disabled.'"><i class="icon-key"></i></a>'.
                 '</span>'.
                 '<span class="gbtn">'.

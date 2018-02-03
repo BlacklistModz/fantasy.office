@@ -27,6 +27,12 @@ $form   ->field("pds_name")
         ->autocomplete('off')
         ->value( !empty($this->item['pds_name']) ? $this->item['pds_name'] : '' );
 
+$form   ->field("pds_unit")
+        ->label("Product Unit")
+        ->addClass("inputtext")
+        ->autocomplete("off")
+        ->value( !empty($this->item["pds_unit"]) ? $this->item["pds_unit"] : '' );
+
 $form   ->field("pds_detail")
         ->label("Description")
         ->addClass('inputtext')

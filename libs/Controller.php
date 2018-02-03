@@ -62,21 +62,28 @@ class Controller {
         }
 
         $this->handleLogin();
-        
+        $this->setPagePermit();
     }
     public function setPagePermit($value='') {
 
-        $permit = $this->model->query('system')->permit( !empty($this->me['access']) ? $this->me['access']:array() );
+        // $permit = $this->model->query('system')->permit( !empty($this->me['access']) ? $this->me['access']:array() );
 
-        if( !empty($this->me['permission']) ){
+        // if( !empty($this->me['permission']) ){
 
-            foreach ($permit as $key => $value) {
+        //     foreach ($permit as $key => $value) {
                 
-                if( !empty($this->me['permission'][ $key ]) ){
-                    $permit[$key] = array_merge($value, $this->me['permission'][ $key ]);
-                }
-            }
+        //         if( !empty($this->me['permission'][ $key ]) ){
+        //             $permit[$key] = array_merge($value, $this->me['permission'][ $key ]);
+        //         }
+        //     }
 
+        // }
+
+        $permit = array();
+        if( !empty($this->me["permission"]) ){
+            foreach ($this->me["permission"] as $key => $value) {
+                $permit[$key] = $value;
+            }
         }
 
         // print_r($permit); die;
