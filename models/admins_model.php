@@ -85,6 +85,10 @@ class Admins_Model extends Model{
             : array();
     }
     public function convert($data , $options=array()){
+        // permission
+        if( !empty($data['permission']) ){
+            $data['permission'] = json_decode($data['permission'], true);
+        }
         $data['permit']['del'] = true;
     	return $data;
     }

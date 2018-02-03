@@ -300,6 +300,7 @@ class Orders_model extends Model{
         $a[] = array('id'=>5, 'name'=>'เก็บเงินมาบางส่วน', 'color'=>'' , 't_color'=>'#000');
         $a[] = array('id'=>6, 'name'=>'เก็บเงินทั้งหมดแล้ว', 'color'=>'' , 't_color'=>'#000');
         $a[] = array('id'=>7, 'name'=>'ยกเลิก', 'color'=>'#C62828' , 't_color'=>'#fff');
+        $a[] = array('id'=>9, 'name'=>'รอการตรวจสอบ', 'color'=>'' , 't_color'=>'#000');
 
         return $a;
     }

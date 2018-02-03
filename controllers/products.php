@@ -66,6 +66,7 @@ class Products extends Controller {
                 $form   ->post('pds_categories_id')->val('is_empty')
                         ->post('pds_code')
                         ->post('pds_name')->val('is_empty')
+                        ->post('pds_unit')
                         ->post('pds_detail')
                         ->post('pds_barcode');
                 $form->submit();

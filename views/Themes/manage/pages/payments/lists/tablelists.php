@@ -19,6 +19,12 @@ if( !empty($this->results['lists']) ){
 
         $add = $item['net_price'] == $item['pay'] ? "disabled" : "";
 
+        $net_price = !empty($item['net_price']) ? number_format($item['net_price'], 2) : "-";
+        if( $item["process"]["id"] == 7 ){
+            $add = "disabled";
+            $net_price = '<span class="fwb tac pas" style="background-color:'.$item["process"]["color"].';color:'.$item["process"]["t_color"].'; border-radius: 10px;">ยกเลิก</span>';
+        }
+
         $tr .= '<tr class="'.$cls.'" data-id="'.$item['id'].'"">'.
 
             '<td class="date">'.$dateStr.'</td>'.
@@ -33,7 +39,7 @@ if( !empty($this->results['lists']) ){
 
             '<td class="address">['.$item['user_code'].'] '.$item['user_name'].'</td>'.
 
-            '<td class="price">'.(!empty($item['net_price']) ? number_format($item['net_price'], 2) : "-").'</td>'.
+            '<td class="price">'.$net_price.'</td>'.
 
             '<td class="price">'.(!empty($item['pay']) ? number_format($item['pay'], 2) : "-").'</td>'.
 

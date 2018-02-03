@@ -3136,6 +3136,16 @@ if ( typeof Object.create !== 'function' ) {
 				self.sortItem();
 			});
 
+			self.$elem.delegate('.js-selector', 'change', function(){
+				var box = $(this).closest('tr');
+				var price = $(this).find("option:selected").data("sales");
+				var unit = $(this).find("option:selected").data("unit");
+				box.find('.js-sales').val( parseInt(price) || 0 );
+				box.find('.js-unit').val( unit || 0 );
+				self.summaryBox( box );
+				self.sortItem();
+			});
+
 			self.$vat.change(function(){
 				self.sortItem();
 			});
@@ -3296,7 +3306,7 @@ if ( typeof Object.create !== 'function' ) {
 			var $select = $('<select>', {class: 'js-selector custom-select inputtext', name: 'item[pro_id][]'});
 			$select.append( $('<option>', {value:"", text:"-"}) );
 			$.each( self.options.products, function (i,obj) {
-				$select.append( $('<option>', {value:obj.id, text: obj.name, "data-id":obj.id}) );
+				$select.append( $('<option>', {value:obj.id, text: obj.name, "data-id":obj.id, "data-sales":obj.sales, "data-unit":obj.unit}) );
 			});
 	
 			$tr = $('<tr>', {style:""});
@@ -3309,7 +3319,7 @@ if ( typeof Object.create !== 'function' ) {
 						$('<input>', {class:"inputtext tar js-qty", name:"item[qty][]", value:data.qty})
 					)
 				, $('<td>').append(
-						$('<input>', {class:"inputtext tac", name:"item[unit][]", value:data.unit})
+						$('<input>', {class:"inputtext tac js-unit", name:"item[unit][]", value:data.unit})
 					)
 				, $('<td>').append(
 						$('<input>', {class:"inputtext tar js-sales", name:"item[sales][]", value:data.sales})

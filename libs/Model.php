@@ -107,6 +107,4 @@ class Model {
 
         return $_data;
     }
-
-    
 }

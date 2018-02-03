@@ -136,4 +136,28 @@ class Admins extends Controller {
     		$this->view->render('password');
     	}
     }
+
+    public function permission($id=null){
+        $id = isset($_REQUEST["id"]) ? $_REQUEST["id"] : $id;
+        if( empty($id) || empty($this->me) || $this->format!='json' ) $this->error();
+
+        $item = $this->model->get($id);
+        if( empty($item) ) $this->error();
+
+        if( !empty($_POST) ){
+            $data["permission"] = !empty($_POST["permission"]) ? json_encode($_POST["permission"]) : "";
+            $this->model->update($id, $data);
+
+            $arr['message'] = "Set Permission Completed !";
+            $arr['url'] = 'refresh';
+
+            echo json_encode($arr);
+        }
+        else{
+            $this->view->setData('item', $item);
+            $this->view->setData('pageMenu', $this->model->query('system')->pageMenu());
+            $this->view->setPage('path','Themes/manage/forms/admins');
+            $this->view->render("permission");
+        }
+    }
 }

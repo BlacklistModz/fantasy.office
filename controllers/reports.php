@@ -63,6 +63,7 @@ class Reports extends Controller {
 
         $start = isset($_REQUEST["period_start"]) ? $_REQUEST["period_start"] : date("Y-m-d");
         $end = isset($_REQUEST["period_end"]) ? $_REQUEST["period_end"] : date("Y-m-d");
+        $sale = isset($_REQUEST["sale"]) ? $_REQUEST["sale"] : '';
 
         $this->view->setData('start', $start);
         $this->view->setData('end', $end);
@@ -70,6 +71,7 @@ class Reports extends Controller {
         $this->view->setData('periodStr', $this->fn->q('time')->str_event_date($start, $end).' '.date("Y", strtotime($end)));
 
         $options = array(
+            'sale' => $sale,
             'period_start'=>$start,
             'period_end'=>$end,
             'not_process'=>7,
@@ -96,5 +98,22 @@ class Reports extends Controller {
         $this->view->setData('results', $results);
 
         $this->view->render('reports/revenue/sections/order-total');
+    }
+
+    public function showDue($id=null){
+        if( empty($id) || empty($this->me) || $this->format!='json' ) $this->error(); 
+
+        $item = $this->model->query('sales')->get($id);
+        if( empty($item) ) $this->error();
+
+        $options = array(
+            'sale'=>$item["sale_code"],
+            'process'=>3,
+        );
+
+        $results = $this->model->sale_due( $options );
+        $this->view->setData('results', $results);
+        $this->view->setPage('path','Forms/reports');
+        $this->view->render('sale_due');
     }
 }
