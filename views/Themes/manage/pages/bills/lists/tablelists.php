@@ -35,6 +35,7 @@ if( !empty($this->results['lists']) ){
 
             '<td class="actions">
                 <div class="group-btn whitespace">'.
+                    '<a class="btn btn-no-padding btn-blue" target="_blank" href="'.URL.'pdf/vat_sale/'.$item['id'].'"><i class="icon-pdf"></i></a>'.
                     '<a class="btn btn-no-padding btn-orange" href="'.URL.'bills/edit/'.$item['id'].'"><i class="icon-pencil"></i></a>'.
                     '<a class="btn btn-no-padding btn-red" data-plugins="dialog" href="'.URL.'bills/del/'.$item['id'].'"><i class="icon-trash"></i></a>'.
                 '</div>
