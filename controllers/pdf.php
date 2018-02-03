@@ -38,4 +38,14 @@ class Pdf extends Controller {
 
         $this->view->render("display");
     }
+
+// เขียนใหม่ สำหรับ vat sale
+    public function vat_sale($id=null) {
+      $item = $this->model->query('bills')->get($id, array("items"=>true));
+      // print_r($item);die;
+      if( empty($item) ) $this->error();
+
+      $this->view->setData('item', $item);
+      $this->view->render("vatsale");
+    }
 }
