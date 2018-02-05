@@ -6,8 +6,8 @@ class Tax_Model extends Model{
     }
 
     private $_objName = "tax";
-    private $_field = "*";
-    private $_table = "tax";
+    private $_field = "t.*, tc.category_name";
+    private $_table = "tax t LEFT JOIN tax_categories tc ON t.tax_category_id=tc.category_id";
     private $_cutNamefield = "tax_";
 
     public function insert(&$data){
@@ -53,6 +53,23 @@ class Tax_Model extends Model{
             $where_str .= !empty($where_str) ? " AND " : "";
             $where_str .= "{$this->_cutNamefield}credit=:credit";
             $where_arr[":credit"] = $options["credit"];
+        }
+
+        if( isset($_REQUEST["period_start"]) && isset($_REQUEST["period_end"]) ){
+            $options["period_start"] = $_REQUEST["period_start"];
+            $options["period_end"] = $_REQUEST["period_end"];
+        }
+        if( !empty($options["period_start"]) && !empty($options["period_end"]) ){
+            $where_str .= !empty($where_str) ? " AND " : "";
+            $where_str .= "(tax_date BETWEEN :s AND :e)";
+            $where_arr[":s"] = $options["period_start"];
+            $where_arr[":e"] = $options["period_end"];
+        }
+
+        if( !empty($options["report"]) ){
+            $where_str .= !empty($where_str) ? " AND " : "";
+            $where_str .= "tax_is_report=:report"; 
+            $where_arr["report"] = 1;
         }
 
         $arr['total'] = $this->db->count($this->_table, $where_str, $where_arr);

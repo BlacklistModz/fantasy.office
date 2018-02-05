@@ -198,4 +198,9 @@ class Tax extends Controller {
             $this->view->render('del');
         }
     }
+    public function plate(){
+        if( empty($this->me) || $this->format!='json' ) $this->error();
+        $this->view->setPage('path', 'Themes/manage/forms/vat/buy');
+        $this->view->render('print');
+    }
 }

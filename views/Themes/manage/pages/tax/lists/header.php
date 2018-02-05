@@ -60,6 +60,10 @@
 						?>
 					</select>
 				</li>
+				<li>
+					<label for="print" class="label">Report</label>
+					<a href="<?=URL?>tax/plate" data-plugins="dialog" class="btn btn-blue"><i class="icon-print"></i></a>
+				</li>
 			</ul>
 			<ul class="rfloat" ref="control">
 				<li class="mt"><form class="form-search" action="#">
