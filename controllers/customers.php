@@ -34,7 +34,7 @@ class Customers extends Controller {
     }
 
     public function import(){
-    	if( empty($this->me) || $this->format!='json' ) $this->error();
+        if( empty($this->me) || $this->format!='json' ) $this->error();
 
         if( !empty($_POST) ){
             try{
@@ -45,7 +45,7 @@ class Customers extends Controller {
 
                     if( $type_file == '.xls' || $type_file == '.xlsx' ){
 
-                    	require WWW_LIBS. 'PHPOffice/PHPExcel.php';
+                        require WWW_LIBS. 'PHPOffice/PHPExcel.php';
                         require WWW_LIBS. 'PHPOffice/PHPExcel/IOFactory.php';
 
                         $inputFileName = $target_file;
@@ -84,89 +84,80 @@ class Customers extends Controller {
                                 $col++;
                             }
 
-                            $address = explode("T.", $data[$r][3]);
-                            $addrStr = $address[0];
-
-                            $sub_dis = "";
-                            $sub_dis = !empty($address[1]) ? $address[1] : "";
-                            if( !empty($address[1]) ){
-                                $cut_dis = explode("A.", $address[1]);
-                                $sub_dis = empty($cut_dis[1]) ? $address[1] : $cut_dis[0];
-
-                            	$add = explode(" ", $address[1]);
-                            	$addrStr .= !empty($add[1]) ? $add[1] : "";
-                            }
-
                             $postData = array(
-                            	'sub_code'=>$data[$r][1],
-                            	'name_store'=>$data[$r][2],
-                            	'sale_name'=>$data[$r][10],
-                            	'sale_code'=>$data[$r][9],
-                            	'address'=>$data[$r][3],
-                                'road'=>$data[$r][4],
-                                'district'=>$data[$r][5],
-                                'province'=>$data[$r][6],
-                                'post_code'=>$data[$r][7],
+                                'sub_code'=>$data[$r][0],
+                                'name_store'=>$data[$r][1],
+                                'sale_code'=>$data[$r][2],
+                                'sale_name'=>$data[$r][3],
+                                'address'=>$data[$r][4],
+                                'road'=>$data[$r][5],
+                                'district'=>$data[$r][6],
+                                'province'=>$data[$r][8],
+                                'post_code'=>$data[$r][9],
                                 'country'=>3,
-                                'phone'=>$data[$r][8],
+                                'phone'=>$data[$r][10],
                                 'status'=>'A',
-                                'note'=>$data[$r][3].' '.$data[$r][4].' '.$data[$r][5].' '.$data[$r][6].' '.$data[$r][7],
+                                'note'=>$data[$r][4].' '.$data[$r][5].' '.$data[$r][6].' '.$data[$r][7].' '.$data[$r][8],
                                 'updated_at'=>date("c")
                             );
 
-                            $customer = $this->model->getCode($data[$r][1]);
+                            $customer = $this->model->getCode($data[$r][0]);
                             if( !empty($customer) ) {
-                                $postData['username'] = "C".$data[$r][1];
-                                $postData['password'] = $this->fn->q('password')->PasswordHash('1234');
+                                // $postData['username'] = "C".$data[$r][1];
+                                // $postData['password'] = $this->fn->q('password')->PasswordHash('1234');
                                 $this->model->update($customer['id'], $postData);
                                 $id = $customer['id'];
                             }
                             else{
-                                $postData['username'] = "C".$data[$r][1];
+                                $postData['username'] = "C".$data[$r][0];
                                 $postData['password'] = $this->fn->q('password')->PasswordHash('1234');
                                 $this->model->insert($postData);
                                 $id = $postData['id'];
                             }
 
-                            if( !empty($id) && empty($customer) ){
+                            if( !empty($id) ){
                                 $_data = array(
                                     'customer_id'=>$id,
-                                    'address'=>$addrStr,
-                                    'road'=>$data[$r][4],
-                                    'area'=>$data[$r][5],
-                                    'district'=>$sub_dis,
-                                    'province'=>$data[$r][6],
-                                    'post_code'=>$data[$r][7],
+                                    'address'=>$data[$r][4],
+                                    'road'=>$data[$r][5],
+                                    'district'=>$data[$r][6],
+                                    'area'=>$data[$r][7],
+                                    'province'=>$data[$r][8],
+                                    'post_code'=>$data[$r][9],
                                     'country'=>3,
                                     'main'=>1,
                                     'ship'=>1,
                                     'bill'=>1,
                                     'sorting'=>1,
-                                    'status'=>'A',
-                                    'created_at'=>date("c"),
-                                    'updated_at'=>date("c")
+                                    'status'=>'A'
                                 );
+                                if( !empty($customer["address"][0]["id"]) ){
+                                    $_data["id"] = $customer["address"][0]["id"];
+                                }
                                 $this->model->setAddress($_data);
                             }
+
+                            $arr['message'] = 'บันทึกเรียบร้อย';
+                            $arr['url'] = 'refresh';
                         }
+
                     }
                     else{
-                    	$arr['error']['file'] = 'Please select only .xls or .xlsx files.';
-                    }
-
-                    if( empty($arr['error']) ){
-                    	$arr['message'] = 'Save successfully.';
-                    	$arr['url'] = 'refresh';
+                        $arr['error']['file'] = 'กรุณาเลือกไฟล์ .xls หรือ .xlsx เท่านั้น';
                     }
                 }
+                else{
+                    $arr['error']['file'] = 'กรุณาเลือกไฟล์เพื่ออัพโหลด';
+                }
+
             } catch (Exception $e) {
-            	$arr['error'] = $this->_getError($e->getMessage());
+                $arr['error'] = $this->_getError($e->getMessage());
             }
             echo json_encode($arr);
         }
         else{
-        	$this->view->setPage('path', 'Themes/manage/forms/customers');
-        	$this->view->render('import');
+            $this->view->setPage('path', 'Themes/manage/forms/customers');
+            $this->view->render('import');
         }
     }
 

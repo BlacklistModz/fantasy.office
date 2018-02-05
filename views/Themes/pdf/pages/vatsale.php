@@ -1,7 +1,35 @@
 <?php
+
+$address = '';
+$address .= $this->item['address'];
+if( !empty($this->item['road']) ){
+  $address .= !empty($address) ? ' ' : '';
+  $address .= 'ถ.'.$this->item['road'];
+}
+if( !empty($this->item['district']) ){
+  $address .= !empty($address) ? ' ' : '';
+  $address .= 'ต.'.$this->item['district'];
+}
+if( !empty($this->item['area']) ){
+  $address .= !empty($address) ? ' ' : '';
+  $address .= 'อ.'.$this->item['area'];
+}
+if( !empty($this->item['province']) ){
+  $address .= !empty($address) ? ' ' : '';
+  $address .= 'จ.'.$this->item['province'];
+}
+if( !empty($this->item['post_code']) ){
+  $address .= !empty($address) ? ' ' : '';
+  $address .= 'รหัสไปรษณีย์'.$this->item['post_code'];
+}
+if( !empty($this->item['country']) ){
+  $address .= !empty($address) ? ' ' : '';
+  $address .= 'ประเทศ'.$this->item['country'];
+}
+
 $style = "
 <style>
-    @page { margin: 10px 10px 0px 10px; }
+    @page { margin: 10px 10px 0px 10px;  }
     .page-break {page-break-after: always;}
     div.breakNow { page-break-inside:avoid; page-break-after:always; }
     body { margin: 0px; font-size: 10pt; }
@@ -37,20 +65,34 @@ $style = "
   </style>
 ";
 
-$tr = '';
+$discount = array();
+$net_price = array();
+$rowData = array();
+
 foreach ($this->item['items'] as $key => $value) {
-  for($i=0;$i<25;$i++){
-  $tr .= '<tr>
-      <td width="3%" style="padding: 5px;">&nbsp;'.($key+1).'&nbsp;</td>
-      <td width="30%" style="padding: 5px;">&nbsp;'.$value['pro_name'].'&nbsp;</td>
-      <td width="6%" style="padding: 5px;">&nbsp;'.$value['qty'].'&nbsp;</td>
-      <td width="5%" style="padding: 5px;">&nbsp;'.$value['unit'].'&nbsp;</td>
-      <td width="7%" style="padding: 5px;">&nbsp;'.$value['sales'].'&nbsp;</td>
-      <td width="7%" style="padding: 5px;">&nbsp;'.$value['amount'].'&nbsp;</td>
-      <td width="10%" style="padding: 5px;">&nbsp;'.$value['remark'].'&nbsp;</td>
-    </tr>';
-  }
+  $record = $key+1;
+  $rowData[$record]['pro_name'] = $value["pro_name"];
+  $rowData[$record]['qty'] = $value["qty"];
+  $rowData[$record]['sales'] = $value["sales"];
+  // $rowData[$record]['itm_discount'] = $line->itm_discount;
+  $rowData[$record]['amount'] = $value['amount'];
+  $rowData[$record]['remark'] = $value['remark'];
+  $discount[] = 0;
+  $net_price[] = $value['amount'];
 }
+
+$vat = 0;
+$total = array_sum($net_price);
+$discount = array_sum($discount);
+$total_net_price = $total-$vat;
+
+$total_paper = ceil(count($rowData)/25);
+if ($total_paper == 0) {
+  $total_paper = 1;
+}
+$page = 1;
+
+for ($page_count=1; $page_count <= $total_paper ; $page_count++) { // Loop
 
 $html = '
 <table width="100%">
@@ -67,17 +109,17 @@ $html = '
   <tr>
     <td width="33%" style="border:0.5px solid #000;padding: 5px 0px 10px 10px;">
       <span class="f-18">
-        66 ถนนราษร์ฏพัฒนา ซอย 1 แขวงสะพานสูง &nbsp;
+        66 ถนนราษร์ฏพัฒนา ซอย 1 แขวงสะพานสูง
         เขตสะพานสูง กรุงเทพมหานคร 10240 <br>เบอร์โทรศัพท์ 02-9171941-2
       </span>
     </td>
     <td valign="top" style="border:0.5px solid #000;padding: 15px 10px 10px 10px;" align="center">
-      <h3 style="">ใบส่งสินค้า/ใบเสร็จรับเงิน(เงินสด)</h3>
-      <span style=""></span>
+      <h3 style="font-weight:bold;">ใบส่งสินค้า/ใบเสร็จรับเงิน(เงินสด)</h3>
+      <span style="font-size: 14px;">('.$page_count.'/'.$total_paper.')</span>
     </td>
     <td width="33%" style="border:0.5px solid #000;padding: 5px 10px 0px 10px;">
-      Inv. No. : '.$this->item['id'].'<br>
-      Date : '.date('d/m/Y', strtotime($this->item['created'])).'<br>
+      Inv. No. : IN'.sprintf("%05d", $this->item['id']).'<br>
+      Date : '.date('d/m/Y', strtotime($this->item['send_date'])).'<br>
       Time : '.date('H:i:s', strtotime($this->item['created'])).'
     </td>
   </tr>
@@ -96,19 +138,23 @@ $html = '
           </tr>
           <tr>
             <td style="" ></td>
-            <td style="padding-top: -5px;">'.$this->item['address'].' '.$this->item['road'].' '.$this->item['area'].' '.$this->item['district'].' '.$this->item['province'].' '.$this->item['post_code'].' '.$this->item['country'].'</td>
+            <td style="padding-top: -5px;">'.$address.'</td>
           </tr>
         </table>
       </td>
       <td width="40%" style="border:0.5px solid #000;border-top: none;padding: 1px 5px 7px 7px;">
         <table width="100%">
           <tr>
+            <td style="">เงื่อนไขการชำระเงิน : </td>
+            <td style="">'.$this->item["term_of_payment_arr"]["name"].'</td>
+          </tr>
+          <tr>
             <td style="">เลขที่อ้างอิง : </td>
-            <td style="">'.$this->item['term_of_payment'].'</td>
+            <td style="">IN'.sprintf("%05d", $this->item['id']).'</td>
           </tr>
           <tr>
             <td style="">วันครบกำหนดชำระเงิน : </td>
-            <td style="">'.$this->item['submit_date'].'</td>
+            <td style="">'.date("d/m/Y", strtotime($this->item['submit_date'])).'</td>
           </tr>
 
         </table>
@@ -129,12 +175,71 @@ $html = '
       <td width="10%" style="">หมายเหตุ<br>Remark</td>
     </tr>
   </thead>
-  <tbody>
-    '.$tr.'
-  </tbody>
-</table>
+  <tbody>';
 
-<div class="footer" style="padding-top: 5px;">
+  $itemPage = 25;
+  if( count($rowData) >= $itemPage*$page_count ){
+    $count_RowPage = $itemPage;
+  }
+  else{
+    $total_row = count($rowData);
+    $count_RowPage = $itemPage;
+  }
+  $h = 1;
+  for($i=0;$i<$count_RowPage;$i++){
+    $rowCount = ($itemPage*$page_count)-($itemPage-$h);
+    $h++;
+    if( isset($rowData[$rowCount]['pro_name']) ){
+      if ($rowCount == count($rowData)) {
+        $style_border_bottom = "border-bottom:1px solid #000;";
+      }else{
+        $style_border_bottom = "border-bottom:none;";
+      }
+
+      $html .= '<tr>
+                <td align="center" valign="middle" style="padding:5px; ">'.$rowCount.'</td>
+                <td align="left" valign="middle" style="padding:5px; padding-left: 5px;">'.$rowData[$rowCount]['pro_name'].'</td>
+                <td align="center" valign="middle" style="padding:5px; ">'.number_format($rowData[$rowCount]['qty']).'</td>
+                <td align="right" valign="middle" style="padding:5px; padding-right: 5px;">'.$rowData[$rowCount]['unit'].'</td>
+                <td align="right" valign="middle" style="padding:5px; padding-right: 5px;">'.number_format($rowData[$rowCount]['sales']).'</td>
+                <td align="right" valign="middle" style="padding:5px; padding-right: 5px;">'.number_format($rowData[$rowCount]['amount']).'</td>
+                <td align="right" valign="middle" style="padding:5px; padding-right: 5px;">'.$rowData[$rowCount]['remark'].'</td>
+              </tr>';
+    }
+    else{
+      $html .= '<tr>
+          <td align="center" valign="middle" style="padding:5px; border-right: none;border-left: none;">&nbsp;</td>
+          <td align="center" valign="middle" style="padding:5px; border-right: none;border-left: none;">&nbsp;</td>
+          <td align="center" valign="middle" style="padding:5px; border-right: none;border-left: none;">&nbsp;</td>
+          <td align="center" valign="middle" style="padding:5px; border-right: none;border-left: none;">&nbsp;</td>
+          <td align="center" valign="middle" style="padding:5px; border-right: none;border-left: none;">&nbsp;</td>
+          <td align="center" valign="middle" style="padding:5px; border-right: none;border-left: none;">&nbsp;</td>
+          <td align="center" valign="middle" style="padding:5px; border-right: none;border-left: none;">&nbsp;</td>
+        </tr>';
+    }
+
+  }
+
+$html .= '</tbody>
+</table>';
+
+if ($page_count == $total_paper) {
+    $table_total = $this->item['total'];
+    $table_discount_extra = 0;
+    $total_vat = $this->item['vat'];
+    $table_net_price = $this->item['total'];
+    $table_total_net_price = $this->item['amount'];
+    $price_str = $this->fn->q('number')->numberTH( $this->item['amount'] );
+  }else{
+    $table_total = 0;
+    $table_discount_extra = 0;
+    $total_vat = 0;
+    $table_net_price = 0;
+    $table_total_net_price = 0;
+    $price_str = "-";
+  }
+
+$html .= '<div class="footer" style="padding-top: 5px;">
   <table class="items" width="100%" style="border-collapse: collapse;border-top: none;" cellpadding="0" cellspacing="0">
     <tr>
       <td class="blanktotal" rowspan="4" align="left" valign="top" width="48.53%" style="padding-left: 5px;padding-top: 5px;">
@@ -144,31 +249,32 @@ $html = '
         <font style="display: block;">Payment by cheque not valid till the cheque has been honoured</font>
       </td>
       <td class="totals" style="padding: 5px;">รวมเงิน</td>
-      <td class="totals cost" width="14.7%" style="padding: 5px;">'.$this->itme['total'].'</td>
+      <td class="totals cost" width="14.7%" style="padding: 5px;">'.number_format($table_total, 2).'</td>
     </tr>
     <tr>
       <td class="totals" style="padding: 5px;">หักส่วนลดพิเศษ</td>
-      <td class="totals cost" style="padding: 5px;">'.$this->itme['total'].'</td>
+      <td class="totals cost" style="padding: 5px;">'.$table_discount_extra.'</td>
     </tr>
     <tr>
       <td class="totals" style="padding: 5px;">ยอดสุทธิ</td>
-      <td class="totals cost" style="padding: 5px;">'.$this->itme['total'].'</td>
+      <td class="totals cost" style="padding: 5px;">'.number_format($table_net_price, 2).'</td>
     </tr>
     <tr>
-      <td class="totals" style="padding: 5px;">ภาษีมูลค่าเพิ่ม&nbsp;7.00%</b></td>
-      <td class="totals cost" style="padding: 5px;">'.$this->itme['vat_persent'].'</td>
+      <td class="totals" style="padding: 5px;">ภาษีมูลค่าเพิ่ม&nbsp;7%</b></td>
+      <td class="totals cost" style="padding: 5px;">'.number_format($total_vat,2).'</td>
     </tr>
     <tr>
       <td class="blanktotal" style="padding: 5px;" align="center" width="48.53%">
-        (xxxxx)
+        ( '.$price_str.' )
       </td>
       <td class="totals" style="padding: 5px;">จำนวนเงินรวมทั้งสิ้น</td>
-      <td class="totals cost" style="padding: 5px;"><b>'.$this->itme['total'].'</b></td>
+      <td class="totals cost" style="padding: 5px;"><b>'.number_format($table_total_net_price,2).'</b></td>
     </tr>
   </table>
   <table width="100%" style="border-collapse: collapse;border-top: none;border:0.5px solid #000;border-top: none;" cellpadding="0" cellspacing="0">
     <tr>
       <td style="height: 80px;" align="center">
+        <p>&nbsp;</p>
         <p>&nbsp;</p>
         <p>...............................</p>
         <div style="margin-top: 3px;">ผู้รับสินค้า</div>
@@ -176,11 +282,13 @@ $html = '
       </td>
       <td style="height: 80px;border-right: none;border-right:0.5px solid #000;" align="center">
         <p>&nbsp;</p>
+        <p>&nbsp;</p>
         <p>...............................</p>
         <div style="margin-top: 3px;">วันที่รับ</div>
         <div style="">Received Date</div>
       </td>
       <td style="height: 80px;border-right:0.5px solid #000;" align="center">
+        <p>&nbsp;</p>
         <p>&nbsp;</p>
         <p>...............................</p>
         <div style="margin-top: 3px;">ผู้ส่งสินค้า</div>
@@ -188,11 +296,13 @@ $html = '
       </td>
       <td style="height: 80px;" align="center">
         <p>&nbsp;</p>
+        <p>&nbsp;</p>
         <p>...............................</p>
         <div style="margin-top: 3px;">ผู้รับเงิน</div>
         <div style="">Collector</div>
       </td>
       <td style="height: 80px;" align="center">
+        <p>&nbsp;</p>
         <p>&nbsp;</p>
         <p>...............................</p>
         <div style="margin-top: 3px;">ผู้อนุมัติ</div>
@@ -202,6 +312,11 @@ $html = '
   </table>
 </div>
 ';
+  if ($page_count != $total_paper) {
+    $html .= '<div class="breakNow"></div>';
+  }
+}
+
 
 $content = '<!doctype html><html lang="th"><head><title id="pageTitle">plate</title><meta charset="utf-8" />'.$style.'</head><body>'.$html.'</body></html>';
 
@@ -227,6 +342,6 @@ $mpdf->list_indent_first_level = 0;
 // $content = mb_convert_encoding($content, 'UTF-8', 'UTF-8');
 
 ob_clean();
-$mpdf->SetTitle('Oral-Invitation');
+$mpdf->SetTitle('VAT-SALE-IN'.sprintf("%05d", $this->item["id"]));
 $mpdf->WriteHTML( $content );
-$mpdf->Output('vat_sale_report.pdf','I');
+$mpdf->Output('IN'.sprintf("%05d", $this->item["id"]).'.pdf','I');

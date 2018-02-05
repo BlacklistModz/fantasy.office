@@ -143,12 +143,12 @@ class Customers_Model extends Model{
         $this->db->delete($this->_objName, "id={$id}");
         $this->delAddress($id);
     }
-    public function getCode($code){
+    public function getCode($code, $options=array()){
         $sth = $this->db->prepare("SELECT {$this->_field} FROM {$this->_table} WHERE sub_code=:code LIMIT 1");
         $sth->execute( array(':code'=>$code) );
 
         return $sth->rowCount()==1
-            ? $sth->fetch( PDO::FETCH_ASSOC )
+            ? $this->convert( $sth->fetch( PDO::FETCH_ASSOC ) , $options )
             : array();
     }
     public function setAddress($data){
@@ -160,7 +160,7 @@ class Customers_Model extends Model{
         }
     }
     public function getAddress($id){
-        return $this->db->select("SELECT address, road, area, district, province, post_code, country, c.name AS country_name FROM customers_address ca LEFT JOIN country c ON ca.country=c.id WHERE customer_id=:id", array(":id"=>$id));
+        return $this->db->select("SELECT ca.id AS id, address, road, area, district, province, post_code, country, c.name AS country_name FROM customers_address ca LEFT JOIN country c ON ca.country=c.id WHERE customer_id=:id", array(":id"=>$id));
     }
     public function delAddress($id){
         $this->db->delete('customers_address', "customer_id={$id}", $this->db->count('customers_address', "customer_id={$id}"));

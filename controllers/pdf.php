@@ -46,7 +46,7 @@ class Pdf extends Controller {
       if( empty($item) ) $this->error();
 
       $this->view->setData('item', $item);
-      $this->view->render("vatsale");
+      $this->view->render("vatsale", array(), true);
     }
 
     public function vat_buy(){
