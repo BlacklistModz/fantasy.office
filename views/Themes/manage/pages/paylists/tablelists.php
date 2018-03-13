@@ -2,7 +2,7 @@
 //print_r($this->results['lists']); die;
 $tr = "";
 $tr_total = "";
-
+$total_amount = 0;
 if( !empty($this->results['lists']) ){
     //print_r($this->results); die;
 
@@ -44,10 +44,19 @@ if( !empty($this->results['lists']) ){
 
             '<td class="contact">'.$type.'</td>'.
 
-            '<td class="price">'.$item['amount'].'</td>'.
+            '<td class="price">'.number_format($item['amount']).'</td>'.
 
         '</tr>';
+
+        $total_amount += $item['amount'];
     }
 }
+
+$tr_total = '<tfoot>
+                <tr>
+                    <th colspan="4">รวม</th>
+                    <th>'.number_format($total_amount).'</
+                </tr>
+             </tfoot>';
 
 $table = '<table><tbody>'. $tr. '</tbody>'.$tr_total.'</table>';

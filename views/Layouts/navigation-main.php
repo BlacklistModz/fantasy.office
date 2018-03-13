@@ -56,6 +56,8 @@ if( !empty($suppliers) ){
 $products[] = array('key'=>'discounts', 'text'=>'Discounts', 'link'=>$url.'discounts', 'icon'=>'cart-arrow-down');
 $products[] = array('key'=>'categories', 'text'=>'Categories', 'link'=>$url.'categories', 'icon'=>'database');
 $products[] = array('key'=>'products', 'text'=>'Products', 'link'=>$url.'products', 'icon'=>'cart-arrow-down');
+$products[] = array('key'=>'import', 'text'=>'Import Products', 'link'=>$url.'import', 'icon'=>'product-hunt');
+$products[] = array('key'=>'export', 'text'=>'Stock Adjust', 'link'=>$url.'export', 'icon'=>'upload');
 foreach ($products as $key => $value) {
 	if( empty($this->permit[$value['key']]['view']) ) unset($products[$key]);
 }

@@ -7,4 +7,4 @@ $title[] = array('key'=>'contact', 'text'=>'Payment Method');
 $title[] = array('key'=>'price', 'text'=>'Amount');
 
 $this->tabletitle = $title;
-$this->getURL =  URL.'payments/lists/';
+$this->getURL =  URL.'import/';

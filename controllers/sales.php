@@ -15,11 +15,39 @@ class Sales extends Controller {
     		$item = $this->model->get($id);
     		if( empty($item) ) $this->error();
 
-            $orders = $this->model->query('orders')->lists( array('sale'=>$item['sale_code']) );
+            if( $this->format=='json' ){
+                $type = isset($_REQUEST["type"]) ? $_REQUEST["type"] : 'orders';
+                $start = isset($_REQUEST["start"]) ? $_REQUEST["start"] : date("Y-m-01");
+                $end = isset($_REQUEST["end"]) ? $_REQUEST["end"] : date("Y-m-t");
 
-            $this->view->setData('orders', $orders);
-            $this->view->setData('item', $item);
-    		$render = 'sales/profile/display';
+                if( $type == 'orders' ){
+                    $options = array(
+                        'sale'=>$item['sale_code'],
+                        'period_start' => $start,
+                        'period_end' => $end
+                    );
+                    $orders = $this->model->query('orders')->lists( $options );
+                    $this->view->setData('orders', $orders);
+                    $render = 'sales/profile/json/orders';
+                }
+                elseif( $type == 'payment' ){
+                    $options = array(
+                        'sale'=>$id,
+                        'start' => $start,
+                        'end' => $end
+                    );
+                    $payment = $this->model->listsPayment( $options );
+                    $this->view->setData('results', $payment);
+                    $render = 'sales/profile/json/payment';
+                }
+                else{
+                    $this->error();
+                }
+            }
+            else{
+                $this->view->setData('item', $item);
+                $render = 'sales/profile/display';
+            }
     	}
     	else{
     		if( $this->format=='json' ){

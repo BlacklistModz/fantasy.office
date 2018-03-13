@@ -3423,6 +3423,649 @@ if ( typeof Object.create !== 'function' ) {
 		items:[]
 	};
 
+	var importForm = {
+		init: function(options, elem) {
+			var self = this;
+			self.elem = elem;
+			self.$elem = $( elem );
+
+			self.options = $.extend( {}, $.fn.importForm.options, options );
+
+			self.is_keycodes = [37,38,39,40,13];
+            self.has_load = false;
+            self._otext = '';
+            self.is_focus = false;
+
+            self.$supplier = self.$elem.find('input#imp_supplier');
+            self.$supplier.wrap( '<div class="ui-search"></div>' );
+            self.$supplier.parent().append( 
+                  $('<div>', {class: 'loader loader-spin-wrap'}).html( $('<div>', {class: 'loader-spin'}) )
+                , $('<div>', {class: 'overlay'})
+            );
+            self.setMenuSupplier();
+
+            /* Current Data*/
+            self.currSup = self.options.sup_id;
+
+			self.setElem();
+			self.Events();
+		},
+		setElem: function(){
+			var self = this;
+
+			self.$listsitem = self.$elem.find('[role=listsitem]');
+			if( self.options.items.length==0 ){
+				self.getItem();
+			}else{
+				$.each( self.options.items, function (i, obj) {
+					self.getItem(obj);
+				} );
+			}
+
+			if( self.currSup != '' ){
+				$.get( Event.URL + 'supplier/get/'+self.currSup, function(res) {
+					self.activeSupplier( res );
+				}, 'json');
+			}
+		},
+		Events: function(){
+			var self = this;
+
+			var v;
+            self.$supplier.keyup(function (e) {
+                var $this = $(this);
+                var value = $.trim($this.val());
+
+                if( self.is_keycodes.indexOf( e.which )==-1 && !self.has_load ){
+
+                    self.$supplier.parent().addClass('has-load');
+                    self.hideSupplier();
+                    clearTimeout( v );
+
+                    if(value==''){
+
+                        self.$supplier.parent().removeClass('has-load');
+                        return false;
+                    }
+
+                    v = setTimeout(function(argument) {
+
+                        self.has_load = true;
+                        self.searchSupplier( value );
+                    }, 500);
+
+                }
+            }).keydown(function (e) {
+                var keyCode = e.which;
+
+                if( keyCode==40 || keyCode==38 ){
+
+                    self.changeUpDownSupplier( keyCode==40 ? 'donw':'up' );
+                    e.preventDefault();
+                }
+
+                if( keyCode==13 && self.$menuSupplier.find('li.selected').length==1 ){
+
+                    self.activeSupplier(self.$menuSupplier.find('li.selected').data());
+                }
+            }).click(function (e) {
+                var value = $.trim($(this).val());
+
+                if(value!=''){
+
+                    if( self._otext==value ){
+                        self.displaySupplier();
+                    }
+                    else{
+
+                        self.$supplier.parent().addClass('has-load');
+                        self.hideSupplier();
+                        clearTimeout( v );
+
+                        self.has_load = true;
+                        self.searchSupplier( value );
+                    }
+                }
+
+                e.stopPropagation();
+            }).blur(function () {
+
+                if( !self.is_focus ){
+                    self.hideSupplier();
+                }
+            });
+
+            self.$menuSupplier.delegate('li', 'mouseenter', function() {
+                $(this).addClass('selected').siblings().removeClass('selected');
+            });
+            self.$menuSupplier.delegate('li', 'click', function(e) {
+                $(this).addClass('selected').siblings().removeClass('selected');
+                self.activeSupplier($(this).data());
+
+                    // e.stopPropagation();
+                });
+            self.$menuSupplier.mouseenter(function() {
+                self.is_focus = true;
+            }).mouseleave(function() { 
+                self.is_focus = false;
+            });
+
+            $('html').on('click', function() {
+            	self.hideSupplier();
+            });
+
+            // item 
+			self.$elem.delegate('.js-add-item', 'click', function () {
+				var box = $(this).closest('tr');
+
+				if( box.find(':input').first().val()=='' ){
+					box.find(':input').first().focus();
+					return false;
+				}
+
+				var setItem = self.setItem({});
+				box.after( setItem );
+				setItem.find(':input').first().focus();
+
+				self.sortItem();
+			});
+
+			self.$elem.delegate('.js-remove-item', 'click', function () {
+				var box = $(this).closest('tr');
+
+				if( self.$listsitem.find('tr').length==1 ){
+					box.find(':input').val('');
+					box.find(':input').first().focus();
+				}
+				else{
+					box.remove();
+				}
+
+				self.sortItem();
+			});
+
+			self.$elem.delegate('.js-qty', 'change', function(){
+				var box = $(this).closest('tr');
+				self.summaryBox( box );
+				self.sortItem();
+			});
+
+			self.$elem.delegate('.js-selector', 'change', function(){
+				var box = $(this).closest('tr');
+				var price = $(this).find("option:selected").data("price");
+				var unit = $(this).find("option:selected").data("unit");
+				box.find('.js-price').val( parseInt(price) || 0 );
+				box.find('.js-unit').val( unit || '' );
+				self.summaryBox( box );
+				self.sortItem();
+			});
+
+			self.$elem.delegate('.js-price', 'change', function(){
+				var box = $(this).closest('tr');
+				self.summaryBox( box );
+				self.sortItem();
+			});
+		},
+		setMenuSupplier: function(){
+			var self = this;
+
+			var $box = $('<div/>', {class: 'uiTypeaheadView selectbox-selectview'});
+            self.$menuSupplier = $('<ul/>', {class: 'search has-loading', role: "listbox"});
+
+            $box.html( $('<div/>', {class: 'bucketed'}).append( self.$menuSupplier ) );
+
+            var settings = self.$supplier.offset();
+            settings.top += self.$supplier.outerHeight();
+
+            uiLayer.get(settings, $box);
+            self.$layerSupplier = self.$menuSupplier.parents('.uiLayer');
+            self.$layerSupplier.addClass('hidden_elem');
+
+            self.$menuSupplier.mouseenter(function () {
+                self.is_focus = true;
+            }).mouseleave(function () {
+                self.is_focus = false;
+            });
+
+            self.resizeMenuSupplier();
+            $( window ).resize(function () {
+                self.resizeMenuSupplier();
+            });
+		},
+		resizeMenuSupplier: function() {
+            var self = this;
+
+            self.$menuSupplier.width( self.$supplier.outerWidth()-2 );
+            var settings = self.$supplier.offset();
+            settings.top += self.$supplier.outerHeight();
+            settings.top -= 1;
+
+            self.$menuSupplier.css({
+                overflowY: 'auto',
+                overflowX: 'hidden',
+                maxHeight: $( window ).height()-settings.top
+            });
+
+            self.$menuSupplier.parents('.uiContextualLayerPositioner').css( settings );
+        },
+        displaySupplier: function () {
+            var self = this;
+
+            if( self.$menuSupplier.find('li').length == 0 ){
+                return false;
+            }
+
+            if( self.$menuSupplier.find('li.selected').length==0 ){
+                self.$menuSupplier.find('li').first().addClass('selected');
+            }
+
+            self.resizeMenuSupplier();
+            self.$layerSupplier.removeClass('hidden_elem');
+        },
+        hideSupplier: function() {
+            this.$layerSupplier.addClass('hidden_elem');
+        },
+        changeUpDownSupplier: function( active ) {
+            var self = this;
+
+            var length = self.$menuSupplier.find('li').length;
+            var index = self.$menuSupplier.find('li.selected').index();
+
+            if( active=='up' ) index--;
+            else index++;
+
+            if( index < 0) index=0;
+            if( index >= length) index=length-1;
+
+            self.$menuSupplier.find('li').eq( index ).addClass('selected').siblings().removeClass('selected');
+        },
+        activeSupplier: function ( data ) {
+            var self = this;
+
+            $remove = $('<button>', {type: 'button', class: 'remove'}).html( $('<i>', {class: 'icon-remove'}) );
+            self.$supplier.prop('disabled', true).val('').parent().addClass('active').find('.overlay').empty().append(
+                $remove
+                // , $('<div>', { class: 'text'}).text( data.name_str )
+                , $('<input>', { type: 'hidden', class: 'hiddenInput', value:data.id, autocomplete:'off', name: 'imp_sup_id' })
+                );
+
+            self.$elem.find('input#imp_supplier').val( data.name_str ).addClass('disabled').prop('disabled', true);
+            self.$elem.find('.notification').empty();
+
+            self.hideSupplier();
+            $remove.click(function() {
+                self.$elem.find('input#imp_supplier').val( '' ).removeClass('disabled').prop('disabled', false);
+                self.$supplier.prop('disabled', false).focus().parent().removeClass('active').find('.overlay').empty();
+            });
+        },
+        searchSupplier: function ( text ) {
+            var self = this;
+
+            var data = {
+                q: text,
+                limit: 5
+            };
+            self.$menuSupplier.empty();
+
+            $.ajax({
+                url: Event.URL + "import/listsSupplier/",
+                data: data,
+                dataType: 'json'
+            }).done(function( results ) {
+
+                if( results.total==0 ){
+                    return false;
+                }
+
+                self.buildFragSupplier( results.lists );
+                self.displaySupplier();
+
+            }).fail(function() {
+
+            }).always(function() {
+
+                self._otext = text;
+                self.has_load = false;
+                self.$supplier.parent().removeClass('has-load');
+            });
+        },
+        buildFragSupplier: function( results ) {
+            var self = this;
+
+            $.each(results, function (i, obj) {
+                var li = $('<li/>', {class:'picThumb'} ).html( $('<a>').append( 
+                	  $('<div>', {class:"avatar lfloat no-avatar mrm"}).append(
+                	  		$('<div>', {class:"initials"}).append(
+                	  			$('<i>', {class:"icon-home", style:"color:black;font-size: 30px;"})
+                	  		)
+                	  	)
+                    , $('<span/>', {class: 'text', text: obj.name_str})
+                    , $('<span/>', {class: 'subtext', text: obj.address_str})
+                    ) 
+                );
+
+                li.data(obj);
+                self.$menuSupplier.append( li );
+            }); 
+        },
+        getItem: function (data) {
+			var self = this;
+
+			self.$listsitem.append( self.setItem( data || {} ) );
+			self.sortItem();
+		},
+		setItem: function ( data ) {
+			var self = this;
+
+			var $select = $('<select>', {class: 'js-selector custom-select inputtext', name: 'item[pro_id][]'});
+			$select.append( $('<option>', {value:"", text:"-"}) );
+			$.each( self.options.products, function (i,obj) {
+				$select.append( $('<option>', {value:obj.id, text: obj.name, "data-id":obj.id, "data-sales":obj.sales, "data-unit":obj.unit}) );
+			});
+	
+			$tr = $('<tr>', {style:""});
+			$tr.append(
+				  $('<td>', {class: "no tac"})
+				, $('<td>', {class: "name"}).append( 
+						$select
+					)
+				, $('<td>').append(
+						$('<input>', {class:"inputtext tac js-qty", name:"item[qty][]", value:data.qty})
+					)
+				, $('<td>').append(
+						$('<input>', {class:"inputtext tac js-unit", name:"item[unit][]", value:data.unit})
+					)
+				, $('<td>').append(
+						$('<input>', {class:"inputtext tar js-price", name:"item[price][]", value:data.price})
+					)
+				, $('<td>').append(
+						$('<input>', {class:"inputtext tar js-amount disabled", name:"item[amount][]", readonly:"1", value:data.amount})
+					)
+				, $('<td>').append(
+						$('<div>', {class: 'whitespace tac'}).append(
+							$('<span>', {class:"gbtn"}).append(
+								$('<button>', {
+									type:"button",
+									class:"btn btn-no-padding js-add-item btn-blue",
+								}).html( $('<i>', {class: 'icon-plus'}) ), 
+							),
+							$('<span>', {class:"gbtn"}).append(
+								$('<button>', {
+									type:"button",
+									class:"btn btn-no-padding js-remove-item btn-red",
+								}).html( $('<i>', {class: 'icon-minus'}) )
+							)
+						)
+					)
+			);
+
+			$tr.find('[data-id='+data.pro_id+']').prop('selected', true);
+			$tr.find('.js-selector').customselect();
+
+			return $tr;
+		},
+		sortItem: function () {
+			var self = this;
+
+			var no = 0, total_price = 0, qty = 0; vat =0; amount = 0;
+			$.each(self.$listsitem.find('tr'), function (i, obj) {
+				no++;
+
+				$(this).find('.no').text( no );
+				$(this).find('.seq').val( no );
+
+				var input_qty = $(this).find('.js-qty').val();
+				if( input_qty == '' ) input_qty = 0;
+				qty += parseInt(input_qty);
+
+				total_price+=parseFloat( $(this).find(':input.js-amount').val() || 0 );
+			});
+
+			self.$elem.find('[summary=item]').text( qty );
+			self.$elem.find('[summary=total]').text( PHP.number_format( total_price , 2 ) );
+
+			/* UPDATE INPUT */
+			self.$elem.find('input[name=imp_total_price]').val( total_price );
+		},
+		summaryItem: function () {
+			var self = this;
+
+			var total = 0;
+			var $listsitem = self.$elem.find('[role="listsitems"]');
+			$.each(  $listsitem.find(':input.js-amount'), function (i, obj) {
+
+				var input = $(obj);
+				var val = parseFloat( input.val() ) || 0;
+
+				total += val
+				input.val( val );
+			});
+
+			$listsitem.find('[summary=total]').text( PHP.number_format( total , 2 ) );
+		},
+		summaryBox: function( box ){
+			var self = this;
+			var qty = box.find('.js-qty').val();
+			var price = box.find('.js-price').val();
+			var amount = box.find('.js-amount');
+
+			qty = parseInt(qty) || 0;
+			price = parseInt(price) || 0;
+
+			var $amount = parseInt(qty) * parseInt(price);
+			amount.val( $amount );
+		}
+	}
+	$.fn.importForm = function( options ) {
+		return this.each(function() {
+			var $this = Object.create( importForm );
+			$this.init( options, this );
+			$.data( this, 'importForm', $this );
+		});
+	};
+	$.fn.importForm.options = {
+		items:[]
+	};
+
+	var exportForm = {
+		init: function(options, elem) {
+			var self = this;
+			self.elem = elem;
+			self.$elem = $( elem );
+
+			self.options = $.extend( {}, $.fn.importForm.options, options );
+
+			self.setElem();
+			self.Events();
+		},
+		setElem: function(){
+			var self = this;
+
+			self.$listsitem = self.$elem.find('[role=listsitem]');
+			if( self.options.items.length==0 ){
+				self.getItem();
+			}else{
+				$.each( self.options.items, function (i, obj) {
+					self.getItem(obj);
+				} );
+			}
+		},
+		Events: function(){
+			var self = this;
+			// item 
+			self.$elem.delegate('.js-add-item', 'click', function () {
+				var box = $(this).closest('tr');
+
+				if( box.find(':input').first().val()=='' ){
+					box.find(':input').first().focus();
+					return false;
+				}
+
+				var setItem = self.setItem({});
+				box.after( setItem );
+				setItem.find(':input').first().focus();
+
+				self.sortItem();
+			});
+
+			self.$elem.delegate('.js-remove-item', 'click', function () {
+				var box = $(this).closest('tr');
+
+				if( self.$listsitem.find('tr').length==1 ){
+					box.find(':input').val('');
+					box.find(':input').first().focus();
+				}
+				else{
+					box.remove();
+				}
+
+				self.sortItem();
+			});
+
+			self.$elem.delegate('.js-qty', 'change', function(){
+				var box = $(this).closest('tr');
+				self.summaryBox( box );
+				self.sortItem();
+			});
+
+			self.$elem.delegate('.js-selector', 'change', function(){
+				var box = $(this).closest('tr');
+				var price = $(this).find("option:selected").data("price");
+				var unit = $(this).find("option:selected").data("unit");
+				box.find('.js-price').val( parseInt(price) || 0 );
+				box.find('.js-unit').val( unit || '' );
+				self.summaryBox( box );
+				self.sortItem();
+			});
+
+			self.$elem.delegate('.js-price', 'change', function(){
+				var box = $(this).closest('tr');
+				self.summaryBox( box );
+				self.sortItem();
+			});
+		},
+		getItem: function (data) {
+			var self = this;
+
+			self.$listsitem.append( self.setItem( data || {} ) );
+			self.sortItem();
+		},
+		setItem: function ( data ) {
+			var self = this;
+
+			var $select = $('<select>', {class: 'js-selector custom-select inputtext', name: 'item[pro_id][]'});
+			$select.append( $('<option>', {value:"", text:"-"}) );
+			$.each( self.options.products, function (i,obj) {
+				$select.append( $('<option>', {value:obj.id, text: obj.name, "data-id":obj.id, "data-price":obj.price, "data-unit":obj.unit}) );
+			});
+	
+			$tr = $('<tr>', {style:""});
+			$tr.append(
+				  $('<td>', {class: "no tac"})
+				, $('<td>', {class: "name"}).append( 
+						$select
+					)
+				, $('<td>').append(
+						$('<input>', {class:"inputtext tac js-qty", name:"item[qty][]", value:data.qty})
+					)
+				, $('<td>').append(
+						$('<input>', {class:"inputtext tac js-unit", name:"item[unit][]", value:data.unit})
+					)
+				, $('<td>').append(
+						$('<input>', {class:"inputtext tac js-price", name:"item[price][]", value:data.price})
+					)
+				, $('<td>').append(
+						$('<input>', {class:"inputtext tac js-amount disabled", name:"item[amount][]", readonly:"1", value:data.amount})
+					)
+				, $('<td>').append(
+						$('<input>', {class:"inputtext", name:"item[remark][]", value:data.remark})
+					)
+				, $('<td>').append(
+						$('<div>', {class: 'whitespace tac'}).append(
+							$('<span>', {class:"gbtn"}).append(
+								$('<button>', {
+									type:"button",
+									class:"btn btn-no-padding js-add-item btn-blue",
+								}).html( $('<i>', {class: 'icon-plus'}) ), 
+							),
+							$('<span>', {class:"gbtn"}).append(
+								$('<button>', {
+									type:"button",
+									class:"btn btn-no-padding js-remove-item btn-red",
+								}).html( $('<i>', {class: 'icon-minus'}) )
+							)
+						)
+					)
+			);
+
+			$tr.find('[data-id='+data.pro_id+']').prop('selected', true);
+			$tr.find('.js-selector').customselect();
+
+			return $tr;
+		},
+		sortItem: function () {
+			var self = this;
+
+			var no = 0, total_price = 0, qty = 0; vat =0; amount = 0;
+			$.each(self.$listsitem.find('tr'), function (i, obj) {
+				no++;
+
+				$(this).find('.no').text( no );
+				$(this).find('.seq').val( no );
+
+				var input_qty = $(this).find('.js-qty').val();
+				if( input_qty == '' ) input_qty = 0;
+				qty += parseInt(input_qty);
+
+				total_price+=parseFloat( $(this).find(':input.js-amount').val() || 0 );
+			});
+
+			self.$elem.find('[summary=item]').text( qty );
+			self.$elem.find('[summary=total]').text( PHP.number_format( total_price , 2 ) );
+
+			/* UPDATE INPUT */
+			self.$elem.find('input[name=imp_total_price]').val( total_price );
+		},
+		summaryItem: function () {
+			var self = this;
+
+			var total = 0;
+			var $listsitem = self.$elem.find('[role="listsitems"]');
+			$.each(  $listsitem.find(':input.js-amount'), function (i, obj) {
+
+				var input = $(obj);
+				var val = parseFloat( input.val() ) || 0;
+
+				total += val
+				input.val( val );
+			});
+
+			$listsitem.find('[summary=total]').text( PHP.number_format( total , 2 ) );
+		},
+		summaryBox: function( box ){
+			var self = this;
+			var qty = box.find('.js-qty').val();
+			var price = box.find('.js-price').val();
+			var amount = box.find('.js-amount');
+
+			qty = parseInt(qty) || 0;
+			price = parseInt(price) || 0;
+
+			var $amount = parseInt(qty) * parseInt(price);
+			amount.val( $amount );
+		}
+	}
+	$.fn.exportForm = function( options ) {
+		return this.each(function() {
+			var $this = Object.create( exportForm );
+			$this.init( options, this );
+			$.data( this, 'exportForm', $this );
+		});
+	};
+	$.fn.exportForm.options = {
+		items:[]
+	};
+
 })( jQuery, window, document );
 
 

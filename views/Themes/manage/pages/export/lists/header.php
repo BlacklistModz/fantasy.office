@@ -5,12 +5,16 @@
 
 			<ul class="lfloat" ref="actions">
 				<li class="mt">
-					<h2><i class="icon-money mrs"></i><span> Receipts Payment</span></h2>
+					<h2><i class="icon-upload mrs"></i><span>Stock Adjust</span></h2>
 				</li>
 
 				<li class="mt"><a class="btn js-refresh" data-plugins="tooltip" data-options="<?=$this->fn->stringify(array('text'=>'refresh'))?>"><i class="icon-refresh"></i></a></li>
 
 				<li class="divider"></li>
+
+				<li class="mt">
+					<a href="<?=URL?>export/set" class="btn btn-blue"><i class="icon-plus mrs"></i>Add New</a>
+				</li>
 
 			</ul>
 
@@ -38,25 +42,13 @@
 					<label for="closedate" class="label">Choose date</label><select ref="closedate" name="closedate" class="inputtext">
 						<option value="daily">Today</option>
 						<option value="yesterday">Yesterday</option>
-						<option value="weekly" selected>This week</option>
-						<option value="monthly">This month</option>
+						<option value="weekly">This week</option>
+						<option value="monthly" selected>This month</option>
 						<option value="custom">Custom</option>
 					</select>
 				</li>
 
 				<li class="divider"></li>
-
-				<li>
-					<label class="label" for="bank">Select a bank</label>
-					<select name="bank" class="inputtext" ref="selector">
-						<option value="">-</option>
-						<?php
-						foreach ($this->account as $key => $value) {
-							echo '<option value="'.$value['id'].'">'.$value['name_str'].'</option>';
-						}
-						?>
-					</select>
-				</li>
 
 			</ul>
 			<ul class="rfloat" ref="control">

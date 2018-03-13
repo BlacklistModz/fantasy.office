@@ -57,6 +57,17 @@ class Bills_Model extends Model{
             $where_arr[":term_of_payment"] = $options["term_of_payment"];
         }
 
+        if( isset($_REQUEST["period_start"]) && isset($_REQUEST["period_end"]) ){
+            $options["period_start"] = $_REQUEST["period_start"];
+            $options["period_end"] = $_REQUEST["period_end"];
+        }
+        if( !empty($options["period_start"]) && !empty($options["period_end"]) ){
+            $where_str .= !empty($where_str) ? " AND " : "";
+            $where_str .= "(bill_send_date BETWEEN :s AND :e)";
+            $where_arr[":s"] = $options["period_start"];
+            $where_arr[":e"] = $options["period_end"];
+        }
+
         // if( !empty($options["q"]) ){
         //     $where_str .= !empty($where_str) ? " AND " : "";
         //     $where_str .= "{$this->_cutNamefield}bill =: "

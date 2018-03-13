@@ -44,12 +44,12 @@ class Suppliers_Model extends Model{
 
         if( !empty($options['q']) ){
             $where_str .= !empty($where_str) ? " AND " : "";
-            $where_str .= "s.sup_name LIKE :q
+            $where_str .= "(s.sup_name LIKE :q
                         OR s.sup_code LIKE :q
                         OR s.sup_first_name LIKE :q
                         OR s.sup_last_name LIKE :q
                         OR s.sup_nickname LIKE :q
-                        OR s.sup_phone LIKE :q";
+                        OR s.sup_phone LIKE :q)";
             $where_arr[":q"] = "%{$options["q"]}%";
 
         }

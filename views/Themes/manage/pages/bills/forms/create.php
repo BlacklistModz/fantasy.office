@@ -98,7 +98,7 @@ $table = '<table class="table-bordered" width="100%">
 
 $formTable	->field("lists")
 			->text( $table );
-
+			
 $options = $this->fn->stringify( array(
 		'cus_id' => !empty($this->item['cus_id']) ? $this->item['cus_id'] : '',
 		'items' => !empty($this->item['items']) ? $this->item['items'] : array(),

@@ -21,7 +21,7 @@
 			<div class="clearfix">
 				<div class="span12">
 					<div class="uiBoxOverlay pam pas">
-						<h3 class="mbm fwb"><i class="icon-user"></i> Salesman information</h3>
+						<h3 class="mbm fwb"><i class="icon-user"></i> Information</h3>
 						<ul>
 							<li>
 								<label><span class="fwb">Code : </span><?=$this->item['sale_code']?></label>
@@ -46,50 +46,32 @@
 			<div class="clearfix">
 				<div class="span12">
 					<div class="uiBoxOverlay mtm pam pas">
-						<div ref="table" class="listpage2-table">
-							<table class="table-bordered">
-								<thead>
-									<tr>
-										<th class="ID">Order</th>
-										<th class="date">Date</th>
-										<th class="ID">ORDER CODE</th>
-										<th class="name">Shop name</th>
-										<th class="price">Total</th>
-									</tr>
-								</thead>
-								<tbody>
-									<?php
-									$num = 0;
-									$total_price = 0;
-									if ( !empty($this->orders['lists']) ) {
-										foreach ($this->orders['lists'] as $key => $value) {
-											$num++;
-											$total_price += $value['net_price'];
-											?>
-											<tr>
-												<td class="ID"><?=$num?></td>
-												<td class="date"><?= date('d/m/Y', strtotime($value['date'])) ?></td>
-												<td class="ID"><?=$value['code']?></td>
-												<td class="name">
-													<span class="fwb">
-														<a href="<?=URL?>customers/<?=$value['id']?>" target="_blank"><?=$value['user_name']?></a>
-													</span>
-												</td>
-												<td class="price"><?=number_format($value['net_price'],2)?></td>
-											</tr>
-											<?php
-										}
-									}else{
-										echo '<td colspan="3" style="text-align:center; color:red;" class="fwb">No purchase information found.</td>';
-									}
-									?>
-								</tbody>
-								<tfoot>
-									<th colspan="4" style="text-align: right;" class="fwb">Total</th>
-									<th class="fwb" style="text-align: center;"><?=number_format($total_price, 2)?></th>
-								</tfoot>
-							</table>
+						<div>
+							<ul>
+								<li style="display:inline-block;">
+									<label class="label fwb">Select Time</label>
+									<select selector="closedate" name="closedate" class="inputtext"></select>
+								</li>
+								<li style="display: inline-block;">
+									<div style="display: inline-block;" class="mll">
+										<label class="radio fwb">
+											<input type="radio" name="type" value="orders" checked="1">ยอดขาย
+										</label>
+									</div>
+									<div style="display: inline-block;" class="mlm">
+										<label class="radio fwb">
+											<input type="radio" name="type" value="payment">ยอดเก็บเงิน
+										</label>
+									</div>
+								</li>
+								<li style="display:inline-block;" class="mlm">
+									<span class="gbtn">
+										<a class="js-search btn btn-green btn-no-padding"><i class="icon-search"></i></a>
+									</span>
+								</li>
+							</ul>
 						</div>
+						<div id="saleMain" class="mtm"></div>
 					</div>
 				</div>
 			</div>
@@ -97,3 +79,39 @@
 		</div>
 	</div>
 </div>
+<script type="text/javascript">
+	$('[selector=closedate]').closedate({
+		leng:"th",
+		options: [
+			{
+				text: 'This month',
+				value: 'monthly',
+			},
+			{
+				text: 'Custom',
+				value: 'custom',
+			}
+		],
+	});
+
+	var id = <?=$this->item["id"]?>
+
+	var loading = '<div class="tac"><div class="loader-spin-wrap" style="display:inline-block;"><div class="loader-spin"></div></div></div>';
+
+	$("#saleMain").html( loading );
+	$.get( Event.URL + 'sales/' + id, function(res){
+		$("#saleMain").html( res );
+	});
+
+	$('.js-search').click(function(){
+		$("#saleMain").html( loading );
+
+		var start = $('[name=start_date]').val();
+		var end = $('[name=end_date]').val();
+		var type = $('[name=type]:checked').val();
+
+		$.get( Event.URL + 'sales/' + id, {start:start, end:end, type:type}, function(res){
+			$("#saleMain").html( res );
+		});
+	});
+</script>

@@ -5,7 +5,7 @@ class System_Model extends Model{
     public function __construct() {
         parent::__construct();
     }
-
+    
     public function pageMenu()
     {
         $a = array();
@@ -24,6 +24,8 @@ class System_Model extends Model{
         $a[] = array('key'=>'discounts', 'name'=>'Discounts');
         $a[] = array('key'=>'categories', 'name'=>'Categories');
         $a[] = array('key'=>'products', 'name'=>'Products');
+        $a[] = array('key'=>'import', 'name'=>'Import Products');
+        $a[] = array('key'=>'export', 'name'=>'Export Products');
         $a[] = array('key'=>'comission', 'name'=>'Comission reports');
         $a[] = array('key'=>'revenue', 'name'=>'Receipt reports');
         // $a[] = array('key'=>'settings', 'name'=>'Settings');

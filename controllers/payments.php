@@ -571,29 +571,27 @@ class Payments extends Controller {
         }
     }
 
-    /* public function lists($id=null){
-        if( empty($this->me) || empty($id) ) $this->error();
+    public function lists($id=null){
+        if( empty($this->me) ) $this->error();
 
-        $type = $this->model->getType($id);
-        if( empty($type) ) $this->error();
+        // $type = $this->model->getType($id);
+        // if( empty($type) ) $this->error();
 
         $this->view->setPage('on', 'lists'.$id);
-        $this->view->setPage('title', 'รายการรับเงิน-'.$type['name']);
+        $this->view->setPage('title', 'Received Payment');
 
         if( $this->format=='json' ){
-            $this->view->setData('results', $this->model->lists( array('type'=>$id) ));
-            $render = 'paycash/json';
+            $this->view->setData('results', $this->model->lists());
+            $render = 'paylists/json';
         }
         else{
             // $this->view->setData('type', $this->model->type());
-            $this->view->setData('bank', $this->model->bank());
-            $render = 'paycash/display';
+            $this->view->setData('account', $this->model->account());
+            $render = 'paylists/display';
         }
-
-        $this->view->setData('type', $type);
         $this->view->render( $render );
-    } */
-    public function cash(){
+    }
+    /* public function cash(){
         if( empty($this->me) ) $this->error();
 
         $type = $this->model->getType(1);
@@ -658,7 +656,7 @@ class Payments extends Controller {
 
         $this->view->setData('type', $type);
         $this->view->render( $render );
-    }
+    } */
 
     #FUNCTION FOR JSON
     public function get_type($id=null){

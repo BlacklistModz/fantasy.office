@@ -38,3 +38,10 @@ if( !empty($sub) ){
 	$this->count_nav+=count($sub);
 	$menu[] = array('text' => 'Suppliers', 'url' => URL.'settings/suppliers', 'sub' => $sub);
 }
+
+$sub = array();
+$sub[] = array('text' => 'Adjust Categories', 'key'=>'categories', 'url' => URL.'settings/export/categories');
+if( !empty($sub) ){
+	$this->count_nav+=count($sub);
+	$menu[] = array('text' => 'Stock', 'url' => URL.'settings/export', 'sub' => $sub);
+}

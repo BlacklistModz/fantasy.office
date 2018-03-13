@@ -171,4 +171,54 @@ class Sales_Model extends Model{
             return false;
         }
     }
+
+    /* PROFILE */
+    public function listsPayment( $options=array() ){
+        $data = array();
+        $data['total_amount'] = 0;
+
+        $table = "payments p 
+                  LEFT JOIN orders o ON p.pay_order_id=o.id
+                  LEFT JOIN sales s ON p.pay_sale_id=s.id
+                  LEFT JOIN customers c ON o.ord_customer_id=c.id";
+        $field = "p.*
+                  , o.ord_code
+                  , o.ord_customer_id AS cus_id
+
+                  , s.sale_code
+                  , s.sale_name
+
+                  , c.sub_code
+                  , c.name_store";
+
+        $condition = '';
+        $params = array();
+
+        if( !empty($options["start"]) && !empty($options["end"]) ){
+            $condition .= !empty($condition) ? " AND " : "";
+            $condition .= "(p.pay_date BETWEEN :s AND :e)";
+            $params[":s"] = $options["start"];
+            $params[":e"] = $options["end"];
+        }
+        if( !empty($options["sale"]) ){
+            $condition .= !empty($condition) ? " AND " : "";
+            $condition .= "p.pay_sale_id=:sale";
+            $params[":sale"] = $options["sale"];
+        }
+
+        $condition .= !empty($condition) ? " AND " : "";
+        $condition .= "o.ord_process=:process";
+        $params[":process"] = 3;
+
+        $condition = !empty($condition) ? "WHERE {$condition}" : "";
+        $sql = "SELECT {$field} FROM {$table} {$condition} ORDER BY pay_date ASC";
+        $results = $this->db->select( $sql, $params );
+
+        foreach ($results as $key => $value) {
+            $data['lists'][$key] = $value;
+            $data['total_amount'] += $value["pay_amount"];
+        }
+
+        return $data;
+    }
 }

@@ -81,36 +81,67 @@ class Bills extends Controller {
             }
             else{
                 $postData["bill_cus_id"] = $_POST["bill_cus_id"];
-                $customer = $this->model->query("customers")->get($_POST["bill_cus_id"]);
+                $customer = $this->model->query("customers")->get($postData["bill_cus_id"]);
 
                 #SET CUSTOMER
                 $postData["bill_name_store"] = $customer["name_store"];
                 if( !empty($customer["address"][0]) ){
-                    $postData['bill_address'] = $customer["address"][0]['address'];
-                    $postData['bill_road'] = $customer["address"][0]['road'];
-                    $postData['bill_area'] = $customer['address'][0]['area'];
-                    $postData['bill_district'] = $customer['address'][0]['district'];
-                    $postData['bill_post_code'] = $customer['address'][0]['post_code'];
-                    $postData['bill_country'] = $customer['address'][0]['country_name'];
+                    $postData['bill_address'] = !empty($customer["address"][0]['address']) 
+                                                ? $customer["address"][0]['address'] 
+                                                : "";
+                    $postData['bill_road'] = !empty($customer["address"][0]['road'])
+                                             ? $customer["address"][0]['road'] 
+                                             : "";
+                    $postData['bill_area'] = !empty($customer['address'][0]['area'])
+                                             ? $customer['address'][0]['area']
+                                             : "";
+                    $postData['bill_district'] = !empty($customer['address'][0]['district'])
+                                                 ? $customer['address'][0]['district']
+                                                 : "";
+                    $postData['bill_post_code'] = !empty($customer['address'][0]['post_code'])
+                                                  ? $customer['address'][0]['post_code']
+                                                  : "";
+                    $postData['bill_country'] = !empty($customer['address'][0]['country_name'])
+                                                ? $customer['address'][0]['country_name']
+                                                : "";
                 }
             }
 
-            $items = array();
+            #SUM PRODUCT IF SAME
+            $setItems = array();
             $postItem = $_POST["item"];
-            $c = 0;
             for($i=0;$i<=count($postItem["pro_id"]);$i++){
                 if( empty($postItem["pro_id"][$i]) || empty($postItem["qty"][$i]) ) continue;
                 $product = $this->model->query("products")->get($postItem["pro_id"][$i]);
                 if( empty($product) ) continue;
 
-                $items[$c]["item_pro_id"] = $postItem["pro_id"][$i];
-                $items[$c]["item_pro_code"] = $product["pds_barcode"];
-                $items[$c]["item_pro_name"] = $product["pds_name"];
-                $items[$c]["item_qty"] = $postItem["qty"][$i];
-                $items[$c]["item_unit"] = $postItem["unit"][$i];
-                $items[$c]["item_sales"] = $postItem["sales"][$i];
-                $items[$c]["item_amount"] = $postItem["amount"][$i];
-                $items[$c]["item_remark"] = $postItem["remark"][$i];
+                if( empty($setItems[$product["id"]]) ){
+                    $setItems[$product["id"]]["item_pro_code"] = $product["pds_barcode"];
+                    $setItems[$product["id"]]["item_pro_name"] = $product["pds_name"];
+                    $setItems[$product["id"]]["item_qty"] = $postItem["qty"][$i];
+                    $setItems[$product["id"]]["item_unit"] = $postItem["unit"][$i];
+                    $setItems[$product["id"]]["item_sales"] = $postItem["sales"][$i];
+                    $setItems[$product["id"]]["item_amount"] = $postItem["amount"][$i];
+                    $setItems[$product["id"]]["item_remark"] = $postItem["remark"][$i];
+                }
+                else{
+                    $setItems[$product["id"]]["item_qty"] += $postItem["qty"][$i];
+                    $setItems[$product["id"]]["item_amount"] += $postItem["amount"][$i];
+                }
+            }
+
+            #BUILD REAL DATA ITEMS
+            $items = array();
+            $c = 0;
+            foreach ($setItems as $key => $value) {
+                $items[$c]["item_pro_id"] = $key;
+                $items[$c]["item_pro_code"] = $value["item_pro_code"];
+                $items[$c]["item_pro_name"] = $value["item_pro_name"];
+                $items[$c]["item_qty"] = $value["item_qty"];
+                $items[$c]["item_unit"] = $value["item_unit"];
+                $items[$c]["item_sales"] = $value["item_sales"];
+                $items[$c]["item_amount"] = $value["item_amount"];
+                $items[$c]["item_remark"] = $value["item_remark"];
                 $c++;
             }
 
@@ -126,11 +157,11 @@ class Bills extends Controller {
                     $postData['bill_user_id'] = $this->me['id'];
                     $this->model->insert($postData);
                     $id = $postData["id"];
-
-                    $this->model->update($id, array("bill_number"=>sprintf("%05d", $id)));
                 }
 
                 if( !empty($id) ){
+                    $this->model->update($id, array("bill_number"=>'IN'.sprintf("%05d", $id)));
+
                     $_items = array();
                     if( !empty($item['items']) ){
                         foreach ($item['items'] as $key => $value) {
@@ -139,6 +170,7 @@ class Bills extends Controller {
                     }
 
                     foreach ($items as $key => $value) {
+
                         if( !empty($_items[$key]) ){
                             $value["id"] = $_items[$key];
                             unset($_items[$key]);
@@ -157,13 +189,36 @@ class Bills extends Controller {
                 $arr['message'] = 'Saved !';
                 $arr['url'] = URL.'bills';
             }
-
-        } catch (Expcetion $e) {
+        } catch (Exception $e) {
             $arr['error'] = $this->_getError($e->getMessage());
         }
         echo json_encode($arr);
     }
     public function del($id=null){
         $id = isset($_REQUEST["id"]) ? $_REQUEST["id"] : $id;
+        if( empty($this->me) || empty($id) ) $this->error();
+
+        $item = $this->model->get($id);
+        if( empty($item) ) $this->error();
+
+        if( !empty($_POST) ){
+            if( !empty($item['permit']['del']) ){
+                $this->model->delete($id);
+                $arr['message'] = 'Deleted !';
+                $arr['url'] = 'refresh';
+            }
+            else{
+                $arr['message'] = 'Access Error !';
+            }
+        }
+        else{
+            $this->view->setData('item', $item);
+            $this->view->render('bills/forms/del');
+        }
+    }
+
+    public function plate(){
+        if( empty($this->me) || $this->format!='json' ) $this->error();
+        $this->view->render('bills/forms/print');
     }
 }

@@ -1,17 +1,5 @@
 <?php 
 
-$tr = '';
-foreach ($this->results["lists"] as $key => $value) {
-	$tr .= '<tr>
-				<td align="center">'.$value["slipt"].'</td>
-				<td align="center">'.date("d/m/Y", strtotime($value["date"])).'</td>
-				<td>'.$value["sup_code"].'</td>
-				<td>'.$value["sup_name"].'</td>
-				<td align="right">'.number_format($value["total"], 2).'</td>
-				<td align="right">'.number_format($value["vat"], 2).'</td>
-			</tr>';
-}
-
 $head = '<style>
 			@page{ margin : 10px 10px 10px 10px }
 			table, th, td {

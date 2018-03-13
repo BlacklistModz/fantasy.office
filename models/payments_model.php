@@ -26,6 +26,7 @@ class Payments_model extends Model{
                          , a.account_branch
                          , o.ord_code AS code
                          , o.ord_net_price
+                         , c.sub_code
                          , c.name_store AS cus_name
                          , s.sale_code
                          , s.sale_name";

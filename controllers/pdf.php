@@ -49,6 +49,26 @@ class Pdf extends Controller {
       $this->view->render("vatsale", array(), true);
     }
 
+    public function listsVatsale(){
+        $month = isset($_REQUEST["month"]) ? sprintf("%02d", $_REQUEST["month"]) : date("m");
+        $year = isset($_REQUEST["year"]) ? $_REQUEST["year"] : date("Y");
+
+        $start = date( "Y-m-d", strtotime( "{$year}-{$month}-01" ) );
+        $end = date( "Y-m-t", strtotime( "{$year}-{$month}-01" ) );
+
+        $options = array(
+            "period_start" => $start,
+            "period_end" => $end,
+            "unlimit" => true
+        );
+
+        $results = $this->model->query("bills")->lists( $options );
+        $this->view->setData('results', $results);
+        $this->view->setData('month', $month);
+        $this->view->setData('year', $year);
+        $this->view->render("lists_vat_sale", array(), true);
+    }
+
     public function vat_buy(){
         $month = isset($_REQUEST["month"]) ? sprintf("%02d", $_REQUEST["month"]) : date("m");
         $year = isset($_REQUEST["year"]) ? $_REQUEST["year"] : date("Y");

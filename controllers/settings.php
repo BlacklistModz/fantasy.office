@@ -132,4 +132,20 @@ class Settings extends Controller {
         $this->view->setData('data', $data);
         $this->view->render( $render );
     }
+
+    public function export( $tap='categories' ){
+        $this->view->setPage('title', "Settings ".ucfirst($tap));
+
+        $this->view->setPage('on', 'settings' );
+        $this->view->setData('section', 'export');
+        $this->view->setData('tap', $tap);
+        $render = "settings/display";
+
+        if( $tap=='categories' ){
+            $data = $this->model->query('export')->category();
+        }
+
+        $this->view->setData('data', $data);
+        $this->view->render( $render );
+    }
 }
